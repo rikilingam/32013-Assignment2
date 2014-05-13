@@ -34,14 +34,12 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
 
             expenseForm.expenseItem = new ExpenseItem();
             expenseForm.expenseReport = new ExpenseReport();
-
-
+            
             expenseForm.employeeName = employee.Firstname + " " + employee.Surname;
             expenseForm.departmentName = employee.Department.DepartmentName;
             expenseForm.expenseReport.CreateDate = DateTime.Now;
             expenseForm.noOfItems = 0;
-
-
+            
             return View(expenseForm);
 
         }
@@ -68,8 +66,7 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
             expenseForm.expenseReport.ExpenseItems = items;
 
             expenseForm.expenseItem = new ExpenseItem();
-
-
+            
             ModelState.Clear();
             return View("CreateExpense", expenseForm);
 
