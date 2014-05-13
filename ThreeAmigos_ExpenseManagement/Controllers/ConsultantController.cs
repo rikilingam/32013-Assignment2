@@ -25,20 +25,21 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
         }
 
         public ActionResult CreateExpense()
-        {            
+        {
             Employee employee = new Employee();
             ExpenseFormViewModel expenseForm = new ExpenseFormViewModel();
+            List<ExpenseItem> items = new List<ExpenseItem>();
+            ControllerContext.HttpContext.Session["_expenseItems"] = items;
+            employee = IntializeEmployee();
 
-                employee = IntializeEmployee();
+            expenseForm.expenseItem = new ExpenseItem();
+            expenseForm.expenseReport = new ExpenseReport();
 
-                expenseForm.expenseItem = new ExpenseItem();
-                expenseForm.expenseReport = new ExpenseReport();
-                
 
-                expenseForm.employeeName = employee.Firstname + " " + employee.Surname;
-                expenseForm.departmentName = employee.Department.DepartmentName;
-                expenseForm.expenseReport.CreateDate = DateTime.Now;
-                expenseForm.noOfItems = 0;
+            expenseForm.employeeName = employee.Firstname + " " + employee.Surname;
+            expenseForm.departmentName = employee.Department.DepartmentName;
+            expenseForm.expenseReport.CreateDate = DateTime.Now;
+            expenseForm.noOfItems = 0;
 
 
             return View(expenseForm);
@@ -49,7 +50,7 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
         public ActionResult CreateExpense(ExpenseFormViewModel expenseForm)
         {
             List<ExpenseItem> items = new List<ExpenseItem>();
-            
+
             expenseForm.expenseItem.AudAmount = CurrencyService.CalcAud(expenseForm.expenseItem.Amount, expenseForm.expenseItem.Currency);
 
             if (ControllerContext.HttpContext.Session["_expenseItems"] != null)
@@ -62,19 +63,19 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
             {
                 items.Add(expenseForm.expenseItem);
                 ControllerContext.HttpContext.Session["_expenseItems"] = items;
-            }                        
-            
+            }
+
             expenseForm.expenseReport.ExpenseItems = items;
-            
+
             expenseForm.expenseItem = new ExpenseItem();
-                       
+
 
             ModelState.Clear();
             return View("CreateExpense", expenseForm);
 
         }
 
-   
+
         public ActionResult SubmitExpense()
         {
             return View();
