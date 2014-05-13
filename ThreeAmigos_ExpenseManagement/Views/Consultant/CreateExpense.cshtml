@@ -1,0 +1,134 @@
+﻿@model ThreeAmigos_ExpenseManagement.ViewModels.ExpenseFormViewModel
+
+
+@{
+    ViewBag.Title = "Expense Management System | Create Expense";
+    Layout = "~/Views/Shared/_EM_LayoutPage.cshtml";
+
+    List<SelectListItem> ddlCurrency = new List<SelectListItem>();
+    ddlCurrency.Add(new SelectListItem
+    {
+        Text = "AUD",
+        Value = "AUD"
+    });
+    ddlCurrency.Add(new SelectListItem
+    {
+        Text = "CNY",
+        Value = "CNY"
+    });
+    ddlCurrency.Add(new SelectListItem
+    {
+        Text = "EUR",
+        Value = "EUR"
+    });
+    
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var dp = $('#<%=txtItemDate.ClientID%>');
+        dp.datetimepicker({
+            pickTime: false,
+            autoclose: true,
+
+        });
+    });
+</script>
+
+@using (Html.BeginForm("CreateExpense", "Consultant", FormMethod.Post, new { id = "expenseItemForm" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+       
+        
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">Expense Form</h3>
+        </div>
+
+        <div class="panel-body">
+            <div class="container-fluid">
+                <!-- This is the expense header -->
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            @Html.ValidationMessageFor(m => m.employeeName)
+                            @Html.LabelFor(m => m.employeeName)
+                            @Html.TextBoxFor(m => m.employeeName, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="col-md-2 em-col-md-offset-2">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.departmentName)
+                            @Html.TextBoxFor(m => m.departmentName, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="col-md-2 em-col-md-offset-2">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.expenseReport.CreateDate)
+                            @Html.TextBoxFor(m => m.expenseReport.CreateDate, "{0:dd/MM/yyyy}", new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <hr />
+                </div>
+
+                <!-- This row contains the expense items -->
+
+                <div class="row">
+                    <div class="col-md-7">
+                        @if (Model.expenseReport.ExpenseItems.Count > 0)
+                        {
+                            <table class="table">
+                                <tr>
+                                    <th>Item Date</th>
+                                    <th>Location</th>
+                                    <th>Description</th>
+                                    <th>Receipt</th>
+                                    <th>Amount</th>
+                                    <th>Currency</th>
+                                    <th>Aud Amount</th>
+                                </tr>
+
+                                @foreach (var item in Model.expenseReport.ExpenseItems)
+                                {
+                                    <tr>
+                                        <td>@Html.Encode(String.Format("{0:dd/MM/yyyy}",item.ExpenseDate))</td>
+                                        <td>@item.Location</td>
+                                        <td>@item.Description</td>
+                                        <td>@item.ReceiptFileName</td>
+                                        <td>@Html.Encode(String.Format("{0:C}",item.Amount))</td>
+                                        <td>@item.Currency</td>
+                                        <td>@Html.Encode(String.Format("{0:C}",item.AudAmount))</td>
+                                    </tr>
+                                }
+
+                            </table>
+                        }
+                    </div>
+                </div>
+
+                <div class="row">
+                    <hr />
+                </div>
+
+                <!-- This row is the buttons  data-toggle="modal" data-target="#myModal" -->
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <input id="btnAddExpenseItem" type="button" value="Add Item" class="btn btn-primary" onclick="ShowExpenseItemModal();" />
+                            <input id="btnSubmitExpense" type="submit" value="Submit Report" class="btn btn-success" />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <section>
+        @Html.Partial("_ExpenseItemFormPartial", Model)
+    </section>
+}

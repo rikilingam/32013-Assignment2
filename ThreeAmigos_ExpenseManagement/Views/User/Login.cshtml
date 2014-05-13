@@ -1,0 +1,50 @@
+﻿@model ThreeAmigos_ExpenseManagement.Models.LoginModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <script src="/Scripts/bootstrap.js"></script>
+    <script src="/Scripts/bootstrap.js"></script>
+    <link href="/Content/bootstrap.css" rel="stylesheet" />
+    <link href="/Content/bootstrap-theme.css" rel="stylesheet" />
+    <link href="/Content/EM_StyleSheet.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Expense Management System | Login</title>
+</head>
+<body>
+    @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        <div class="login_main">
+            <h4>Expense Management System</h4>
+            <div class="container-fluid">
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.UserName)
+                    @Html.TextBoxFor(m => m.UserName,new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.UserName)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Password)
+                    @Html.PasswordFor(m => m.Password,new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Password)
+
+                </div>
+                <div class="checkbox">
+                    @Html.CheckBoxFor(m => m.RememberMe)
+                    @Html.LabelFor(m => m.RememberMe)
+                    <br />
+                </div>
+            </div>
+            <br />
+            <input type="submit" value="Log in" class="btn btn-primary" />
+        </div>
+    }
+</body>
+</html>

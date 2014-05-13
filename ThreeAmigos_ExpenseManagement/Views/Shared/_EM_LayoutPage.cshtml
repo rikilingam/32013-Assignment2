@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <script src="/Scripts/jquery-1.9.1.js"></script>
+    <script src="/Scripts/bootstrap.js"></script>
+    <script src="/Scripts/moment.js"></script>
+    <script src="/Scripts/bootstrap-datetimepicker.min.js"></script>
+    <script src="/Scripts/EM_Functions.js"></script>
+    <link href="/Content/bootstrap.css" rel="stylesheet" />
+    <link href="/Content/bootstrap-theme.css" rel="stylesheet" />
+    <link href="/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <link href="/Content/EM_StyleSheet.css" rel="stylesheet" />
+
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">Three Amigos | Expense Mangement</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="em_navbar">
+                <section>
+                    @Html.Partial("_NavItemsPartial")
+                </section>
+                <section>
+                    @Html.Partial("_LoginPartial")
+                </section>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+    <!--<form id="form1" runat="server" class="form-horizontal" role="form" method="post">-->
+        <div class="container-fluid" id="maincontent" runat="server">
+            @RenderBody()
+        </div>
+    <!--</form>-->
+
+
+</body>
+</html>

@@ -1,0 +1,10 @@
+﻿@if (User.IsInRole("Consultant")) {
+<li class="dropdown" runat="server" id="navAccounts">
+    <a id="A1" href="#" class="dropdown-toggle" data-toggle="dropdown" runat="server">Test<b class="caret"></b></a>
+    <ul class="dropdown-menu">
+        <li><a href="/Accounts/ProcessExpenses.aspx">Process Expenses</a></li>
+        <li><a href="/Accounts/ViewReports.aspx">View Reports</a></li>
+        <li><a href="/Accounts/CheckExpenseApproved.aspx">Check Balance and Expense Approved</a></li>
+    </ul>
+</li>
+}

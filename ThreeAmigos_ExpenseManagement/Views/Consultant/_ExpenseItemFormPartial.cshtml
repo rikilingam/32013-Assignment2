@@ -1,0 +1,101 @@
+﻿@model ThreeAmigos_ExpenseManagement.ViewModels.ExpenseFormViewModel
+
+@{    List<SelectListItem> ddlCurrency = new List<SelectListItem>();
+      ddlCurrency.Add(new SelectListItem
+      {
+          Text = "AUD",
+          Value = "AUD"
+      });
+      ddlCurrency.Add(new SelectListItem
+      {
+          Text = "CNY",
+          Value = "CNY"
+      });
+      ddlCurrency.Add(new SelectListItem
+      {
+          Text = "EUR",
+          Value = "EUR"
+      });
+    }
+
+
+        <!-- modal to add items -->
+        <div class="modal fade" id="ExpenseItemModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Add Expense Item</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <!-- Expense items -->
+                        <div class="row">
+                            <div class="col-md-3 col-md-offset-1">
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.expenseItem.ExpenseDate)
+                                    @Html.TextBoxFor(m => m.expenseItem.ExpenseDate, new { @name = "expenseDate", @class = "form-control" })
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-1">
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.expenseItem.Location)
+                                    @Html.TextBoxFor(m => m.expenseItem.Location, new { @name = "location", @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-md-6 col-md-offset-1">
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.expenseItem.Description)
+                                    @Html.TextBoxFor(m => m.expenseItem.Description, new { @name = "description", @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 col-md-offset-1">
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.expenseItem.Amount)
+                                    @Html.TextBoxFor(m => m.expenseItem.Amount, new { @name = "amount", @class = "form-control" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-3 em-col-md-offset-2">
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.expenseItem.Currency)
+                                    @Html.DropDownListFor(m => m.expenseItem.Currency, ddlCurrency, new { @name = "currency", @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-1">
+                                <div class="form-group">
+                                    <label for="fileReceipt" class="control-label">Receipt</label>
+                                    (PDF only and Max file size 4Mb)
+                                <input type="file" name="fileReceiptName" class="form-control" />
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="modal-footer">
+                        <input id="btnAddItem" value="Add to Report" class="btn btn-primary" type="submit" />
+                        <input id="btnItemClose" value="Close" class="btn btn-default" type="button" onclick="HideExpenseItemModal();" />
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+        </div>
+

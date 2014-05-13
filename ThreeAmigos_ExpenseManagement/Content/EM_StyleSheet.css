@@ -1,0 +1,20 @@
+﻿.login_main
+{
+
+    width:400px;
+    padding:20px;
+    text-align:left;
+    margin:auto;
+    border: 1px solid #808080;
+    border-radius:5px;
+    margin-top:50px;
+
+}
+  .em-col-md-offset-2 {
+    /*margin-left: 8.33333333%;*/
+    margin-left:2%;
+  }
+
+  #logoutForm {
+    display: inline;
+}

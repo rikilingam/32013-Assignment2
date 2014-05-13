@@ -1,0 +1,40 @@
+﻿<ul class="nav navbar-nav" id="navitems" runat="server">
+    <li class="active"><a href="/">Home</a></li>
+    @if (Request.IsAuthenticated)
+    {
+        <text>
+        @if (User.IsInRole("Consultant"))
+        {
+<li class="dropdown" runat="server" id="navConsultant">
+            <a id="A2" href="#" class="dropdown-toggle" data-toggle="dropdown" runat="server">Consultant<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li><a href="/Consultant/CreateExpense">Create Expense</a></li>
+                <li><a href="/Consultant/ViewMyExpenses">View My Expenses</a></li>
+            </ul>
+        </li>
+    }
+        @if (User.IsInRole("Supervisor"))
+        {
+<li class="dropdown" runat="server" id="navSupervisor">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" runat="server">Supervisor<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li><a href="/Supervisor/ApproveExpenses.aspx">Approve Expenses</a></li>
+                <li><a href="/Supervisor/ViewReports.aspx">View Reports</a></li>
+                <li><a href="/Supervisor/CheckBalance.aspx">Check Balance</a></li>
+            </ul>
+        </li>
+    }
+        @if (User.IsInRole("Accounts"))
+        {
+<li class="dropdown" runat="server" id="navAccounts">
+            <a id="A1" href="#" class="dropdown-toggle" data-toggle="dropdown" runat="server">Accounts<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li><a href="/Accounts/ProcessExpenses.aspx">Process Expenses</a></li>
+                <li><a href="/Accounts/ViewReports.aspx">View Reports</a></li>
+                <li><a href="/Accounts/CheckExpenseApproved.aspx">Check Balance and Expense Approved</a></li>
+            </ul>
+        </li>
+    }
+        </text>
+}
+</ul>

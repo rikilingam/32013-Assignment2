@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="5f495b1d7e23428b8b63aa4863074642" Name="Diagram1">
+        <EntityTypeShape EntityType="Model.Department" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Employee" Width="1.5" PointX="3" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ExpenseItem" Width="1.5" PointX="10.125" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ExpenseReport" Width="1.5" PointX="7.375" PointY="1.5" IsExpanded="true" />
+        <AssociationConnector Association="Model.FK_Employee_ToDepartment" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_ExpenseHeader_Department" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_ExpenseHeader_ApprovedByEmployee" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_ExpenseHeader_ProcessedByEmployee" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_ExpenseReport_CreatedByEmployee" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_ExpenseItem_ExpenseReport" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
