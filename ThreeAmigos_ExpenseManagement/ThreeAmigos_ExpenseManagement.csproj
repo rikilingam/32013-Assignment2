@@ -285,7 +285,7 @@
     <Content Include="Views\User\ExternalLoginConfirmation.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\Index_org.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -299,6 +299,7 @@
     <Content Include="Views\Consultant\ViewMyExpenses.cshtml" />
     <Content Include="Views\Shared\_NavItemsPartial.cshtml" />
     <Content Include="Views\Consultant\_ExpenseItemFormPartial.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
