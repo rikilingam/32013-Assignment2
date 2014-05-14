@@ -18,12 +18,9 @@ namespace ThreeAmigos_ExpenseManagement.Models
         public int ItemId { get; set; }
         public int ExpenseId { get; set; }
                 
-        [Required]
-        [Display(Name = "Expense Date")]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public Nullable<System.DateTime> ExpenseDate { get; set; }
 
-        [Required]
+        
         public string Location { get; set; }
         
         [Required]

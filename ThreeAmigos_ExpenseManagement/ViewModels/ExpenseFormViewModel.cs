@@ -12,18 +12,21 @@ namespace ThreeAmigos_ExpenseManagement.ViewModels
     public class ExpenseFormViewModel
     {
         [Display(Name = "Employee Name")]
-        public string employeeName { get; set; }
+        public string EmployeeName { get; set; }
 
         [Display(Name = "Department")]
-        public string departmentName { get; set; }
+        public string DepartmentName { get; set; }
 
-        public ExpenseReport expenseReport { get; set; }
+        [Display(Name="Create Date")]
+        public DateTime CreateDate { get; set; }
 
-        public ExpenseItem expenseItem { get; set; }
+        public ExpenseReport ExpenseReport { get; set; }              
 
+        public ExpenseItem ExpenseItem { get; set; }
 
-        public int noOfItems { get; set; }
-
-
+        public ExpenseFormViewModel()
+        {
+            ExpenseReport = new ExpenseReport();
+        }
     }
 }

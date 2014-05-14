@@ -12,7 +12,7 @@ using ThreeAmigos_ExpenseManagement.ViewModels;
 
 namespace ThreeAmigos_ExpenseManagement.Controllers
 {
-    [Authorize]
+    [Authorize(Roles="Consultant")]
     [InitializeSimpleMembership]
     public class ConsultantController : Controller
     {
@@ -26,20 +26,23 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
 
         public ActionResult CreateExpense()
         {
-            Employee employee = new Employee();
+            Employee employee = IntializeEmployee();
             ExpenseFormViewModel expenseForm = new ExpenseFormViewModel();
-            List<ExpenseItem> items = new List<ExpenseItem>();
-            ControllerContext.HttpContext.Session["_expenseItems"] = items;
-            employee = IntializeEmployee();
 
-            expenseForm.expenseItem = new ExpenseItem();
-            expenseForm.expenseReport = new ExpenseReport();
+            expenseForm.EmployeeName = employee.Firstname + " " + employee.Surname;
+            expenseForm.DepartmentName = employee.Department.DepartmentName;
+            expenseForm.CreateDate = DateTime.Now;
             
-            expenseForm.employeeName = employee.Firstname + " " + employee.Surname;
-            expenseForm.departmentName = employee.Department.DepartmentName;
-            expenseForm.expenseReport.CreateDate = DateTime.Now;
-            expenseForm.noOfItems = 0;
+
+
+            ExpenseReport expenseReport = new ExpenseReport();
             
+            expenseReport.CreateDate = DateTime.Now;
+            expenseReport.CreatedBy = employee;
+            expenseReport.Department = employee.Department;
+
+            Session["_expenseReport"] = expenseReport;
+
             return View(expenseForm);
 
         }
@@ -47,27 +50,29 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
         [HttpPost]
         public ActionResult CreateExpense(ExpenseFormViewModel expenseForm)
         {
-            List<ExpenseItem> items = new List<ExpenseItem>();
-
-            expenseForm.expenseItem.AudAmount = CurrencyService.CalcAud(expenseForm.expenseItem.Amount, expenseForm.expenseItem.Currency);
-
-            if (ControllerContext.HttpContext.Session["_expenseItems"] != null)
+            if (ModelState.IsValid)
             {
-                items = (List<ExpenseItem>)ControllerContext.HttpContext.Session["_expenseItems"];
-                items.Add(expenseForm.expenseItem);
-                ControllerContext.HttpContext.Session["_expenseItems"] = items;
-            }
-            else
-            {
-                items.Add(expenseForm.expenseItem);
-                ControllerContext.HttpContext.Session["_expenseItems"] = items;
-            }
+                ExpenseReport expenseReport = new ExpenseReport();
 
-            expenseForm.expenseReport.ExpenseItems = items;
+                expenseForm.ExpenseItem.AudAmount = CurrencyService.CalcAud(expenseForm.ExpenseItem.Amount, expenseForm.ExpenseItem.Currency);
 
-            expenseForm.expenseItem = new ExpenseItem();
+                if (Session["_expenseReport"] != null)
+                {
+                    expenseReport = (ExpenseReport)Session["_expenseReport"];
+                    expenseReport.ExpenseItems.Add(expenseForm.ExpenseItem);
+                    Session["_expenseReport"] = expenseReport;
+                }
+                else
+                {
+                    expenseReport.ExpenseItems.Add(expenseForm.ExpenseItem);
+                    Session["_expenseReport"] = expenseReport;
+                }
+
+                expenseForm.ExpenseReport = expenseReport;
+                expenseForm.ExpenseItem = new ExpenseItem();
+                ModelState.Clear();
+            }
             
-            ModelState.Clear();
             return View("CreateExpense", expenseForm);
 
         }
@@ -88,17 +93,13 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
         {
             int userId = (int)Membership.GetUser().ProviderUserKey;
             Employee emp = new Employee();
+
             using (Entities emEntities = new Entities())
             {
                 var query = from employee in emEntities.Employees.Include("Department")
                             where employee.UserId == userId
                             select employee;
-
-                foreach (Employee employee in query)
-                {
-                    emp = employee;
-
-                }
+                emp = query.First();  
 
             }
             return emp;

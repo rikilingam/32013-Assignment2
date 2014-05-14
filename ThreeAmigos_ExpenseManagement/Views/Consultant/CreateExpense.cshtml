@@ -52,21 +52,21 @@
                 <div class="row">
                     <div class="col-md-2">
                         <div class="form-group">
-                            @Html.ValidationMessageFor(m => m.employeeName)
-                            @Html.LabelFor(m => m.employeeName)
-                            @Html.TextBoxFor(m => m.employeeName, new { @class = "form-control", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(m => m.EmployeeName)
+                            @Html.LabelFor(m => m.EmployeeName)
+                            @Html.TextBoxFor(m => m.EmployeeName, new { @class = "form-control", @readonly = "readonly" })
                         </div>
                     </div>
                     <div class="col-md-2 em-col-md-offset-2">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.departmentName)
-                            @Html.TextBoxFor(m => m.departmentName, new { @class = "form-control", @readonly = "readonly" })
+                            @Html.LabelFor(m => m.DepartmentName)
+                            @Html.TextBoxFor(m => m.DepartmentName, new { @class = "form-control", @readonly = "readonly" })
                         </div>
                     </div>
                     <div class="col-md-2 em-col-md-offset-2">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.expenseReport.CreateDate)
-                            @Html.TextBoxFor(m => m.expenseReport.CreateDate, "{0:dd/MM/yyyy}", new { @class = "form-control", @readonly = "readonly" })
+                            @Html.LabelFor(m => m.CreateDate)
+                            @Html.TextBoxFor(m => m.CreateDate, "{0:dd/MM/yyyy}", new { @class = "form-control", @readonly = "readonly" })
                         </div>
                     </div>
                 </div>
@@ -80,7 +80,7 @@
 
                 <div class="row">
                     <div class="col-md-7">
-                        @if (Model.expenseReport.ExpenseItems.Count > 0)
+                        @if (Model.ExpenseReport.ExpenseItems.Count > 0)
                         {
                             <table class="table">
                                 <tr>
@@ -93,7 +93,7 @@
                                     <th>Aud Amount</th>
                                 </tr>
 
-                                @foreach (var item in Model.expenseReport.ExpenseItems)
+                                @foreach (var item in Model.ExpenseReport.ExpenseItems)
                                 {
                                     <tr>
                                         <td>@Html.Encode(String.Format("{0:dd/MM/yyyy}",item.ExpenseDate))</td>
