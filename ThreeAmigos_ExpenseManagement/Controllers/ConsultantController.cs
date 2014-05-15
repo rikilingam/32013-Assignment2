@@ -12,7 +12,7 @@ using ThreeAmigos_ExpenseManagement.ViewModels;
 
 namespace ThreeAmigos_ExpenseManagement.Controllers
 {
-    [Authorize(Roles="Consultant")]
+    [Authorize(Roles = "Consultant")]
     [InitializeSimpleMembership]
     public class ConsultantController : Controller
     {
@@ -28,21 +28,15 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
         {
             Employee employee = IntializeEmployee();
             ExpenseFormViewModel expenseForm = new ExpenseFormViewModel();
-
-            expenseForm.EmployeeName = employee.Firstname + " " + employee.Surname;
-            expenseForm.DepartmentName = employee.Department.DepartmentName;
-            expenseForm.CreateDate = DateTime.Now;
-            
-
-
             ExpenseReport expenseReport = new ExpenseReport();
-            
+
             expenseReport.CreateDate = DateTime.Now;
             expenseReport.CreatedBy = employee;
             expenseReport.Department = employee.Department;
 
             Session["_expenseReport"] = expenseReport;
 
+            expenseForm.ExpenseReport = expenseReport;
             return View(expenseForm);
 
         }
@@ -71,9 +65,15 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
                 expenseForm.ExpenseReport = expenseReport;
                 expenseForm.ExpenseItem = new ExpenseItem();
                 ModelState.Clear();
+
+                return View("CreateExpense", expenseForm);
             }
-            
-            return View("CreateExpense", expenseForm);
+            else
+            {
+                return PartialView(expenseForm);
+            }
+
+
 
         }
 
@@ -99,7 +99,7 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
                 var query = from employee in emEntities.Employees.Include("Department")
                             where employee.UserId == userId
                             select employee;
-                emp = query.First();  
+                emp = query.First();
 
             }
             return emp;

@@ -52,21 +52,20 @@
                 <div class="row">
                     <div class="col-md-2">
                         <div class="form-group">
-                            @Html.ValidationMessageFor(m => m.EmployeeName)
                             @Html.LabelFor(m => m.EmployeeName)
-                            @Html.TextBoxFor(m => m.EmployeeName, new { @class = "form-control", @readonly = "readonly" })
+                            <input type="text" value="@Html.Encode(Model.ExpenseReport.CreatedBy.Fullname)" class="form-control" readonly="true" />
                         </div>
                     </div>
                     <div class="col-md-2 em-col-md-offset-2">
                         <div class="form-group">
                             @Html.LabelFor(m => m.DepartmentName)
-                            @Html.TextBoxFor(m => m.DepartmentName, new { @class = "form-control", @readonly = "readonly" })
+                            <input type="text" value="@Html.Encode(Model.ExpenseReport.Department.DepartmentName)" class="form-control" readonly="true" />
                         </div>
                     </div>
                     <div class="col-md-2 em-col-md-offset-2">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.CreateDate)
-                            @Html.TextBoxFor(m => m.CreateDate, "{0:dd/MM/yyyy}", new { @class = "form-control", @readonly = "readonly" })
+                            @Html.LabelFor(m => m.CreateDate)                                                        
+                            <input type="text" value="@String.Format("{0:dd/MM/yyyy}",Model.ExpenseReport.CreateDate)" class="form-control" readonly="true" />                            
                         </div>
                     </div>
                 </div>
@@ -96,13 +95,13 @@
                                 @foreach (var item in Model.ExpenseReport.ExpenseItems)
                                 {
                                     <tr>
-                                        <td>@Html.Encode(String.Format("{0:dd/MM/yyyy}",item.ExpenseDate))</td>
+                                        <td>@Html.Encode(String.Format("{0:dd/MM/yyyy}", item.ExpenseDate))</td>
                                         <td>@item.Location</td>
                                         <td>@item.Description</td>
                                         <td>@item.ReceiptFileName</td>
-                                        <td>@Html.Encode(String.Format("{0:C}",item.Amount))</td>
+                                        <td>@Html.Encode(String.Format("{0:C}", item.Amount))</td>
                                         <td>@item.Currency</td>
-                                        <td>@Html.Encode(String.Format("{0:C}",item.AudAmount))</td>
+                                        <td>@Html.Encode(String.Format("{0:C}", item.AudAmount))</td>
                                     </tr>
                                 }
 

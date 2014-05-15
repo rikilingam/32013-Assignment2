@@ -6,7 +6,7 @@ using System.Web;
 
 namespace ThreeAmigos_ExpenseManagement.Models
 {
-    [MetadataType(typeof(ExpenseItem))]
+    [MetadataType(typeof(ExpenseItemMetaData))]
     public partial class ExpenseItem
     {
     }

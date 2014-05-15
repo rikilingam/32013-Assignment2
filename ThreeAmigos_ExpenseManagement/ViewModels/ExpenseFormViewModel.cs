@@ -17,7 +17,8 @@ namespace ThreeAmigos_ExpenseManagement.ViewModels
         [Display(Name = "Department")]
         public string DepartmentName { get; set; }
 
-        [Display(Name="Create Date")]
+        
+        [Display(Name = "Create Date")]
         public DateTime CreateDate { get; set; }
 
         public ExpenseReport ExpenseReport { get; set; }              

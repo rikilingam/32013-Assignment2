@@ -20,8 +20,7 @@ namespace ThreeAmigos_ExpenseManagement.Models
             this.ExpenseItems = new HashSet<ExpenseItem>();
         }
     
-        public int ExpenseId { get; set; }
-        [Display(Name = "Report Date")]
+        public int ExpenseId { get; set; }        
         public Nullable<System.DateTime> CreateDate { get; set; }
         public Nullable<System.DateTime> ApprovedDate { get; set; }
         public Nullable<System.DateTime> ProcessedDate { get; set; }

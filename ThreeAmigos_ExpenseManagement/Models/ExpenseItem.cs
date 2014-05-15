@@ -12,29 +12,18 @@ namespace ThreeAmigos_ExpenseManagement.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    
+
     public partial class ExpenseItem
     {
         public int ItemId { get; set; }
         public int ExpenseId { get; set; }
-                
         public Nullable<System.DateTime> ExpenseDate { get; set; }
-
-        
         public string Location { get; set; }
-        
-        [Required]
         public string Description { get; set; }
-        
-        [Required]
         public Nullable<decimal> Amount { get; set; }
-        
         public string Currency { get; set; }
-        
         public Nullable<decimal> AudAmount { get; set; }
-        
         public string ReceiptFileName { get; set; }
-    
         public virtual ExpenseReport ExpenseReport { get; set; }
     }
 }
