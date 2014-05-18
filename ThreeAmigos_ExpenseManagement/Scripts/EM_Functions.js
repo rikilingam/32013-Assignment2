@@ -1,10 +1,10 @@
 ﻿var today = new Date();
 $(document).ready(function () {
-    var dp = $('#<%=txtItemDate.ClientID%>');
+    var toEndDate = new Date();
+    var dp = $('#expenseDate');
     dp.datetimepicker({
         pickTime: false,
         autoclose: true,
-
     });
 });
 

@@ -14,8 +14,8 @@ namespace ThreeAmigos_ExpenseManagement.Models
     public partial class ExpenseItemMetaData
     {
         [Required]
-        [Display(Name = "Expense Date")]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        [Display(Name = "Expense Date")]        
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public Nullable<System.DateTime> ExpenseDate { get; set; }
 
         [Required]

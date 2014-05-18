@@ -3,37 +3,8 @@
 
 @{
     ViewBag.Title = "Expense Management System | Create Expense";
-    Layout = "~/Views/Shared/_EM_LayoutPage.cshtml";
-
-    List<SelectListItem> ddlCurrency = new List<SelectListItem>();
-    ddlCurrency.Add(new SelectListItem
-    {
-        Text = "AUD",
-        Value = "AUD"
-    });
-    ddlCurrency.Add(new SelectListItem
-    {
-        Text = "CNY",
-        Value = "CNY"
-    });
-    ddlCurrency.Add(new SelectListItem
-    {
-        Text = "EUR",
-        Value = "EUR"
-    });
-    
+    Layout = "~/Views/Shared/_EM_LayoutPage.cshtml";    
 }
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        var dp = $('#<%=txtItemDate.ClientID%>');
-        dp.datetimepicker({
-            pickTime: false,
-            autoclose: true,
-
-        });
-    });
-</script>
 
 @using (Html.BeginForm("CreateExpense", "Consultant", FormMethod.Post, new { id = "expenseItemForm" }))
 {
