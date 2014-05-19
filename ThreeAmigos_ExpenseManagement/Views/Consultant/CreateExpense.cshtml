@@ -43,7 +43,7 @@
 
 
                 <div class="row">
-                    <hr />
+                    <br />
                 </div>
 
                 <!-- This row contains the expense items -->
@@ -90,7 +90,7 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <input id="btnAddExpenseItem" type="button" value="Add Item" class="btn btn-primary" onclick="ShowExpenseItemModal();" />
-                            <input id="btnSubmitExpense" type="submit" value="Submit Report" class="btn btn-success" />
+                            @Html.ActionLink("Submit Report", "SubmitExpense", "Consultant", new {@class="btn btn-success" })
                         </div>
                     </div>
                 </div>

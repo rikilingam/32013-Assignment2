@@ -26,7 +26,7 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
 
         public ActionResult CreateExpense()
         {
-            Employee employee = IntializeEmployee();
+            Employee employee = IntializeEmployee((int)Membership.GetUser().ProviderUserKey);
             ExpenseFormViewModel expenseForm = new ExpenseFormViewModel();
             ExpenseReport expenseReport = new ExpenseReport();
 
@@ -80,7 +80,26 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
 
         public ActionResult SubmitExpense()
         {
-            return View();
+            if (Session["_expenseReport"] != null)
+            {
+                ExpenseReport report = (ExpenseReport)Session["_expenseReport"];
+
+                using (EMEntitiesContext ctx = new EMEntitiesContext())
+                {
+                    ExpenseReport newReport = new ExpenseReport();
+
+                    newReport.CreatedBy = ctx.Employees.First(e => e.UserId == report.CreatedBy.UserId);
+                    newReport.CreateDate = report.CreateDate;
+                    newReport.Department = ctx.Departments.First(d => d.DepartmentId == report.Department.DepartmentId);
+                    newReport.Status = "Submitted";
+                    newReport.ExpenseItems = report.ExpenseItems;
+
+                    ctx.ExpenseReports.Add(newReport);
+                    ctx.SaveChanges();
+                }
+            }
+
+            return RedirectToAction("Index","Home");
         }
 
         public ActionResult ViewMyExpenses()
@@ -89,20 +108,18 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
         }
 
 
-        private Employee IntializeEmployee()
+        private Employee IntializeEmployee(int userId)
         {
-            int userId = (int)Membership.GetUser().ProviderUserKey;
-            Employee emp = new Employee();
 
-            using (Entities emEntities = new Entities())
+            using (EMEntitiesContext ctx = new EMEntitiesContext())
             {
-                var query = from employee in emEntities.Employees.Include("Department")
+                var query = from employee in ctx.Employees.Include("Department")
                             where employee.UserId == userId
                             select employee;
-                emp = query.First();
+
+                return (Employee)query.First();
 
             }
-            return emp;
 
         }
 
