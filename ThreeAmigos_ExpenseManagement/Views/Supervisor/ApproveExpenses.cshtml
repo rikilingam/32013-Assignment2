@@ -1,0 +1,36 @@
+﻿@using ThreeAmigos_ExpenseManagement.Models
+@model IEnumerable<ExpenseReport>
+
+@{
+    ViewBag.Title = "Expense Management System | Create Expense";
+    Layout = "~/Views/Shared/_EM_LayoutPage.cshtml";    
+}
+
+<h2>ApproveExpenses</h2>
+ 
+ @foreach (var item in Model)
+     
+ {
+    <p>
+   <b> Report Date</b>: @item.CreateDate    
+   
+   <b> Consultant</b> : @item.CreatedBy.Fullname
+
+   <b> Department</b> :@item.Department.DepartmentName
+
+   <b> Status</b>: @item.Status
+        @foreach (var ExpenseItem in item.ExpenseItems)
+        {
+           <p>
+              <b> Expense Date</b>:@ExpenseItem.ExpenseDate
+              <b> Location </b>: @ExpenseItem.Location
+              <b> Description</b>:@ExpenseItem.Description
+             <b>  Amount</b> :@ExpenseItem.Amount               
+           </p>
+        }  
+        <br>  
+   </p>
+
+ }
+
+
