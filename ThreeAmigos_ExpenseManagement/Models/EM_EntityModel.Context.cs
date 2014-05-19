@@ -13,10 +13,10 @@ namespace ThreeAmigos_ExpenseManagement.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class Entities : DbContext
+    public partial class EMEntitiesContext : DbContext
     {
-        public Entities()
-            : base("name=Entities")
+        public EMEntitiesContext()
+            : base("name=EM_Entities")
         {
         }
     
