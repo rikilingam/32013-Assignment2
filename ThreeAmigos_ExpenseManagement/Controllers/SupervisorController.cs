@@ -26,8 +26,7 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
         public ActionResult ApproveExpenses()
         {
             Employee employee = IntializeEmployee((int)Membership.GetUser().ProviderUserKey);
-            ExpenseFormViewModel expenseForm = new ExpenseFormViewModel();
-            
+        
             DateTime startDateTime = DateTime.Today; //Today at 00:00:00 NEED TO CORRECT
             DateTime endDateTime = DateTime.Today.AddDays(1).AddTicks(-1);
 
@@ -40,6 +39,21 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
                 return View(result.ToList());
             }
         }
+
+        public ActionResult ViewReports(string status)
+        {
+            Employee employee = IntializeEmployee((int)Membership.GetUser().ProviderUserKey);
+            using (EMEntitiesContext ctx = new EMEntitiesContext())
+            {
+                var result = from i in ctx.ExpenseReports.Include("CreatedBy").Include("ExpenseItems").Include("Department")
+                             where i.Department.DepartmentId == employee.Department.DepartmentId && i.Status == status
+                             select i;
+                return View(result.ToList());
+            }
+        }
+
+       
+
 
         private Employee IntializeEmployee(int userId)
         {
