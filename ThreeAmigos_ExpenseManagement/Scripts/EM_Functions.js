@@ -8,6 +8,20 @@ $(document).ready(function () {
     });
 });
 
+
+// This script was adapted from http://itzonesl.blogspot.com.au/2014/01/how-to-validate-ddmmyyyy-date-format-in.html
+$(document).ready(function () {
+    $.culture = Globalize.culture("en-AU");
+    $.validator.methods.date = function (value, element) {
+        //This is not ideal but Chrome passes dates through in ISO1901 format regardless of locale
+        //and despite displaying in the specified format.
+
+        return this.optional(element)
+            || Globalize.parseDate(value, "dd/MM/yyyy", "en-AU")
+            || Globalize.parseDate(value, "yyyy-mm-dd");
+    }
+});
+
 function ShowExpenseItemModal() {
     $('#ExpenseItemModal').modal('show');
 }

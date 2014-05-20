@@ -18,12 +18,15 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
     {
         //
         // GET: /Consultant/
-
         public ActionResult Index()
         {
             return View();
         }
 
+        /// <summary>
+        /// This controllers initializes the expense form
+        /// </summary>
+        /// <returns>returns create expense view</returns>
         public ActionResult CreateExpense()
         {
             Employee employee = IntializeEmployee((int)Membership.GetUser().ProviderUserKey);
@@ -41,6 +44,11 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
 
         }
 
+        /// <summary>
+        /// This controller adds items to the expense form
+        /// </summary>
+        /// <param name="expenseForm">the completed expense item</param>
+        /// <returns>The expense form with expense items</returns>
         [HttpPost]
         public ActionResult CreateExpense(ExpenseFormViewModel expenseForm)
         {
@@ -73,11 +81,13 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
                 return PartialView(expenseForm);
             }
 
-
-
         }
 
 
+        /// <summary>
+        /// Inserts the expense report and items to the database
+        /// </summary>
+        /// <returns>Index in Home controller</returns>
         public ActionResult SubmitExpense()
         {
             if (Session["_expenseReport"] != null)
@@ -108,6 +118,11 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
         }
 
 
+        /// <summary>
+        /// Initializes the employee and department
+        /// </summary>
+        /// <param name="userId">UserId of the employee</param>
+        /// <returns>Employee object</returns>
         private Employee IntializeEmployee(int userId)
         {
 
