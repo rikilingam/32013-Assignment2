@@ -101,7 +101,7 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
                     newReport.CreatedBy = ctx.Employees.First(e => e.UserId == report.CreatedBy.UserId);
                     newReport.CreateDate = report.CreateDate;
                     newReport.Department = ctx.Departments.First(d => d.DepartmentId == report.Department.DepartmentId);
-                    newReport.Status = "Submitted";
+                    newReport.Status = ReportStatus.Submitted.ToString();
                     newReport.ExpenseItems = report.ExpenseItems;
 
                     ctx.ExpenseReports.Add(newReport);
@@ -117,6 +117,16 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Filters the list of expense reports by status
+        /// </summary>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult ViewMyExpenses(string status)
+        {
+            return View();
+        }
 
         /// <summary>
         /// Initializes the employee and department

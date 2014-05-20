@@ -194,6 +194,7 @@
     </Compile>
     <Compile Include="Models\EmployeePartial.cs" />
     <Compile Include="Models\ExpenseItemPartial.cs" />
+    <Compile Include="Models\ExpenseReportPartial.cs" />
     <Compile Include="Models\UserModels.cs" />
     <Compile Include="Models\Currency.cs" />
     <Compile Include="Models\Department.cs">

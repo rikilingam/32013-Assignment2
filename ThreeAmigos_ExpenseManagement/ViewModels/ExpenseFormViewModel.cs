@@ -8,7 +8,7 @@ using ThreeAmigos_ExpenseManagement.BusinessLogic;
 
 namespace ThreeAmigos_ExpenseManagement.ViewModels
 {
-    //View Model for create expense
+    //View Model for create expense view
     public class ExpenseFormViewModel
     {
         [Display(Name = "Employee Name")]
