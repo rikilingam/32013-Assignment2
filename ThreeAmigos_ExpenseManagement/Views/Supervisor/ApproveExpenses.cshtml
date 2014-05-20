@@ -2,7 +2,7 @@
 @model IEnumerable<ExpenseReport>
 
 @{
-    ViewBag.Title = "Expense Management System | Create Expense";
+    ViewBag.Title = "Expense Management System | Approve Expense";
     Layout = "~/Views/Shared/_EM_LayoutPage.cshtml";    
 }
 
@@ -19,6 +19,9 @@
    <b> Department</b> :@item.Department.DepartmentName
 
    <b> Status</b>: @item.Status
+        <input id="btnApproveExpenseReport" type="button" value="Approve" class="btn btn-primary" onclick="ShowExpenseItemModal();" />
+        <input id="btnRejectExpenseReport" type="button" value="Reject" class="btn btn-primary" onclick="ShowExpenseItemModal();" />
+                          
         @foreach (var ExpenseItem in item.ExpenseItems)
         {
            <p>
