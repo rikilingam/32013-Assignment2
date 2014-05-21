@@ -185,6 +185,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="BusinessLogic\CurrencyService.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
+    <Compile Include="Controllers\SupervisorController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ConsultantController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -669,6 +670,8 @@
     <Content Include="Views\Accounts\ProcessExpenses.cshtml" />
     <Content Include="Views\Accounts\CheckExpenseApproved.cshtml" />
     <Content Include="Views\Accounts\ViewReports.cshtml" />
+    <Content Include="Views\Supervisor\ApproveExpenses.cshtml" />
+    <Content Include="Views\Supervisor\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
