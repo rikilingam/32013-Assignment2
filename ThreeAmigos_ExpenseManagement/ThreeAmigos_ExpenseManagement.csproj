@@ -184,11 +184,17 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="BusinessLogic\CurrencyService.cs" />
+    <Compile Include="BusinessLogic\ExpenseReportService.cs" />
+    <Compile Include="BusinessLogic\IEmployeeService.cs" />
+    <Compile Include="BusinessLogic\IExpenseReportService.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\SupervisorController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ConsultantController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="BusinessLogic\EmployeeService.cs" />
+    <Compile Include="DataAccess\EmployeeDAL.cs" />
+    <Compile Include="DataAccess\ExpenseReportDAL.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

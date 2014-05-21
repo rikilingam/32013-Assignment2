@@ -6,16 +6,21 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using ThreeAmigos_ExpenseManagement.BusinessLogic;
+using ThreeAmigos_ExpenseManagement.DataAccess;
 using ThreeAmigos_ExpenseManagement.Filters;
 using ThreeAmigos_ExpenseManagement.Models;
 using ThreeAmigos_ExpenseManagement.ViewModels;
 
 namespace ThreeAmigos_ExpenseManagement.Controllers
 {
+
     [Authorize(Roles = "Consultant")]
     [InitializeSimpleMembership]
     public class ConsultantController : Controller
     {
+        IExpenseReportService reportService = new ExpenseReportService();
+        IEmployeeService employeeService = new EmployeeService();
+
         //
         // GET: /Consultant/
         public ActionResult Index()
@@ -29,7 +34,7 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
         /// <returns>returns create expense view</returns>
         public ActionResult CreateExpense()
         {
-            Employee employee = IntializeEmployee((int)Membership.GetUser().ProviderUserKey);
+            Employee employee = employeeService.GetEmployee((int)Membership.GetUser().ProviderUserKey);
             ExpenseFormViewModel expenseForm = new ExpenseFormViewModel();
             ExpenseReport expenseReport = new ExpenseReport();
 
@@ -92,24 +97,11 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
         {
             if (Session["_expenseReport"] != null)
             {
-                ExpenseReport report = (ExpenseReport)Session["_expenseReport"];
+                reportService.CreateExpenseReport((ExpenseReport)Session["_expenseReport"]);
 
-                using (EMEntitiesContext ctx = new EMEntitiesContext())
-                {
-                    ExpenseReport newReport = new ExpenseReport();
-
-                    newReport.CreatedBy = ctx.Employees.First(e => e.UserId == report.CreatedBy.UserId);
-                    newReport.CreateDate = report.CreateDate;
-                    newReport.Department = ctx.Departments.First(d => d.DepartmentId == report.Department.DepartmentId);
-                    newReport.Status = ReportStatus.Submitted.ToString();
-                    newReport.ExpenseItems = report.ExpenseItems;
-
-                    ctx.ExpenseReports.Add(newReport);
-                    ctx.SaveChanges();
-                }
             }
 
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult ViewMyExpenses()
@@ -128,25 +120,6 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
             return View();
         }
 
-        /// <summary>
-        /// Initializes the employee and department
-        /// </summary>
-        /// <param name="userId">UserId of the employee</param>
-        /// <returns>Employee object</returns>
-        private Employee IntializeEmployee(int userId)
-        {
-
-            using (EMEntitiesContext ctx = new EMEntitiesContext())
-            {
-                var query = from employee in ctx.Employees.Include("Department")
-                            where employee.UserId == userId
-                            select employee;
-
-                return (Employee)query.First();
-
-            }
-
-        }
 
     }
 }
