@@ -20,7 +20,6 @@
     @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
     {
         @Html.AntiForgeryToken()
-        @Html.ValidationSummary(true)
         <div class="login_main">
             <h4>Expense Management System</h4>
             <div class="container-fluid">
