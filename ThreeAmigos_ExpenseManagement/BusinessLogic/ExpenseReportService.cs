@@ -20,5 +20,11 @@ namespace ThreeAmigos_ExpenseManagement.BusinessLogic
         {
             reportDAL.InsertExpenseReport(report);
         }
+
+
+        public List<ExpenseReport> GetReportsBySupervisor(string status)
+        {
+            return reportDAL.GetReportsBySupervisor(status);
+        }
     }
 }
