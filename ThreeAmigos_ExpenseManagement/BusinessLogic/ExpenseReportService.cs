@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using ThreeAmigos_ExpenseManagement.DataAccess;
 using ThreeAmigos_ExpenseManagement.Models;
+using ThreeAmigos_ExpenseManagement.ViewModels;
 
 namespace ThreeAmigos_ExpenseManagement.BusinessLogic
 {
@@ -26,5 +27,12 @@ namespace ThreeAmigos_ExpenseManagement.BusinessLogic
         {
             return reportDAL.GetReportsBySupervisor(status);
         }
+
+        public List<ExpenseReport> GetReportsByConsultant(string status, Employee consultant)
+        {
+            return reportDAL.GetExpenseReportByConsultant(status,consultant);
+        }
+
+
     }
 }

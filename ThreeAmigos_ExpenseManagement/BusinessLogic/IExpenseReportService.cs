@@ -9,7 +9,11 @@ namespace ThreeAmigos_ExpenseManagement.BusinessLogic
     public interface IExpenseReportService
     {
         void CreateExpenseReport(ExpenseReport report);
+        
         ExpenseReport GetExpenseReport(int expenseId);
+        
         List<ExpenseReport> GetReportsBySupervisor(string status);
+
+        List<ExpenseReport> GetReportsByConsultant(string status, Employee consultant);
     }
 }

@@ -34,9 +34,22 @@ namespace ThreeAmigos_ExpenseManagement.DataAccess
         }
 
 
+        public List<ExpenseReport> GetExpenseReportByConsultant(string status, Employee consultant)
+        {
+
+            using (EMEntitiesContext ctx = new EMEntitiesContext())
+            {
+                var result = from report in ctx.ExpenseReports.Include("CreatedBy").Include("ExpenseItems").Include("Department")
+                             where report.CreatedBy.UserId == consultant.UserId && report.Status==status
+                             select report;
+
+                return (List<ExpenseReport>)result.ToList();
+            }
+        }
+
         public List<ExpenseReport> GetReportsBySupervisor(string status)
         {
-     
+
             IEmployeeService employeeService = new EmployeeService();
             DateTime startDateTime = DateTime.Today; //Today at 00:00:00 NEED TO CORRECT
             DateTime endDateTime = DateTime.Today.AddDays(1).AddTicks(-1);
@@ -44,10 +57,10 @@ namespace ThreeAmigos_ExpenseManagement.DataAccess
             using (EMEntitiesContext ctx = new EMEntitiesContext())
             {
                 var result = (from i in ctx.ExpenseReports.Include("CreatedBy").Include("ExpenseItems").Include("Department")
-                              where i.Department.DepartmentId == employee.Department.DepartmentId && i.CreateDate >= startDateTime && i.CreateDate <= endDateTime && i.Status==status
+                              where i.Department.DepartmentId == employee.Department.DepartmentId && i.CreateDate >= startDateTime && i.CreateDate <= endDateTime && i.Status == status
                               select i);
-                return (List<ExpenseReport>)result.ToList();              
-            }         
+                return (List<ExpenseReport>)result.ToList();
+            }
         }
 
 

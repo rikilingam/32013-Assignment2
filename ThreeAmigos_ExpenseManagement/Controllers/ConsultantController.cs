@@ -120,7 +120,9 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
 
         public ActionResult ViewMyExpenses()
         {
-            return View();
+            List<ExpenseReport> reports = new List<ExpenseReport>();
+
+            return View(reports);
         }
 
         /// <summary>
@@ -131,7 +133,7 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
         [HttpPost]
         public ActionResult ViewMyExpenses(string status)
         {
-            return View();
+            return View(reportService.GetReportsByConsultant(status, employee));
         }
 
 

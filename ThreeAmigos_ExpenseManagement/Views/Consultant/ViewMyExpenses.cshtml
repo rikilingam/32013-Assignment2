@@ -1,4 +1,4 @@
-﻿@model List<ThreeAmigos_ExpenseManagement.ViewModels.ExpenseFormViewModel>
+﻿@model List<ThreeAmigos_ExpenseManagement.Models.ExpenseReport>
 @{
     ViewBag.Title = "Expense Management System | View My Expenses";
     Layout = "~/Views/Shared/_EM_LayoutPage.cshtml";
@@ -7,33 +7,88 @@
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
-<div class="panel panel-primary">
-    <div class="panel-heading">
-        <h3 class="panel-title">View My Expenses</h3>
-    </div>
-    <div class="panel-body">
-        <div class="container-fluid">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">View My Expenses</h3>
+        </div>
+        <div class="panel-body">
+            <div class="container-fluid">
 
-            <div class="row">
-                <div class="col-md-2">
+                <div class="row">
+                    <div class="col-md-2">
 
-                    <strong>Search Filter:</strong>
-                    <select class="form-control">
-                        <option value="Submitted">All Submitted</option>
-                        <option value="ApprovedByAccounts">All Approved</option>
-                        <option value="Pending">Pending Approval</option>
-                    </select>
-                    <input type="submit" value="Search" class="btn btn-primary" />
-                    
+                        <strong>Search Filter:</strong>
+                        <select class="form-control" name="status">
+                            <option value="Submitted">All Submitted</option>
+                            <option value="ApprovedByAccounts">All Approved</option>
+                            <option value="Pending">Pending Approval</option>
+                        </select>
+                        <input type="submit" value="Search" class="btn btn-primary" />
+
+                    </div>
+
                 </div>
+                <div class="row">
+                    <hr />
+                </div>
+                <div class="row" id="divDisplayExpenseReports" runat="server">
 
-            </div>
-            <div class="row">
-                <hr />
-            </div>
-            <div class="row" id="divDisplayExpenseReports" runat="server">
+                    @if (Model.Count > 0)
+                    {
+                        <table class="table">
+                            @foreach (var report in Model)
+                            {
+                                decimal? totalAmount=0;
+                                <tr class="info">
+                                    <th>Report Date: @report.CreateDate</th>
+                                    <th>Consultant: @report.CreatedBy.Fullname</th>
+                                    <th>Department: @report.Department.DepartmentName</th>
+                                    <th>Status:@report.Status</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                    <th>Expense Date</th>
+                                    <th>Location</th>
+                                    <th>Description</th>
+                                    <th>Receipt</th>
+                                    <th>Amount (AUD)</th>
+                                </tr>
+                                foreach (var item in report.ExpenseItems)
+                                {
+                                <tr>
+                                    <td>@item.ExpenseDate</td>
+                                    <td>@item.Location</td>
+                                    <td>@item.Description</td>
+                                    <td>@item.ReceiptFileName</td>
+                                    <td>@item.AudAmount</td>
+                                </tr>
+                                totalAmount=totalAmount+item.AudAmount;
+                                }
+                                <tr class="success">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><b>Expense Total:</b></td>
+                                    <td><b>@totalAmount</b></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                
+                            }
+                        </table>
+                    }
+
+                </div>
             </div>
         </div>
     </div>
-</div>
 }
