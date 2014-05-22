@@ -25,6 +25,8 @@ namespace ThreeAmigos_ExpenseManagement.ViewModels
 
         public ExpenseItem ExpenseItem { get; set; }
 
+        public List<ExpenseReport> ExpenseReports { get; set; }
+
         public ExpenseFormViewModel()
         {
             ExpenseReport = new ExpenseReport();
