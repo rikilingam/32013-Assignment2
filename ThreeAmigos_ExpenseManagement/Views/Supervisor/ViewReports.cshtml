@@ -1,0 +1,93 @@
+﻿@model ThreeAmigos_ExpenseManagement.ViewModels.ExpenseFormViewModel
+@{
+    ViewBag.Title = "Expense Management System | View My Expenses";
+    Layout = "~/Views/Shared/_EM_LayoutPage.cshtml";
+}
+
+@using (Html.BeginForm("ViewReports", "Supervisor", FormMethod.Post))
+{
+     @Html.AntiForgeryToken()
+     @Html.ValidationSummary(true)
+    
+    
+<div class="panel panel-primary">
+    
+    <div class="panel-heading">
+        <h3 class="panel-title">View Reports</h3>
+    </div>
+
+    <div class="panel-body">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-2">
+                    <strong>Search Filter:</strong>
+                    <select class="form-control" name="Status">
+                        <option value="ApprovedBySupervisor">All Approved</option>
+                        <option value="RejectedBySupervisor">All Rejected</option>
+                        <option value="RejectedByAccounts">Rejected By Accounts</option>
+                        <option value="Submitted">Submitted</option>
+                    </select>
+
+
+                   <input type="submit" value="Search" class="btn btn-primary"  />
+               </div>
+            </div>  
+                           
+            <div class="row">
+                <hr />
+            </div>
+            
+            <div class="row" id="divDisplayExpenseReports" runat="server">
+                
+                @if (Model == null)
+                {
+                    <b>No reports</b>
+                }
+                else
+                {
+                    
+                    foreach (var ExpenseReport in Model.ExpenseReports)
+                    {
+                        <table class="table">
+                        <tr class="info">
+                        <th> <b> Report Date</b>: @ExpenseReport.CreateDate</th>
+                        <th><b>Supervisor Processed Date</b>@ExpenseReport.ProcessedDate</th>
+                       <th> <b>Supervisor</b>: @ExpenseReport.ProcessedBy.Fullname</th>
+                       <th> <b> Consultant</b> :@ExpenseReport.CreatedBy.Fullname </th>
+                        <th><b> Department</b> :@ExpenseReport.Department.DepartmentName</th>
+                       <th> <b> Status</b>: @ExpenseReport.Status</th>
+                        </tr>
+                       <tr>
+                           <th></th>
+                           <th>Expense Date</th>
+                           <th>Location</th>
+                           <th>Description</th>
+                           <th>Amount (AUD)</th>                                        
+                           </tr>
+                        @foreach (var ExpenseItem in ExpenseReport.ExpenseItems)
+                         {
+                           
+                           <tr>
+                           <td></td>
+                           <td> @ExpenseItem.ExpenseDate</td>
+                           <td> @ExpenseItem.Location</td>
+                           <td> @ExpenseItem.Description</td>
+                           <td> @ExpenseItem.AudAmount</td>
+                           </tr>
+                         }
+                            </table>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+    
+     
+}
+
