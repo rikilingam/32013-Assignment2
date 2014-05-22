@@ -6,7 +6,7 @@ using ThreeAmigos_ExpenseManagement.Models;
 
 namespace ThreeAmigos_ExpenseManagement.BusinessLogic
 {
-    interface IEmployeeService
+    public interface IEmployeeService
     {
         Employee GetEmployee(int userId);
     }

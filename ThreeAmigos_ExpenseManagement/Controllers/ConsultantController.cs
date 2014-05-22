@@ -18,8 +18,23 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
     [InitializeSimpleMembership]
     public class ConsultantController : Controller
     {
-        IExpenseReportService reportService = new ExpenseReportService();
-        IEmployeeService employeeService = new EmployeeService();
+        private IExpenseReportService reportService;
+        private IEmployeeService employeeService;
+        private Employee employee;
+
+        public ConsultantController()
+        {
+            reportService = new ExpenseReportService();
+            employeeService = new EmployeeService();
+            employee = employeeService.GetEmployee((int)Membership.GetUser().ProviderUserKey);
+        }
+
+        public ConsultantController(IEmployeeService empService, IExpenseReportService rptService, int userId)
+        {           
+            employeeService = empService;
+            reportService = rptService;
+            employee = empService.GetEmployee(userId);
+        }
 
         //
         // GET: /Consultant/
@@ -34,7 +49,6 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
         /// <returns>returns create expense view</returns>
         public ActionResult CreateExpense()
         {
-            Employee employee = employeeService.GetEmployee((int)Membership.GetUser().ProviderUserKey);
             ExpenseFormViewModel expenseForm = new ExpenseFormViewModel();
             ExpenseReport expenseReport = new ExpenseReport();
 
