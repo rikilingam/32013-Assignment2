@@ -22,9 +22,16 @@ namespace ThreeAmigos_ExpenseManagement.BusinessLogic
         }
 
 
-        public List<ExpenseReport> GetReportsBySupervisor(string status)
+        public List<ExpenseReport> GetReportsBySupervisor(string status,int month)
         {
-            return reportDAL.GetReportsBySupervisor(status);
+            return reportDAL.GetReportsBySupervisor(status,month);
         }
+
+        public void ActionOnReport(int? itemid,string action)
+        {
+            reportDAL.ActionOnReport(itemid,action);
+        }
+
+        
     }
 }
