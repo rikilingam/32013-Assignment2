@@ -34,22 +34,48 @@ namespace ThreeAmigos_ExpenseManagement.DataAccess
         }
 
 
-        public List<ExpenseReport> GetReportsBySupervisor(string status)
+        public List<ExpenseReport> GetReportsBySupervisor(string status,int month)
         {
-     
             IEmployeeService employeeService = new EmployeeService();
-            DateTime startDateTime = DateTime.Today; //Today at 00:00:00 NEED TO CORRECT
-            DateTime endDateTime = DateTime.Today.AddDays(1).AddTicks(-1);
             Employee employee = employeeService.GetEmployee((int)Membership.GetUser().ProviderUserKey);
             using (EMEntitiesContext ctx = new EMEntitiesContext())
             {
                 var result = (from i in ctx.ExpenseReports.Include("CreatedBy").Include("ExpenseItems").Include("Department")
-                              where i.Department.DepartmentId == employee.Department.DepartmentId && i.CreateDate >= startDateTime && i.CreateDate <= endDateTime && i.Status==status
+                              where i.Department.DepartmentId == employee.Department.DepartmentId && i.CreateDate.Value.Month == month   && i.Status == status
                               select i);
-                return (List<ExpenseReport>)result.ToList();              
-            }         
+
+                return (List<ExpenseReport>)result.ToList();
+            }
         }
 
+        public void ActionOnReport(int? itemid, string action)
+        {
+            IEmployeeService employeeService = new EmployeeService();
+            Employee employee = employeeService.GetEmployee((int)Membership.GetUser().ProviderUserKey);
+            using (EMEntitiesContext ctx = new EMEntitiesContext())
+            {
 
+                var report = (from ExpReport in ctx.ExpenseReports
+                              where ExpReport.ExpenseId == itemid
+                              select ExpReport).FirstOrDefault();
+
+                if (action == "Approve")
+                {
+                    report.ProcessedDate = DateTime.Now;
+                    report.Status = "ApprovedBySupervisor";
+                    report.ProcessedById = employee.UserId;
+                    ctx.SaveChanges();
+                }
+                else
+                {
+                    report.ProcessedDate = DateTime.Now;
+                    report.Status = "RejectedBySupervisor";
+                    report.ProcessedById = employee.UserId;
+                    ctx.SaveChanges();
+                }
+            }
+        }
+
+        
     }
 }
