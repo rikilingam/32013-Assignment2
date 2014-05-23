@@ -16,16 +16,20 @@ namespace ThreeAmigos_ExpenseManagement.ViewModels
 
         [Display(Name = "Department")]
         public string DepartmentName { get; set; }
-
         
         [Display(Name = "Create Date")]
         public DateTime CreateDate { get; set; }
+
+        [Display(Name = "Status")]
+        public string Status { get; set; }
 
         public ExpenseReport ExpenseReport { get; set; }              
 
         public ExpenseItem ExpenseItem { get; set; }
 
         public List<ExpenseReport> ExpenseReports { get; set; }
+
+        public HttpPostedFileBase ReceiptFile { get; set; }
 
         public ExpenseFormViewModel()
         {

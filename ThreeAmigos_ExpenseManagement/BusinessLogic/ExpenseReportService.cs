@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using ThreeAmigos_ExpenseManagement.DataAccess;
 using ThreeAmigos_ExpenseManagement.Models;
+using ThreeAmigos_ExpenseManagement.ViewModels;
 
 namespace ThreeAmigos_ExpenseManagement.BusinessLogic
 {
@@ -31,7 +32,5 @@ namespace ThreeAmigos_ExpenseManagement.BusinessLogic
         {
             reportDAL.ActionOnReport(itemid,action);
         }
-
-        
     }
 }
