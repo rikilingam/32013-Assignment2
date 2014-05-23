@@ -1,0 +1,32 @@
+﻿@model ThreeAmigos_ExpenseManagement.ViewModels.BudgetViewModel
+@{
+    ViewBag.Title = "Expense Management System | Check Balance";
+    Layout = "~/Views/Shared/_EM_LayoutPage.cshtml";
+}
+
+@using (Html.BeginForm("CheckBalance", "CheckBalance", "Supervisor", FormMethod.Post, null))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">Check Balances</h3>
+        </div>
+        <div class="panel-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <p>Total money spent so far is : AU$  @Html.Encode(Model.totalAmountRemaining)</p>
+                    <p>Total money remaining is    : AU$ @Html.Encode(Model.totalAmountSpent)</p>
+                </div>
+            </div>
+        </div>
+    </div>   
+}
+    
+    
+    
+    
+    
+    
+     
