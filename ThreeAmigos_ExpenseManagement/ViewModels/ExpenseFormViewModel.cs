@@ -29,6 +29,8 @@ namespace ThreeAmigos_ExpenseManagement.ViewModels
 
         public List<ExpenseReport> ExpenseReports { get; set; }
 
+        public HttpPostedFileBase ReceiptFile { get; set; }
+
         public ExpenseFormViewModel()
         {
             ExpenseReport = new ExpenseReport();

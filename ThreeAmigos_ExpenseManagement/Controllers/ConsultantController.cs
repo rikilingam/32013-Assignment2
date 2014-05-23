@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.EntityClient;
 using System.Linq;
 using System.Web;
@@ -74,8 +75,11 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
             if (ModelState.IsValid)
             {
                 ExpenseReport expenseReport = new ExpenseReport();
+                FileUploader fileUploader = new FileUploader();
 
                 expenseForm.ExpenseItem.AudAmount = CurrencyService.CalcAud(expenseForm.ExpenseItem.Amount, expenseForm.ExpenseItem.Currency);
+
+                expenseForm.ExpenseItem.ReceiptFileName = fileUploader.Upload(expenseForm.ReceiptFile);
 
                 if (Session["_expenseReport"] != null)
                 {
@@ -101,7 +105,6 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
             }
 
         }
-
 
         /// <summary>
         /// Inserts the expense report and items to the database

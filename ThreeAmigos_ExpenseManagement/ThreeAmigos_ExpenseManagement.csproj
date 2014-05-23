@@ -195,6 +195,7 @@
     <Compile Include="BusinessLogic\EmployeeService.cs" />
     <Compile Include="DataAccess\EmployeeDAL.cs" />
     <Compile Include="DataAccess\ExpenseReportDAL.cs" />
+    <Compile Include="DataAccess\FileUploader.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -684,6 +685,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Receipts\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
