@@ -38,9 +38,9 @@
                         <table class="table">
                             @foreach (var report in Model)
                             {
-                                decimal? totalAmount=0;
+                                decimal? totalAmount = 0;
                                 <tr class="info">
-                                    <th>Report Date: @report.CreateDate</th>
+                                    <th>Report Date: @String.Format("{0:dd/MM/yyyy}", report.CreateDate)</th>
                                     <th>Consultant: @report.CreatedBy.Fullname</th>
                                     <th>Department: @report.Department.DepartmentName</th>
                                     <th>Status:@report.Status</th>
@@ -58,13 +58,19 @@
                                 foreach (var item in report.ExpenseItems)
                                 {
                                 <tr>
-                                    <td>@item.ExpenseDate</td>
+                                    <td></td>
+                                    <td>@String.Format("{0:dd/MM/yyyy}", item.ExpenseDate)</td>
                                     <td>@item.Location</td>
                                     <td>@item.Description</td>
-                                    <td>@item.ReceiptFileName</td>
-                                    <td>@item.AudAmount</td>
+                                    <td>@if (item.ReceiptFileName != null)
+                                        {
+                                        <a href="" onclick="OpenReceipt(@item.ReceiptFileName);">
+                                            <img src="~/Images/img_pdf_icon.png" /></a>
+                                        }
+                                    </td>
+                                    <td>@String.Format("{0:C}", item.AudAmount)</td>
                                 </tr>
-                                totalAmount=totalAmount+item.AudAmount;
+                                        totalAmount = totalAmount + item.AudAmount;
                                 }
                                 <tr class="success">
                                     <td></td>
@@ -72,7 +78,7 @@
                                     <td></td>
                                     <td></td>
                                     <td><b>Expense Total:</b></td>
-                                    <td><b>@totalAmount</b></td>
+                                    <td><b>@String.Format("{0:C}", totalAmount)</b></td>
                                 </tr>
                                 <tr>
                                     <td></td>
