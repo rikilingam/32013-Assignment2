@@ -1,41 +1,73 @@
 ﻿@model ThreeAmigos_ExpenseManagement.ViewModels.ExpenseFormViewModel
-@*@model ThreeAmigos_ExpenseManagement.ViewModels.GetReportsBySupervisorViewModel*@
-
 @{
     ViewBag.Title = "Expense Management System | Approve Expense";
     Layout = "~/Views/Shared/_EM_LayoutPage.cshtml";    
 }
 
-<h2>ApproveExpenses</h2>
+@using (Html.BeginForm("ApproveExpenses", "Supervisor", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+
+    <div class="panel panel-primary">
+
+        <div class="panel-heading">
+            <h3 class="panel-title">View Reports</h3>
+        </div>
+
+        @foreach (var ExpenseReport in Model.ExpenseReports)
+        {	
+  
+            <table class="table">
+                <tr class="info">
+                    <th>Report Date: @ExpenseReport.CreateDate</th>
+                    <th>Consultant :@ExpenseReport.CreatedBy.Fullname</th>
+                    <th>Department:@ExpenseReport.Department.DepartmentName</th>
+                    <th>Status : @ExpenseReport.Status</th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th>Expense Date</th>
+                    <th>Location</th>
+                    <th>Description</th>
+                    <th>Amount (AUD)</th>
+                </tr>
+
+                @foreach (var ExpenseItem in ExpenseReport.ExpenseItems)
+                {
+                    <tr>
+                        <td></td>
+
+                        <td>@ExpenseItem.ExpenseDate</td>
+                        <td>@ExpenseItem.Location</td>
+                        <td>@ExpenseItem.Description</td>
+                        <td>@ExpenseItem.Amount </td>
+                    </tr> 
+                }
+            </table>
  
- @foreach (var ExpenseReport in Model.ExpenseReports)
-     
- {
-   <p>
-   <b> Report Date</b>: @ExpenseReport.CreateDate
+            <div>
+                @Html.ActionLink(
+    linkText: "Approve",
+    actionName: "ApproveExpenses",
+    controllerName: "Supervisor",
+    routeValues: new { itemid = ExpenseReport.ExpenseId, act = "Approve" },
+    htmlAttributes: new { @class = "btn btn-success" }
+    )
+        &nbsp;
+        &nbsp;
+    @Html.ActionLink(
+    linkText: "Reject",
+    actionName: "ApproveExpenses",
+    controllerName: "Supervisor",
+    routeValues: new { itemid = ExpenseReport.ExpenseId, act = "Reject" },
+    htmlAttributes: new { @class = "btn btn-success" }
+    )
+            </div>
+    
    
-   <b> Consultant</b> :@ExpenseReport.CreatedBy.Fullname
-       
-
-   <b> Department</b> :@ExpenseReport.Department.DepartmentName
-
-   <b> Status</b>: @ExpenseReport.Status
-        <input id="btnApproveExpenseReport" type="button" value="Approve" class="btn btn-primary" onclick="ShowExpenseItemModal();" />
-        <input id="btnRejectExpenseReport" type="button" value="Reject" class="btn btn-primary" onclick="ShowExpenseItemModal();" />
-                          
-        @foreach (var ExpenseItem in ExpenseReport.ExpenseItems)
-        {
-           <p>
-              <b> Expense Date</b>:@ExpenseItem.ExpenseDate
-              <b> Location </b>: @ExpenseItem.Location
-              <b> Description</b>:@ExpenseItem.Description
-             <b>  Amount</b> :@ExpenseItem.Amount         
-           </p>
-        } 
-        
-        <br>  
-   </p>
-   
- }
-
+        }
+    </div>
+}
 
