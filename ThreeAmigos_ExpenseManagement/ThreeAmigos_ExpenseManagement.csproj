@@ -183,8 +183,10 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="BusinessLogic\BudgetTracker.cs" />
     <Compile Include="BusinessLogic\CurrencyService.cs" />
     <Compile Include="BusinessLogic\ExpenseReportService.cs" />
+    <Compile Include="BusinessLogic\IBudgetTracker.cs" />
     <Compile Include="BusinessLogic\IEmployeeService.cs" />
     <Compile Include="BusinessLogic\IExpenseReportService.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
@@ -193,6 +195,7 @@
     <Compile Include="Controllers\ConsultantController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="BusinessLogic\EmployeeService.cs" />
+    <Compile Include="DataAccess\BudgetTrackerDAL.cs" />
     <Compile Include="DataAccess\EmployeeDAL.cs" />
     <Compile Include="DataAccess\ExpenseReportDAL.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
@@ -232,6 +235,7 @@
       <DependentUpon>EM_EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\BudgetViewModel.cs" />
     <Compile Include="ViewModels\ExpenseFormViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -678,6 +682,8 @@
     <Content Include="Views\Accounts\ViewReports.cshtml" />
     <Content Include="Views\Supervisor\ApproveExpenses.cshtml" />
     <Content Include="Views\Supervisor\Index.cshtml" />
+    <Content Include="Views\Supervisor\ViewReports.cshtml" />
+    <Content Include="Views\Supervisor\CheckBalance.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
