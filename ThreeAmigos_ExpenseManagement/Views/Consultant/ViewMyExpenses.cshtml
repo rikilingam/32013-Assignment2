@@ -62,7 +62,7 @@
                                     <td>@String.Format("{0:dd/MM/yyyy}", item.ExpenseDate)</td>
                                     <td>@item.Location</td>
                                     <td>@item.Description</td>
-                                    <td>@if (item.ReceiptFileName != null)
+                                    <td>@if (item.ReceiptFileName != null && item.ReceiptFileName != "")
                                         {
                                         <a href="/Receipts/@item.ReceiptFileName" target="_blank">
                                             <img src="~/Images/img_pdf_icon.png" /></a>
