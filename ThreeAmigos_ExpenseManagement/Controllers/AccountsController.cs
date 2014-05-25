@@ -67,6 +67,11 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
                     {
                         reportService.ProcessReport(itemid, act);
                     }
+                    else
+                    {
+                        return PartialView("_ProcessExpensesPartial");
+                        //@Html.Partial("_ExpenseItemFormPartial", Model);
+                    }
                     expenseForm.ExpenseReports = reportService.GetReportsBySupervisor("ApprovedBySupervisor", month);
                     return View(expenseForm);
                 }
