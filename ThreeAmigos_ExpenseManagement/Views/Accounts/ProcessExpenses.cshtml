@@ -21,10 +21,10 @@
   
             <table class="table">
                 <tr class="info">
-                    <th>Report Date: @ExpenseReport.CreateDate</th>
-                    <th>Consultant :@ExpenseReport.CreatedBy.Fullname</th>
-                    <th>Department:@ExpenseReport.Department.DepartmentName</th>
-                    <th>Status : @ExpenseReport.Status</th>
+                    <th>Report Date: @String.Format("{0:dd/MM/yyyy}", @ExpenseReport.CreateDate)</th>
+                    <th>Consultant: @ExpenseReport.CreatedBy.Fullname</th>
+                    <th>Department: @ExpenseReport.Department.DepartmentName</th>
+                    <th>Status: @ExpenseReport.Status</th>
                     <th></th>
                     <th></th>
                     <th></th>
@@ -42,7 +42,7 @@
                 {
                     <tr>
                         <td></td>
-                        <td>@ExpenseItem.ExpenseDate</td>
+                        <td>@String.Format("{0:dd/MM/yyyy}", @ExpenseItem.ExpenseDate)</td>
                         <td>@ExpenseItem.Location</td>
                         <td>@ExpenseItem.Description</td>
                         <td>@if (@ExpenseItem.ReceiptFileName != null && @ExpenseItem.ReceiptFileName != "")
@@ -51,7 +51,7 @@
                                    <img src="~/Images/img_pdf_icon.png" /></a>
                                }
                          </td>                        
-                        <td>@ExpenseItem.AudAmount </td>
+                        <td>@String.Format("{0:C}",@ExpenseItem.AudAmount) </td>
                     </tr> 
                 }
             </table>
