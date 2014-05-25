@@ -32,5 +32,10 @@ namespace ThreeAmigos_ExpenseManagement.BusinessLogic
         {
             reportDAL.ActionOnReport(itemid,action);
         }
+
+        public void ProcessReport(int? itemid, string action)
+        {
+            reportDAL.ProcessReport(itemid, action);
+        }
     }
 }
