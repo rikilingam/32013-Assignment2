@@ -18,11 +18,11 @@
 
         @foreach (var ExpenseReport in Model.ExpenseReports)
         {	
-  
             <table class="table">
                 <tr class="info">
                     <th>Report Date: @String.Format("{0:dd/MM/yyyy}", @ExpenseReport.CreateDate)</th>
                     <th>Consultant: @ExpenseReport.CreatedBy.Fullname</th>
+                    <th>Supervisor: @ExpenseReport.ApprovedBy.Fullname</th>
                     <th>Department: @ExpenseReport.Department.DepartmentName</th>
                     <th>Status: @ExpenseReport.Status</th>
                     <th></th>
@@ -34,8 +34,10 @@
                     <th>Expense Date</th>
                     <th>Location</th>
                     <th>Description</th>
-                    <th>File Name</th>
+                    <th>Receipt File</th>
                     <th>Amount (AUD)</th>
+                    <th></th>
+                    <th></th>
                 </tr>
 
                 @foreach (var ExpenseItem in ExpenseReport.ExpenseItems)
@@ -52,6 +54,8 @@
                                }
                          </td>                        
                         <td>@String.Format("{0:C}",@ExpenseItem.AudAmount) </td>
+                        <td></td>
+                        <td></td>
                     </tr> 
                 }
             </table>
@@ -73,9 +77,7 @@
                     routeValues: new { itemid = ExpenseReport.ExpenseId, act = "Reject" },
                     htmlAttributes: new { @class = "btn btn-success" }
                 )
-            </div>
-    
-   
+            </div>  
         }
     </div>
 }
