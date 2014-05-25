@@ -9,7 +9,6 @@
      @Html.AntiForgeryToken()
      @Html.ValidationSummary(true)
     
-    
 <div class="panel panel-primary">
     
     <div class="panel-heading">
@@ -28,7 +27,6 @@
                         <option value="RejectedByAccounts">Rejected By Accounts</option>
                     </select>
 
-
                    <input type="submit" value="Search" class="btn btn-primary"  />
                </div>
             </div>  
@@ -45,17 +43,16 @@
                 }
                 else
                 {
-                    
                     foreach (var ExpenseReport in Model.ExpenseReports)
                     {
                         <table class="table">
                         <tr class="info">
-                            <th> <b> Report Date</b>: @ExpenseReport.CreateDate</th>
-                            <th><b>Supervisor Processed Date</b>@ExpenseReport.ProcessedDate</th>
-                            @*<th> <b>Supervisor</b>: @ExpenseReport.ProcessedBy.Fullname</th>*@
-                            <th> <b> Consultant</b> :@ExpenseReport.CreatedBy.Fullname </th>
-                            <th><b> Department</b> :@ExpenseReport.Department.DepartmentName</th>
-                            <th> <b> Status</b>: @ExpenseReport.Status</th>
+                            <th><b>Report Date:</b> @String.Format("{0:dd/MM/yyyy}",@ExpenseReport.CreateDate)</th>
+                            <th><b>Consultant:</b> @ExpenseReport.CreatedBy.Fullname </th>
+                            <th><b>Approval Date:</b> @String.Format("{0:dd/MM/yyyy}",@ExpenseReport.ProcessedDate)</th>
+                            <th><b>Supervisor</b>: @ExpenseReport.ProcessedBy.Fullname</th>
+                            <th><b>Department:</b> @ExpenseReport.Department.DepartmentName</th>
+                            <th><b>Status:</b> @ExpenseReport.Status</th>
                             <th></th>
                        </tr>
                        <tr>
@@ -64,23 +61,24 @@
                            <th>Location</th>
                            <th>Description</th>
                            <th>Receipt File</th>
-                           <th>Amount (AUD)</th>                                        
+                           <th>Amount (AUD)</th>    
+                           <th></th>
                         </tr>
                         @foreach (var ExpenseItem in ExpenseReport.ExpenseItems)
                          {
-                           
                            <tr>
                                 <td></td>
-                                <td> @ExpenseItem.ExpenseDate</td>
-                                <td> @ExpenseItem.Location</td>
-                                <td> @ExpenseItem.Description</td>
+                                <td>@String.Format("{0:dd/MM/yyyy}", @ExpenseItem.ExpenseDate)</td>
+                                <td>@ExpenseItem.Location</td>
+                                <td>@ExpenseItem.Description</td>
                                 <td>@if (@ExpenseItem.ReceiptFileName != null && @ExpenseItem.ReceiptFileName != "")
                                     {
                                         <a href="/Receipts/@ExpenseItem.ReceiptFileName" target="_blank">
                                         <img src="~/Images/img_pdf_icon.png" /></a>
                                     }
                                 </td>  
-                                <td> @ExpenseItem.AudAmount</td>
+                                <td>@String.Format("{0:C}", @ExpenseItem.AudAmount)</td>
+                                <td></td>
                            </tr>
                          }
                    </table>
