@@ -30,6 +30,31 @@ namespace ThreeAmigos_ExpenseManagement.DataAccess
             
       }
 
+
+        public decimal? TotalExpenseProcessByCompany(int month, int year)
+        {
+            using (EMEntitiesContext ctx = new EMEntitiesContext())
+            {
+                decimal? total = 0;
+
+                var reports = from expenseReports in ctx.ExpenseReports
+                              where expenseReports.ProcessedDate.Value.Month == month && expenseReports.ProcessedDate.Value.Year == year
+                                    && expenseReports.Status == "ApprovedByAccounts"
+                              select expenseReports;
+
+                foreach (var expenseItems in reports)
+                {
+                    foreach (var totalamount in expenseItems.ExpenseItems)
+                    {
+                        total = total + totalamount.AudAmount;
+                    }
+                }
+                return total;
+            }
+        }
+
+
+
         public decimal? CheckReportTotal(int? expenseId)
         {
             decimal? reportTotal = 0;
