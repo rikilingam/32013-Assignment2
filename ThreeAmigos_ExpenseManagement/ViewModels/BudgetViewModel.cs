@@ -9,5 +9,7 @@ namespace ThreeAmigos_ExpenseManagement.ViewModels
     {
         public decimal? totalAmountSpent { get; set; }
         public decimal? totalAmountRemaining { get; set; }
+        public decimal? companyAmountSpent { get; set; }
+        public decimal? companyAmountRemaining { get; set; }
     }
 }
