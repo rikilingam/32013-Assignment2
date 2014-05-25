@@ -10,7 +10,8 @@ namespace ThreeAmigos_ExpenseManagement.BusinessLogic
     public class BudgetTracker:IBudgetTracker
     {
         private decimal? budgetAmount;
-        private decimal? totalExpenseAmount;  
+        private decimal? totalExpenseAmount;
+        private decimal? totalExpenseProcessedCompany;
         BudgetTrackerDAL budgetTracker;
 
         public BudgetTracker()
@@ -18,6 +19,7 @@ namespace ThreeAmigos_ExpenseManagement.BusinessLogic
             budgetTracker = new BudgetTrackerDAL();
             budgetAmount = 0;
             totalExpenseAmount = 0;
+            totalExpenseProcessedCompany = 0;
         }
 
         public decimal? TotalExpenseAmount
@@ -45,6 +47,26 @@ namespace ThreeAmigos_ExpenseManagement.BusinessLogic
              TotalExpenseAmount = budgetTracker.TotalExpenseAmountByDept(deptId);
              return TotalExpenseAmount;
         }
+        
+        public decimal? CompanyBudget(int month, int year)
+        {
+            budgetAmount = 30000;
+            totalExpenseProcessedCompany = budgetTracker.TotalExpenseProcessByCompany(month, year);
+            return totalExpenseProcessedCompany;
+        }
+
+        public bool ExceedCompanyBudget(decimal? amount)
+        {
+            if ((budgetAmount - (totalExpenseProcessedCompany + amount)) < 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
 
         public decimal? RemainingAmount
         {
