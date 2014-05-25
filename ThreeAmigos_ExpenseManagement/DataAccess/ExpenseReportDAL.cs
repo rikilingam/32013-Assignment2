@@ -75,5 +75,34 @@ namespace ThreeAmigos_ExpenseManagement.DataAccess
                 }
             }
         }
+
+        public void ProcessReport(int? itemid, string action)
+        {
+            IEmployeeService employeeService = new EmployeeService();
+            Employee employee = employeeService.GetEmployee((int)Membership.GetUser().ProviderUserKey);
+            using (EMEntitiesContext ctx = new EMEntitiesContext())
+            {
+
+                var report = (from ExpReport in ctx.ExpenseReports
+                              where ExpReport.ExpenseId == itemid
+                              select ExpReport).FirstOrDefault();
+
+                if (action == "Approve")
+                {
+                    report.ProcessedDate = DateTime.Now;
+                    report.Status = "ApprovedByAccounts";
+                    report.ProcessedById = employee.UserId;
+                    ctx.SaveChanges();
+                }
+                else
+                {
+                    report.ProcessedDate = DateTime.Now;
+                    report.Status = "RejectedByAccounts";
+                    report.ProcessedById = employee.UserId;
+                    ctx.SaveChanges();
+                }
+            }
+        }
+
     }
 }
