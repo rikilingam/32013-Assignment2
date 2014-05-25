@@ -72,6 +72,12 @@
                            <td> @ExpenseItem.ExpenseDate</td>
                            <td> @ExpenseItem.Location</td>
                            <td> @ExpenseItem.Description</td>
+                           <td>@if (@ExpenseItem.ReceiptFileName != null && @ExpenseItem.ReceiptFileName != "")
+                               {
+                                   <a href="/Receipts/@ExpenseItem.ReceiptFileName" target="_blank">
+                                   <img src="~/Images/img_pdf_icon.png" /></a>
+                               }
+                           </td>  
                            <td> @ExpenseItem.AudAmount</td>
                            </tr>
                          }
