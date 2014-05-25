@@ -50,38 +50,40 @@
                     {
                         <table class="table">
                         <tr class="info">
-                        <th> <b> Report Date</b>: @ExpenseReport.CreateDate</th>
-                        <th><b>Supervisor Processed Date</b>@ExpenseReport.ProcessedDate</th>
-                       @*<th> <b>Supervisor</b>: @ExpenseReport.ProcessedBy.Fullname</th>*@
-                       <th> <b> Consultant</b> :@ExpenseReport.CreatedBy.Fullname </th>
-                        <th><b> Department</b> :@ExpenseReport.Department.DepartmentName</th>
-                       <th> <b> Status</b>: @ExpenseReport.Status</th>
-                        </tr>
+                            <th> <b> Report Date</b>: @ExpenseReport.CreateDate</th>
+                            <th><b>Supervisor Processed Date</b>@ExpenseReport.ProcessedDate</th>
+                            @*<th> <b>Supervisor</b>: @ExpenseReport.ProcessedBy.Fullname</th>*@
+                            <th> <b> Consultant</b> :@ExpenseReport.CreatedBy.Fullname </th>
+                            <th><b> Department</b> :@ExpenseReport.Department.DepartmentName</th>
+                            <th> <b> Status</b>: @ExpenseReport.Status</th>
+                            <th></th>
+                       </tr>
                        <tr>
                            <th></th>
                            <th>Expense Date</th>
                            <th>Location</th>
                            <th>Description</th>
+                           <th>Receipt File</th>
                            <th>Amount (AUD)</th>                                        
-                           </tr>
+                        </tr>
                         @foreach (var ExpenseItem in ExpenseReport.ExpenseItems)
                          {
                            
                            <tr>
-                           <td></td>
-                           <td> @ExpenseItem.ExpenseDate</td>
-                           <td> @ExpenseItem.Location</td>
-                           <td> @ExpenseItem.Description</td>
-                           <td>@if (@ExpenseItem.ReceiptFileName != null && @ExpenseItem.ReceiptFileName != "")
-                               {
-                                   <a href="/Receipts/@ExpenseItem.ReceiptFileName" target="_blank">
-                                   <img src="~/Images/img_pdf_icon.png" /></a>
-                               }
-                           </td>  
-                           <td> @ExpenseItem.AudAmount</td>
+                                <td></td>
+                                <td> @ExpenseItem.ExpenseDate</td>
+                                <td> @ExpenseItem.Location</td>
+                                <td> @ExpenseItem.Description</td>
+                                <td>@if (@ExpenseItem.ReceiptFileName != null && @ExpenseItem.ReceiptFileName != "")
+                                    {
+                                        <a href="/Receipts/@ExpenseItem.ReceiptFileName" target="_blank">
+                                        <img src="~/Images/img_pdf_icon.png" /></a>
+                                    }
+                                </td>  
+                                <td> @ExpenseItem.AudAmount</td>
                            </tr>
                          }
-                            </table>
+                   </table>
                     }
                 }
             </div>
