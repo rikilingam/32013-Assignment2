@@ -1,6 +1,25 @@
-﻿@{
-    ViewBag.Title = "CheckExpenseApproved";
+﻿@model ThreeAmigos_ExpenseManagement.ViewModels.BudgetViewModel
+@{
+    ViewBag.Title = "Expense Management System | Check Expense Approved";
     Layout = "~/Views/Shared/_EM_LayoutPage.cshtml";
 }
 
-<h2>CheckExpenseApproved</h2>
+@using (Html.BeginForm("CheckExpenseApproved", "CheckExpenseApproved", "Accounts", FormMethod.Post, null))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">Check Balances</h3>
+        </div>
+        <div class="panel-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <p>Total money spent so far is : AU$ @Html.Encode(Model.companyAmountSpent)</p>
+                    <p>Total money remaining is    : AU$ @Html.Encode(Model.companyAmountRemaining)</p>
+                </div>
+            </div>
+        </div>
+    </div>   
+}
