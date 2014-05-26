@@ -33,6 +33,18 @@ namespace ThreeAmigos_ExpenseManagement.DataAccess
             throw new NotImplementedException();
         }
 
+        public List<ExpenseReport> GetExpenseReportByConsultant(string status, Employee consultant)
+        {
+
+            using (EMEntitiesContext ctx = new EMEntitiesContext())
+            {
+                var result = from report in ctx.ExpenseReports.Include("CreatedBy").Include("ExpenseItems").Include("Department")
+                             where report.CreatedBy.UserId == consultant.UserId && report.Status == status
+                             select report;
+
+                return (List<ExpenseReport>)result.ToList();
+            }
+        }
 
         public List<ExpenseReport> GetReportsBySupervisor(string status, int month)
         {

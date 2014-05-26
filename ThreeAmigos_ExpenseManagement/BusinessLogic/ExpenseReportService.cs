@@ -17,6 +17,13 @@ namespace ThreeAmigos_ExpenseManagement.BusinessLogic
             return reportDAL.GetExpenseReportById(expenseId);
         }
 
+        public List<ExpenseReport> GetReportsByConsultant(string status, Employee employee)
+        {
+
+            return null;
+        
+        }
+
         public void CreateExpenseReport(ExpenseReport report)
         {
             reportDAL.InsertExpenseReport(report);

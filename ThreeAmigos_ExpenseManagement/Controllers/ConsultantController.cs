@@ -31,7 +31,7 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
         }
 
         public ConsultantController(IEmployeeService empService, IExpenseReportService rptService, int userId)
-        {           
+        {
             employeeService = empService;
             reportService = rptService;
             employee = empService.GetEmployee(userId);
