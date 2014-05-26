@@ -17,10 +17,10 @@ namespace ThreeAmigos_ExpenseManagement.BusinessLogic
             return reportDAL.GetExpenseReportById(expenseId);
         }
 
-        public List<ExpenseReport> GetReportsByConsultant(string status, Employee employee)
+        public List<ExpenseReport> GetReportsByConsultant(string status, Employee consultant)
         {
 
-            return null;
+            return reportDAL.GetExpenseReportByConsultant(status, consultant);
         
         }
 
