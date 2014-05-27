@@ -24,7 +24,7 @@ namespace ThreeAmigos_ExpenseManagement.DataAccess
                 {
                     foreach(var totalamount in expenseItems.ExpenseItems)
                     {
-                         total = total + totalamount.Amount;
+                        total = total + totalamount.AudAmount;
                     }                    
                 }
                 return total;
@@ -113,7 +113,7 @@ namespace ThreeAmigos_ExpenseManagement.DataAccess
 
                 foreach (var ExpenseItem in report.ExpenseItems)
                 {
-                    reportTotal = reportTotal + ExpenseItem.Amount;
+                    reportTotal = reportTotal + ExpenseItem.AudAmount;
                 }
                return reportTotal;
             }
