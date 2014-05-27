@@ -25,5 +25,12 @@ namespace ThreeAmigos_ExpenseManagement.Tests.MockBusinessLogic
         {
             return null;
         }
+        public List<ExpenseReport> GetReportsByConsultant(string status, Employee consultant)
+        {
+            return null;
+        }
+
+        public void ProcessReport(int? itemid, string action)
+        { }
     }
 }
