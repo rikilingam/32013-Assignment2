@@ -39,5 +39,19 @@ namespace ThreeAmigos_ExpenseManagement.BusinessLogic
 
             return audAmount;
         }
+
+        public static decimal GetCompanyMonthlyBudget()
+        {
+            decimal budget = 0;
+
+            if (decimal.TryParse(ConfigurationManager.AppSettings["CompanyMonthlyBudget"], out budget) && budget > 0)
+            {
+                return budget;
+            }
+            else
+            {
+                return 0;
+            }
+        }
     }
 }
