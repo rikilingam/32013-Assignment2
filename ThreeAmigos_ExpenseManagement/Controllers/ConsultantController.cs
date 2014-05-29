@@ -60,6 +60,7 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
             Session["_expenseReport"] = expenseReport;
 
             expenseForm.ExpenseReport = expenseReport;
+            TempData["msg"] = "There are currently no expense items";
             return View(expenseForm);
 
         }
@@ -81,6 +82,7 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
 
                 expenseForm.ExpenseItem.ReceiptFileName = fileUploader.Upload(expenseForm.ReceiptFile);
 
+                //check if the session is valid if valid add new items to existing session else create a new report session
                 if (Session["_expenseReport"] != null)
                 {
                     expenseReport = (ExpenseReport)Session["_expenseReport"];
@@ -90,7 +92,7 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
                 else
                 {
                     expenseReport.ExpenseItems.Add(expenseForm.ExpenseItem);
-                    Session["_expenseReport"] = expenseReport;
+                    Session["_expenseReport"] = expenseReport;                    
                 }
 
                 expenseForm.ExpenseReport = expenseReport;
@@ -112,14 +114,19 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
         /// <returns>Index in Home controller</returns>
         public ActionResult SubmitExpense()
         {
+            // Check if the session is valid, if valid submit the report else start a new form
             if (Session["_expenseReport"] != null)
             {
                 reportService.CreateExpenseReport((ExpenseReport)Session["_expenseReport"]);
-
+                return RedirectToAction("Index", "Home");
             }
-
-            return RedirectToAction("Index", "Home");
+            else
+            {
+                return RedirectToAction("CreateExpense");
+            }
+            
         }
+
 
         public ActionResult ViewMyExpenses()
         {

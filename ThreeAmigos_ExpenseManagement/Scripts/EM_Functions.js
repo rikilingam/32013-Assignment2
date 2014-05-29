@@ -45,4 +45,17 @@ function HideBudgetWarningModal() {
     $('#BudgetWarningModal').modal('hide');
 }
 
+//Check if the expense form has items
+function CheckExpenseItems(itemCount)
+{
+    if (itemCount > 0)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
 

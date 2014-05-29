@@ -43,6 +43,7 @@
 
 
                 <div class="row">
+                   
                     <br />
                 </div>
 
@@ -84,6 +85,10 @@
 
                             </table>
                         }
+                        else
+                        {
+                           @Html.Encode("There are currently no items in the expense form.");
+                        }
                     </div>
                 </div>
 
@@ -96,7 +101,7 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <input id="btnAddExpenseItem" type="button" value="Add Item" class="btn btn-primary" onclick="ShowExpenseItemModal();" />
-                            @Html.ActionLink("Submit Report", "SubmitExpense", "Consultant", new { @class = "btn btn-success" })
+                            @Html.ActionLink("Submit Report", "SubmitExpense", "Consultant", new { @class = "btn btn-success", @onclick=@String.Format("return CheckExpenseItems({0});",Model.ExpenseReport.ExpenseItems.Count)})
                         </div>
                     </div>
                 </div>
