@@ -34,6 +34,7 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
             return View();
         }
 
+
         public ActionResult ApproveExpenses()
         {
             //decimal? reportTotal = 0;
@@ -41,12 +42,9 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
 
             expenseForm.ExpenseReports = reportService.GetReportsBySupervisor("Submitted", month);
             return View(expenseForm);
-
-
         }
-
-        [HttpPost]
-        public ActionResult ApproveExpenses(int? itemid, string act)
+        
+        public ActionResult ApproveExpense(int? itemid, string act)
         {
             decimal? reportTotal = 0;
             ExpenseFormViewModel expenseForm = new ExpenseFormViewModel();
@@ -61,7 +59,7 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
             //{
                 if (act == "Approve")
                 {
-                    BudgetViewModel budget = new BudgetViewModel();
+                    Budget budget = new Budget();
                     budget.totalAmountSpent = bud.DepartmentBudget(employee.Department.MonthlyBudget, employee.DepartmentId);
                     budget.totalAmountRemaining = bud.RemainingAmount;
 
@@ -70,21 +68,21 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
                     reportTotal = bud.CheckReportTotal(itemid);
                     if (bud.IsBudgetExceeded(reportTotal))
                     {
-                        return View(expenseForm);
+                        return View("ApproveExpenses",expenseForm);
                     }
 
                     else
                     {
                         reportService.ActionOnReport(itemid, act);
                         expenseForm.ExpenseReports = reportService.GetReportsBySupervisor("Submitted", month);
-                        return View(expenseForm);
+                        return View("ApproveExpenses", expenseForm);
                     }
                 }
                 else
                 {
                     reportService.ActionOnReport(itemid, act);
                     expenseForm.ExpenseReports = reportService.GetReportsBySupervisor("Submitted", month);
-                    return View(expenseForm);
+                    return View("ApproveExpenses", expenseForm);
                 }
             //}
         }
@@ -97,15 +95,16 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
         [HttpPost]
         public ActionResult ViewReports(string status)
         {
-            ExpenseFormViewModel expenseForm = new ExpenseFormViewModel();
-            expenseForm.ExpenseReports = reportService.GetReportsBySupervisor(status, month);
-            return View(expenseForm);
+          //  ExpenseFormViewModel expenseForm = new ExpenseFormViewModel();
+            List<ExpenseReport> expReports =new List<ExpenseReport>();
+            expReports = reportService.GetReportsBySupervisor(status, month);
+            return View(expReports);
         }
 
 
         public ActionResult CheckBalance()
         {
-            BudgetViewModel budget = new BudgetViewModel();
+            Budget budget = new Budget();
             budget.totalAmountSpent = bud.DepartmentBudget(employee.Department.MonthlyBudget, employee.DepartmentId);
             budget.totalAmountRemaining = bud.RemainingAmount;
             return View(budget);
