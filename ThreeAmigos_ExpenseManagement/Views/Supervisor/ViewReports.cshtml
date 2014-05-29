@@ -43,28 +43,30 @@
                 
                 @if (Model == null)
                 {
-                    <b>No reports</b>
+                    
                 }
                 else
                 {
                     
                     foreach (var ExpenseReport in Model)
                     {
+                        decimal? totalAmount = 0;  
                         <table class="table">
                         <tr class="info">
                         <th> <b> Report Date</b>:@String.Format("{0:dd/MM/yyyy}", @ExpenseReport.CreateDate)</th>
-                        <th><b>Supervisor Processed Date</b>:@String.Format("{0:dd/MM/yyyy}",@ExpenseReport.ProcessedDate)</th>
+                        <th><b>Supervisor Approved Date</b>:@String.Format("{0:dd/MM/yyyy}",@ExpenseReport.ApprovedDate)</th>
+                        <th> <b> Consultant</b> :@ExpenseReport.ApprovedBy.Fullname </th>
                         <th> <b> Consultant</b> :@ExpenseReport.CreatedBy.Fullname </th>
                         <th><b> Department</b> :@ExpenseReport.Department.DepartmentName</th>
-                       <th> <b> Status</b>: @ExpenseReport.Status</th>
+                        <th> <b> Status</b>: @ExpenseReport.Status</th>
                         </tr>
                        <tr>
                            <th></th>
                            <th>Expense Date</th>
                            <th>Location</th>
                            <th>Description</th>
-                           <th>Amount (AUD)</th>  
-                           <th>Receipt</th>                                       
+                           <th>Receipt</th> 
+                           <th>Amount (AUD)</th>                                                                 
                            </tr>
                         @foreach (var ExpenseItem in ExpenseReport.ExpenseItems)
                          {
@@ -74,15 +76,21 @@
                            <td> @String.Format("{0:dd/MM/yyyy}",ExpenseItem.ExpenseDate)</td>
                            <td> @ExpenseItem.Location</td>
                            <td> @ExpenseItem.Description</td>
-                           <td> @ExpenseItem.AudAmount</td>
-                           <td>@if (ExpenseItem.ReceiptFileName != null && ExpenseItem.ReceiptFileName != "")
+                               <td>@if (ExpenseItem.ReceiptFileName != null && ExpenseItem.ReceiptFileName != "")
                                         {
                                         <a href="/Receipts/@ExpenseItem.ReceiptFileName" target="_blank">
                                             <img src="~/Images/img_pdf_icon.png" /></a>
                                         }
                                </td>
+                          
+                           <td> @String.Format("{0:C}",@ExpenseItem.AudAmount)</td>
+                           
                            </tr>
+                             totalAmount = totalAmount + ExpenseItem.AudAmount;
                          }
+                            <tr class ="success">
+                            <td><b>Expense Total: @String.Format("{0:C}", totalAmount)</b></td>  
+                            </tr>
                             </table>
                     }
                 }
