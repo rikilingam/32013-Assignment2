@@ -45,6 +45,7 @@
                 {
                     foreach (var ExpenseReport in Model.ExpenseReports)
                     {
+                        decimal? totalAmount = 0;                        
                         <table class="table">
                         <tr class="info">
                             <th><b>Report Date:</b> @String.Format("{0:dd/MM/yyyy}",@ExpenseReport.CreateDate)</th>
@@ -80,7 +81,19 @@
                                 <td>@String.Format("{0:C}", @ExpenseItem.AudAmount)</td>
                                 <td></td>
                            </tr>
+                             totalAmount = totalAmount + ExpenseItem.AudAmount;                            
                          }
+
+                <tr class="success">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><b>Expense Total:</b></td>
+                    <td><b>@String.Format("{0:C}", totalAmount)</b></td>
+                    <td></td>
+              </tr>
+
                    </table>
                     }
                 }
