@@ -50,7 +50,7 @@
                             <th><b>Report Date:</b> @String.Format("{0:dd/MM/yyyy}",@ExpenseReport.CreateDate)</th>
                             <th><b>Consultant:</b> @ExpenseReport.CreatedBy.Fullname </th>
                             <th><b>Approval Date:</b> @String.Format("{0:dd/MM/yyyy}",@ExpenseReport.ProcessedDate)</th>
-                            <th><b>Supervisor</b>: @ExpenseReport.ProcessedBy.Fullname</th>
+                            <th><b>Supervisor</b>: @ExpenseReport.ApprovedBy.Fullname</th>
                             <th><b>Department:</b> @ExpenseReport.Department.DepartmentName</th>
                             <th><b>Status:</b> @ExpenseReport.Status</th>
                             <th></th>
