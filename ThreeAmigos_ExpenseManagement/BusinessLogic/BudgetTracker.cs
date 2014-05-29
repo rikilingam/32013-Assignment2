@@ -13,6 +13,7 @@ namespace ThreeAmigos_ExpenseManagement.BusinessLogic
         private decimal? totalExpenseAmount;
         private decimal? totalExpenseProcessedCompany;
         BudgetTrackerDAL budgetTracker;
+        Budget companyBudget = new Budget(); //John
 
         public BudgetTracker()
         {
