@@ -32,7 +32,7 @@ function HideExpenseItemModal() {
 
 
 function OpenReceipt(receiptFileName) {
-    var path = '<%=ConfigurationManager.AppSettings["ReceiptItemFilePath"].ToString() %>'
+    var path = '<%=ConfigurationManager.AppSettings["ReceiptItemFilePath"].ToString() %>';
     window.open(receiptFileName);
 }
 
@@ -43,6 +43,12 @@ function ShowBudgetWarningModal() {
 
 function HideBudgetWarningModal() {
     $('#BudgetWarningModal').modal('hide');
+}
+
+function CheckDeptBudgetExceeded(isExceeded) {
+    if (isExceeded == true) {
+        $('#BudgetWarningModal').modal('show');
+    }
 }
 
 //Check if the expense form has items
