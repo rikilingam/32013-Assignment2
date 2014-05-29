@@ -55,7 +55,7 @@
                         <tr class="info">
                         <th> <b> Report Date</b>:@String.Format("{0:dd/MM/yyyy}", @ExpenseReport.CreateDate)</th>
                         <th><b>Supervisor Approved Date</b>:@String.Format("{0:dd/MM/yyyy}",@ExpenseReport.ApprovedDate)</th>
-                        <th> <b> Consultant</b> :@ExpenseReport.ApprovedBy.Fullname </th>
+                        <th> <b> Supervisor</b> :@ExpenseReport.ApprovedBy.Fullname </th>
                         <th> <b> Consultant</b> :@ExpenseReport.CreatedBy.Fullname </th>
                         <th><b> Department</b> :@ExpenseReport.Department.DepartmentName</th>
                         <th> <b> Status</b>: @ExpenseReport.Status</th>
@@ -89,7 +89,12 @@
                              totalAmount = totalAmount + ExpenseItem.AudAmount;
                          }
                             <tr class ="success">
-                            <td><b>Expense Total: @String.Format("{0:C}", totalAmount)</b></td>  
+                                <td></td>
+                                 <td></td>
+                                 <td></td>
+                                 <td></td>
+                                 <td><b>Expense Total:</b></td>
+                            <td><b> @String.Format("{0:C}", totalAmount)</b></td>   
                             </tr>
                             </table>
                     }
