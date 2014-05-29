@@ -31,9 +31,12 @@ namespace ThreeAmigos_ExpenseManagement.ViewModels
 
         public HttpPostedFileBase ReceiptFile { get; set; }
 
+        public decimal remainBudgetCompany { get; set; }  // John
+
         public ExpenseFormViewModel()
         {
             ExpenseReport = new ExpenseReport();
+            remainBudgetCompany = 3000; // John
         }
     }
 }
