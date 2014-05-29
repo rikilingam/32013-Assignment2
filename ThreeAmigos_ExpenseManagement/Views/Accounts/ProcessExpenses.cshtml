@@ -9,7 +9,11 @@
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
-
+@helper HighlightOverBudget(decimal? spent) {
+    <text>style="background-color:@(spent > 700 ? "yellow" : "none")"</text>
+}
+    
+    
     <div class="panel panel-primary">
 
         <div class="panel-heading">
@@ -58,7 +62,7 @@
                     totalAmount = totalAmount + ExpenseItem.AudAmount;
                 }
 
-                    <tr class="success">
+                <tr  @HighlightOverBudget(totalAmount)> @* class="success">*@
                     <td></td>
                     <td></td>
                     <td></td>
@@ -80,10 +84,23 @@
                             htmlAttributes: new { @class = "btn btn-success" }
                             )
                         &nbsp;
-                    <b>Expense Total:</b></td>
-                    <td><b>@String.Format("{0:C}", totalAmount)</b></td>
+                        <b>Expense Total:</b></td>
+                        <td><b>@String.Format("{0:C}", totalAmount)</b></td>
+                        <td></td>
+                  </tr>
+
+
+                  <tr>
                     <td></td>
-                    </tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                    
+                    
             </table>
         }
     </div>
