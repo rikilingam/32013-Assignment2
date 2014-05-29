@@ -73,14 +73,14 @@ namespace ThreeAmigos_ExpenseManagement.DataAccess
 
                 if (action == "Approve")
                 {
-                    report.ProcessedDate = DateTime.Now;
+                    report.ApprovedDate = DateTime.Now;
                     report.Status = "ApprovedBySupervisor";
                     report.ApprovedById = employee.UserId;
                     ctx.SaveChanges();
                 }
                 else
                 {
-                    report.ProcessedDate = DateTime.Now;
+                    report.ApprovedDate = DateTime.Now;
                     report.Status = "RejectedBySupervisor";
                     report.ApprovedById = employee.UserId;
                     ctx.SaveChanges();
