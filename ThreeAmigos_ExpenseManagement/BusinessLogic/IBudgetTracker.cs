@@ -12,5 +12,6 @@ namespace ThreeAmigos_ExpenseManagement.BusinessLogic
         bool IsBudgetExceeded(decimal? amount);
         decimal? TotalExpenseAmount { get; set; }
         decimal? RemainingAmount { get; }
+        decimal? BudgetAmount { get; } 
     }
 }
