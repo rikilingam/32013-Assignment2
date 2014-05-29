@@ -56,7 +56,7 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
             {
                 if (act == "Approve")
                 {
-                    BudgetViewModel budget = new BudgetViewModel();
+                    Budget budget = new Budget();
 
                     // compute the total expense of the company in the month
                     budget.companyAmountSpent = bud.CompanyBudget(month, year);
@@ -100,7 +100,7 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
 
         public ActionResult CheckExpenseApproved()
         {
-            BudgetViewModel budget = new BudgetViewModel();
+            Budget budget = new Budget();
             budget.companyAmountSpent = bud.CompanyBudget(month, year);
             budget.companyAmountRemaining = bud.RemainingAmount - bud.CompanyBudget(month, year);
 
