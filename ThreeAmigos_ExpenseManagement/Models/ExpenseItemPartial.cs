@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using ThreeAmigos_ExpenseManagement.BusinessLogic;
 
 namespace ThreeAmigos_ExpenseManagement.Models
 {
@@ -16,6 +17,7 @@ namespace ThreeAmigos_ExpenseManagement.Models
         [Required]
         [Display(Name = "Expense Date")]        
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        [MaximumDate]
         public Nullable<System.DateTime> ExpenseDate { get; set; }
 
         [Required]
