@@ -8,16 +8,17 @@
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
-
+    decimal? remain = Model.BudgetTracker.RemainingAmount;
 
     <div class="panel panel-primary">
 
         <div class="panel-heading">
             <h3 class="panel-title">Expenses awaiting approval</h3>
         </div>
-
+        You currently have $<b> @Model.BudgetTracker.RemainingAmount</b> from your departments monthly budget of $<b>@Model.BudgetTracker.BudgetAmount</b>
         <table class="table">
             <tr><td></td></tr> 
+            
             @foreach (var ExpenseReport in Model.ExpenseReports)
             {
                 decimal? totalAmount = 0;           
@@ -27,6 +28,7 @@
                     <th>Department: @ExpenseReport.Department.DepartmentName</th>
                     <th>Status: @ExpenseReport.Status</th>
                     <th></th>
+                    <th></th>
                 </tr>
                 <tr>
                     <th></th>
@@ -35,7 +37,7 @@
                     <th>Description</th>
                     <th>Receipt</th>
                     <th>Amount (AUD)</th>
-                </tr>
+                 </tr>
 
                 foreach (var ExpenseItem in ExpenseReport.ExpenseItems)
                 {
@@ -58,43 +60,44 @@
                     <td></td>
                     <td></td>
                     <td></td>
+                    <td></td>
                     <td><b>Expense Total: @String.Format("{0:C}", totalAmount)</b></td> 
                     <td>
-                        @Html.ActionLink(linkText: "Approve", actionName: "ApproveExpense", controllerName: "Supervisor", routeValues: new { itemid = ExpenseReport.ExpenseId, act = "Approve" }, htmlAttributes: new { @class = "btn btn-success" })
-                        @Html.ActionLink(linkText: "Reject", actionName: "ApproveExpense", controllerName: "Supervisor", routeValues: new { itemid = ExpenseReport.ExpenseId, act = "Reject" }, htmlAttributes: new { @class = "btn btn-success" })
+                      @Html.ActionLink(linkText: "Approve", actionName: "ApproveExpense", controllerName: "Supervisor", routeValues: new { itemid = ExpenseReport.ExpenseId, act = "Approve" },htmlAttributes:new { @class = "btn btn-success" , onclick="return CheckDeptBudgetExceeded(Model.BudgetTracker.IsBudgetExceeded(totalAmount))"})
+                      @Html.ActionLink(linkText: "Reject", actionName: "ApproveExpense", controllerName: "Supervisor", routeValues: new { itemid = ExpenseReport.ExpenseId, act = "Reject" }, htmlAttributes: new { @class = "btn btn-success" })
                     </td>
-                </tr>                
+                </tr> 
+                <tr><td></td></tr>                
                 
             }
         </table>
     </div>
     
     <!-- pop modal to to display confirmation when budget limit has been exceeded -->
-    <div class="modal fade bs-example-modal-sm" id="BudgetWarningModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <table class="table">
-                    <tr>
-                        <th colspan="2">Budget Warning</th>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <!--label to go here -->
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <!--Approved button-->
-                        </td>
-                        <td>
-                            <!--Close button-->
-                        </td>
-                    </tr>
-                </table>
-                <p>
-                </p>
-            </div>
-        </div>
-    </div>
-}
+    <div class="modal fade" id="BudgetWarningModal">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <table class="table">
+                <tr>
+                    <th colspan="2">Budget Warning</th>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                      If you approve this expense you will exceed the department's montlhy budget, do you want to proceed?
+                      
+                    </td>
+                </tr>
+                <tr>
+                    <td><input type="button" ID="btnConfirmApprove" class="btn btn-success" value="Approve" OnClick="btnConfirmApprove_Click" /></td>
+                    <td><input type="button" ID="btnConfirmReject"class="btn btn-warning" value="Close" OnClick="btnConfirmReject_Click" /></td>
+                </tr>
+            </table>
+            <p>
+            </p>
 
+            <input id="hdnExpenseId" type="hidden">
+        </div>
+        <!-- /.modal-content -->
+    </div>
+</div>
+}
