@@ -48,10 +48,10 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td>Expense Total:</td>
+                    <td>Expense Total:</td> 
                     <td>
-                        @Html.ActionLink(linkText: "Approve", actionName: "ApproveExpenses", controllerName: "Supervisor", routeValues: new { itemid = ExpenseReport.ExpenseId, act = "Approve" }, htmlAttributes: new { @class = "btn btn-success" })
-                        @Html.ActionLink(linkText: "Reject", actionName: "ApproveExpenses", controllerName: "Supervisor", routeValues: new { itemid = ExpenseReport.ExpenseId, act = "Reject" }, htmlAttributes: new { @class = "btn btn-success" })
+                        @Html.ActionLink(linkText: "Approve", actionName: "ApproveExpense", controllerName: "Supervisor", routeValues: new { itemid = ExpenseReport.ExpenseId, act = "Approve" }, htmlAttributes: new { @class = "btn btn-success" })
+                        @Html.ActionLink(linkText: "Reject", actionName: "ApproveExpense", controllerName: "Supervisor", routeValues: new { itemid = ExpenseReport.ExpenseId, act = "Reject" }, htmlAttributes: new { @class = "btn btn-success" })
                     </td>
                 </tr>                
                 
