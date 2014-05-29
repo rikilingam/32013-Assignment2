@@ -203,6 +203,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Budget.cs" />
     <Compile Include="Models\EmployeePartial.cs" />
     <Compile Include="Models\ExpenseItemPartial.cs" />
     <Compile Include="Models\ExpenseReportPartial.cs" />
@@ -237,7 +238,6 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ApproveExpensesViewModel.cs" />
-    <Compile Include="ViewModels\BudgetViewModel.cs" />
     <Compile Include="ViewModels\ExpenseFormViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
