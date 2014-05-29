@@ -1,4 +1,4 @@
-﻿@model ThreeAmigos_ExpenseManagement.ViewModels.BudgetViewModel
+﻿@model ThreeAmigos_ExpenseManagement.Models.Budget 
 @{
     ViewBag.Title = "Expense Management System | Check Balance";
     Layout = "~/Views/Shared/_EM_LayoutPage.cshtml";
@@ -16,8 +16,8 @@
         <div class="panel-body">
             <div class="container-fluid">
                 <div class="row">
-                    <p>Total money spent so far is : AU$  @Html.Encode(Model.totalAmountRemaining)</p>
-                    <p>Total money remaining is    : AU$ @Html.Encode(Model.totalAmountSpent)</p>
+                    <p>Total money spent so far is : AU$  @Html.Encode(Model.totalAmountSpent)</p>
+                    <p>Total money remaining is    : AU$ @Html.Encode(Model.totalAmountRemaining)</p>
                 </div>
             </div>
         </div>
