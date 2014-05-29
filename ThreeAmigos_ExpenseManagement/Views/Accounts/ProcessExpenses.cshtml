@@ -9,19 +9,23 @@
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
-@helper HighlightOverBudget(decimal? spent, decimal? remainingAmount) {
+@helper HighlightOverBudget(decimal? spent, decimal? remainingAmount)
+{
     <text>style="background-color:@(spent > remainingAmount ? "yellow" : "none")"</text>
 }
     
-    <script>
-        function ConfirmApprove() {
-            if (confirm("Do you want to approve ?"))
-                return true;
-            else
-                return false;
-        }
+<script>
+    function ConfirmApprove(spent, budgetAvailable)
+    {
+        if (spent <= budgetAvailable)
+            return true;
+        else if (confirm("Approving this expense will cross the budget. Do you want to approve ?"))
+            return true;
+        else
+            return false;
+    }
 
-    </script>
+</script>
 
     decimal remain = Model.remainBudgetCompany;
     
@@ -64,18 +68,18 @@
                         <td>@ExpenseItem.Location</td>
                         <td>@ExpenseItem.Description</td>
                         <td>@if (@ExpenseItem.ReceiptFileName != null && @ExpenseItem.ReceiptFileName != "")
-                               {
+                            {
                                    <a href="/Receipts/@ExpenseItem.ReceiptFileName" target="_blank">
                                    <img src="~/Images/img_pdf_icon.png" /></a>
-                               }
+                            }
                          </td>     
-                        <td>@String.Format("{0:C}",@ExpenseItem.AudAmount) </td>
+                        <td>@String.Format("{0:C}", @ExpenseItem.AudAmount) </td>
                         <td></td>
                     </tr> 
-                    totalAmount = totalAmount + ExpenseItem.AudAmount;
+                            totalAmount = totalAmount + ExpenseItem.AudAmount;
                 }
                 
-                <tr  @HighlightOverBudget(totalAmount, @ExpenseReport.Department.budget.totalAmountRemaining )> @* class="success">*@
+                <tr  @HighlightOverBudget(totalAmount, @ExpenseReport.Department.budget.totalAmountRemaining)> @* class="success">*@
                     <td></td>
                     <td></td>
                     <td></td>
@@ -92,11 +96,11 @@
                         *@
 
                         @Html.ActionLink(
-                            "Approve", 
-                            "ProcessExpenses", 
+                            "Approve",
+                            "ProcessExpenses",
                             "Accounts",
-                            new {itemid = ExpenseReport.ExpenseId},
-                            new {onclick = " return ConfirmApprove()"}
+                            new { itemid = ExpenseReport.ExpenseId, act = "Approve" },
+                            new { onclick = "return ConfirmApprove(" + totalAmount +"," + @ExpenseReport.Department.budget.totalAmountRemaining +")" }
                             )
 
                         &nbsp; 
