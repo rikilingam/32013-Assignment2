@@ -50,7 +50,6 @@ namespace ThreeAmigos_ExpenseManagement.BusinessLogic
         
         public decimal? CompanyBudget(int month, int year)
         {
-            //budgetAmount = 30000;
             budgetAmount = CurrencyService.GetCompanyMonthlyBudget();
             totalExpenseProcessedCompany = budgetTracker.TotalExpenseProcessByCompany(month, year);
             return totalExpenseProcessedCompany;
