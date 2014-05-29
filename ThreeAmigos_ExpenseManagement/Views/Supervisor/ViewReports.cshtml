@@ -1,4 +1,5 @@
-﻿@model ThreeAmigos_ExpenseManagement.ViewModels.ExpenseFormViewModel
+﻿@model List<ThreeAmigos_ExpenseManagement.Models.ExpenseReport>
+
 @{
     ViewBag.Title = "Expense Management System | View My Expenses";
     Layout = "~/Views/Shared/_EM_LayoutPage.cshtml";
@@ -47,14 +48,13 @@
                 else
                 {
                     
-                    foreach (var ExpenseReport in Model.ExpenseReports)
+                    foreach (var ExpenseReport in Model)
                     {
                         <table class="table">
                         <tr class="info">
-                        <th> <b> Report Date</b>: @ExpenseReport.CreateDate</th>
-                        <th><b>Supervisor Processed Date</b>@ExpenseReport.ProcessedDate</th>
-                       @*<th> <b>Supervisor</b>: @ExpenseReport.ProcessedBy.Fullname</th>*@
-                       <th> <b> Consultant</b> :@ExpenseReport.CreatedBy.Fullname </th>
+                        <th> <b> Report Date</b>:@String.Format("{0:dd/MM/yyyy}", @ExpenseReport.CreateDate)</th>
+                        <th><b>Supervisor Processed Date</b>:@String.Format("{0:dd/MM/yyyy}",@ExpenseReport.ProcessedDate)</th>
+                        <th> <b> Consultant</b> :@ExpenseReport.CreatedBy.Fullname </th>
                         <th><b> Department</b> :@ExpenseReport.Department.DepartmentName</th>
                        <th> <b> Status</b>: @ExpenseReport.Status</th>
                         </tr>
@@ -63,17 +63,24 @@
                            <th>Expense Date</th>
                            <th>Location</th>
                            <th>Description</th>
-                           <th>Amount (AUD)</th>                                        
+                           <th>Amount (AUD)</th>  
+                           <th>Receipt</th>                                       
                            </tr>
                         @foreach (var ExpenseItem in ExpenseReport.ExpenseItems)
                          {
                            
                            <tr>
                            <td></td>
-                           <td> @ExpenseItem.ExpenseDate</td>
+                           <td> @String.Format("{0:dd/MM/yyyy}",ExpenseItem.ExpenseDate)</td>
                            <td> @ExpenseItem.Location</td>
                            <td> @ExpenseItem.Description</td>
                            <td> @ExpenseItem.AudAmount</td>
+                           <td>@if (ExpenseItem.ReceiptFileName != null && ExpenseItem.ReceiptFileName != "")
+                                        {
+                                        <a href="/Receipts/@ExpenseItem.ReceiptFileName" target="_blank">
+                                            <img src="~/Images/img_pdf_icon.png" /></a>
+                                        }
+                               </td>
                            </tr>
                          }
                             </table>
