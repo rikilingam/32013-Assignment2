@@ -75,14 +75,14 @@ namespace ThreeAmigos_ExpenseManagement.DataAccess
                 {
                     report.ProcessedDate = DateTime.Now;
                     report.Status = "ApprovedBySupervisor";
-                    report.ProcessedById = employee.UserId;
+                    report.ApprovedById = employee.UserId;
                     ctx.SaveChanges();
                 }
                 else
                 {
                     report.ProcessedDate = DateTime.Now;
                     report.Status = "RejectedBySupervisor";
-                    report.ProcessedById = employee.UserId;
+                    report.ApprovedById = employee.UserId;
                     ctx.SaveChanges();
                 }
             }
@@ -117,4 +117,4 @@ namespace ThreeAmigos_ExpenseManagement.DataAccess
         }
 
     }
-}
+} 
