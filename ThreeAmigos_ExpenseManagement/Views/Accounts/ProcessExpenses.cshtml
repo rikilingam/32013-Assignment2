@@ -9,10 +9,11 @@
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
-@helper HighlightOverBudget(decimal? spent) {
-    <text>style="background-color:@(spent > 700 ? "yellow" : "none")"</text>
+@helper HighlightOverBudget(decimal? spent, decimal? remainingAmount) {
+    <text>style="background-color:@(spent > remainingAmount ? "yellow" : "none")"</text>
 }
     
+    decimal? deptSpent = 0;
     
     <div class="panel panel-primary">
 
@@ -29,7 +30,8 @@
                     <th>Consultant: @ExpenseReport.CreatedBy.Fullname</th>
                     <th>Supervisor: @ExpenseReport.ApprovedBy.Fullname</th>
                     <th>Department: @ExpenseReport.Department.DepartmentName</th>
-                    <th>Status: @ExpenseReport.Status</th>
+                    @*<th>Status: @ExpenseReport.Status</th>*@
+                    <th>Tempo Dept Remaining Budget: @ExpenseReport.Department.budget.totalAmountRemaining </th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -41,6 +43,7 @@
                     <th>Receipt File</th>
                     <th>Amount (AUD)</th>
                     <th></th>
+                
                 </tr>
 
                 @foreach (var ExpenseItem in ExpenseReport.ExpenseItems)
@@ -61,8 +64,8 @@
                     </tr> 
                     totalAmount = totalAmount + ExpenseItem.AudAmount;
                 }
-
-                <tr  @HighlightOverBudget(totalAmount)> @* class="success">*@
+                
+                <tr  @HighlightOverBudget(totalAmount, @ExpenseReport.Department.budget.totalAmountRemaining )> @* class="success">*@
                     <td></td>
                     <td></td>
                     <td></td>
@@ -89,17 +92,15 @@
                         <td></td>
                   </tr>
 
-
                   <tr>
                     <td></td>
+                    <td>UTS  @String.Format("{0:C}", deptSpent)</td>
                     <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td></td>
-                  </tr>
-                    
+                  </tr>                    
                     
             </table>
         }
