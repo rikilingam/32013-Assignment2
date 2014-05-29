@@ -18,7 +18,7 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
         private IBudgetTracker deptBudget;
         private IExpenseReportService reportService;
         private IEmployeeService employeeService;
-        private Employee employee;
+        private Employee employee; 
         int month = DateTime.Now.Month;
 
         public SupervisorController()
@@ -52,10 +52,11 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
                 reportTotal = deptBudget.CheckReportTotal(itemid);
 
                 if (expenses.BudgetTracker.IsBudgetExceeded(reportTotal))
-                {
-                    return View("ApproveExpenses", expenses);
+                { 
+                    return View("ApproveExpenses", expenses); 
                 }
                 else
+                
                 {
                     reportService.ActionOnReport(itemid, act);
                     expenses.ExpenseReports = reportService.GetReportsBySupervisor("Submitted", month);
@@ -91,4 +92,5 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
             return View(budget);
         }
     }
+
 }
