@@ -1,4 +1,8 @@
-﻿@model ThreeAmigos_ExpenseManagement.ViewModels.ExpenseFormViewModel
+﻿@* @model ThreeAmigos_ExpenseManagement.ViewModels.ExpenseFormViewModel*@
+
+
+@model List<ThreeAmigos_ExpenseManagement.Models.ExpenseReport>
+
 @{
     ViewBag.Title = "Expense Management System | View My Expenses";
     Layout = "~/Views/Shared/_EM_LayoutPage.cshtml";
@@ -43,7 +47,7 @@
                 }
                 else
                 {
-                    foreach (var ExpenseReport in Model.ExpenseReports)
+                    foreach (var ExpenseReport in Model)
                     {
                         decimal? totalAmount = 0;                        
                         <table class="table">
