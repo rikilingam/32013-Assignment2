@@ -12,6 +12,7 @@ namespace ThreeAmigos_ExpenseManagement.BusinessLogic
         
         ExpenseReport GetExpenseReport(int expenseId);
         List<ExpenseReport> GetReportsBySupervisor(string status);
+        List<ExpenseReport> GetReportsByAccounts(string status);
         void ActionOnReport(int? itemid, string action);
         void ProcessReport(int? itemid, string action);
 
