@@ -19,7 +19,7 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
         private IExpenseReportService reportService;
         private IEmployeeService employeeService;
         private Employee employee; 
-        int month = DateTime.Now.Month;
+      
 
         public SupervisorController()
         {
@@ -37,7 +37,7 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
         public ActionResult ApproveExpenses()
         {
             ApproveExpensesViewModel expenses = new ApproveExpensesViewModel();
-            expenses.ExpenseReports = reportService.GetReportsBySupervisor("Submitted", month);
+            expenses.ExpenseReports = reportService.GetReportsBySupervisor(ReportStatus.Submitted.ToString());
             expenses.BudgetTracker = deptBudget;
             return View(expenses);
         }
@@ -59,14 +59,14 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
                 
                 {
                     reportService.ActionOnReport(itemid, act);
-                    expenses.ExpenseReports = reportService.GetReportsBySupervisor("Submitted", month);
+                    expenses.ExpenseReports = reportService.GetReportsBySupervisor(ReportStatus.Submitted.ToString());
                     return View("ApproveExpenses", expenses);
                 }
             }
             else
             {
                 reportService.ActionOnReport(itemid, act);
-                expenses.ExpenseReports = reportService.GetReportsBySupervisor("Submitted", month);
+                expenses.ExpenseReports = reportService.GetReportsBySupervisor(ReportStatus.Submitted.ToString());
                 return View("ApproveExpenses", expenses);
             }
         }
@@ -80,7 +80,7 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
         public ActionResult ViewReports(string status)
         {
             List<ExpenseReport> expReports = new List<ExpenseReport>();
-            expReports = reportService.GetReportsBySupervisor(status, month);
+            expReports = reportService.GetReportsBySupervisor(status);
             return View(expReports);
         }
 
