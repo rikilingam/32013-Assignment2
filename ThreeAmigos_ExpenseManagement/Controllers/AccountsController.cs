@@ -24,13 +24,13 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
             return View();
         }
 
-
         IExpenseReportService reportService = new ExpenseReportService();
         private IEmployeeService employeeService;
         private Employee employee;
         BudgetTracker bud;
         int month = DateTime.Now.Month;
         int year = DateTime.Now.Year;
+
 
         public AccountsController()
         {
@@ -43,7 +43,6 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
 
         public ActionResult ProcessExpenses(int? itemid, string act)
         {
-            decimal? reportTotal = 0;
             ProcessExpensesViewModel expenseForm = new ProcessExpensesViewModel();
 
             if (itemid == null)
@@ -51,34 +50,20 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
                 expenseForm.ExpenseReports = reportService.GetReportsBySupervisor("ApprovedBySupervisor");
                 return View(expenseForm);
             }
-
             else
             {
-                if (act == "Approve")
-                {
-                    Budget budget = new Budget();
-                    // compute the total expense of the company in the month
-                    //budget.companyAmountSpent = bud.CompanyBudgetRemain(month, year);
-                    //budget.companyAmountRemaining = bud.RemainingAmount;
-
-                    reportService.ProcessReport(itemid, act);
-
-                    expenseForm.ExpenseReports = reportService.GetReportsBySupervisor("ApprovedBySupervisor");
-                    return View(expenseForm);
-                }
-                else
-                {
-                    reportService.ProcessReport(itemid, act);
-                    expenseForm.ExpenseReports = reportService.GetReportsBySupervisor("ApprovedBySupervisor");
-                    return View(expenseForm);
-                }
+                reportService.ProcessReport(itemid, act);
+                expenseForm.ExpenseReports = reportService.GetReportsBySupervisor("ApprovedBySupervisor");
+                return View(expenseForm);
             }
         }
+
 
         public ActionResult ViewReports()
         {
             return View();
         }
+
 
         [HttpPost]
         public ActionResult ViewReports(string status)
@@ -94,12 +79,8 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
             Budget budget = new Budget();
             budget.companyAmountSpent = bud.CompanyBudgetRemain(month, year);
             budget.companyAmountRemaining = bud.RemainingAmount - bud.CompanyBudgetRemain(month, year);
-
-            //budget.totalAmountSpent= bud.DepartmentBudget(employee.Department.MonthlyBudget, employee.DepartmentId);
-            //budget.totalAmountRemaining = bud.RemainingAmount;
             return View(budget);
         }
-
 
     }
 }
