@@ -14,5 +14,6 @@ namespace ThreeAmigos_ExpenseManagement.BusinessLogic
         decimal? RemainingAmount { get; }
         decimal? BudgetAmount { get; }
         decimal? CompanyBudgetRemain(int month, int year);
+        decimal? GetDepartmentBudgetRemain(int month, int year, Department department);
     }
 }
