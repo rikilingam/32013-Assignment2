@@ -62,6 +62,22 @@ namespace ThreeAmigos_ExpenseManagement.DataAccess
             }
         }
 
+        public List<ExpenseReport> GetReportsByAccounts(string status)
+        {
+            int month = DateTime.Now.Month;
+            int year = DateTime.Now.Year;
+            IEmployeeService employeeService = new EmployeeService();
+            Employee employee = employeeService.GetEmployee((int)Membership.GetUser().ProviderUserKey);
+            using (EMEntitiesContext ctx = new EMEntitiesContext())
+            {
+                var result = (from i in ctx.ExpenseReports.Include("CreatedBy").Include("ExpenseItems").Include("Department").Include("ApprovedBy")
+                              where i.CreateDate.Value.Month == month && i.CreateDate.Value.Year == year && i.Status == status
+                              select i);
+
+                return (List<ExpenseReport>)result.ToList();
+            }
+        }
+
         public void ActionOnReport(int? itemid, string action)
         {
             IEmployeeService employeeService = new EmployeeService();
