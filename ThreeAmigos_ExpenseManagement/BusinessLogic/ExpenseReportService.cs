@@ -35,6 +35,11 @@ namespace ThreeAmigos_ExpenseManagement.BusinessLogic
             return reportDAL.GetReportsBySupervisor(status);
         }
 
+        public List<ExpenseReport> GetReportsByAccounts(string status)
+        {
+            return reportDAL.GetReportsByAccounts(status);
+        }
+
         public void ActionOnReport(int? itemid,string action)
         {
             reportDAL.ActionOnReport(itemid,action);
