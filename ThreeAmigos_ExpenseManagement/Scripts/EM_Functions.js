@@ -37,20 +37,6 @@ function OpenReceipt(receiptFileName) {
 }
 
 
-function ShowBudgetWarningModal() {
-    $('#BudgetWarningModal').modal('show');
-}
-
-function HideBudgetWarningModal() {
-    $('#BudgetWarningModal').modal('hide');
-}
-
-function CheckDeptBudgetExceeded(isExceeded) {
-    if (isExceeded == true) {
-        $('#BudgetWarningModal').modal('show');
-    }
-}
-
 //Check if the expense form has items
 function CheckExpenseItems(itemCount)
 {
