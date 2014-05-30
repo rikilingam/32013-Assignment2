@@ -29,12 +29,6 @@ namespace ThreeAmigos_ExpenseManagement.BusinessLogic
             totalExpenseAmount = budgetTrackerDAL.TotalExpenseAmountByDept(department.DepartmentId);
         }
 
-        //public BudgetTracker(decimal companyBudget)
-        //{
-        //    budgetAmount = companyBudget;
-        //    totalExpenseProcessedCompany = budgetTrackerDAL.TotalExpenseProcessByCompany(month, year);
-        //}
-
         public decimal? TotalExpenseAmount
         {
             get
@@ -54,16 +48,16 @@ namespace ThreeAmigos_ExpenseManagement.BusinessLogic
             get { return budgetAmount; }
         }
 
-        public decimal? CompanyBudget(int month, int year)
+        public decimal? CompanyBudgetRemain(int month, int year)
         {
-            budgetAmount = 30000;
+            budgetAmount = CurrencyService.GetCompanyMonthlyBudget();
             totalExpenseProcessedCompany = budgetTrackerDAL.TotalExpenseProcessByCompany(month, year);
-            return totalExpenseProcessedCompany;
+            return (budgetAmount - totalExpenseProcessedCompany);
         }
 
-        public bool ExceedCompanyBudget(decimal? amount)
+        public bool ExceedCompanyBudget(int month, int year, decimal? amount)
         {
-            if ((budgetAmount - (totalExpenseProcessedCompany + amount)) < 0)
+            if (amount > CompanyBudgetRemain(month, year) )
             {
                 return true;
             }
