@@ -9,19 +9,19 @@
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
     decimal? remain = Model.BudgetTracker.RemainingAmount;
-
+   <div>  </div>
     <div class="panel panel-primary">
-
+        
         <div class="panel-heading">
             <h3 class="panel-title">Expenses awaiting approval</h3>
         </div>
         You currently have $<b> @Model.BudgetTracker.RemainingAmount</b> from your departments monthly budget of $<b>@Model.BudgetTracker.BudgetAmount</b>
-        <table class="table">
-            <tr><td></td></tr> 
             
-            @foreach (var ExpenseReport in Model.ExpenseReports)
+        <table class="table">
+          <tr><td></td></tr> 
+           @foreach (var ExpenseReport in Model.ExpenseReports)
             {
-                decimal? totalAmount = 0;           
+               decimal? totalAmount = 0;           
                 <tr class="info">
                     <th>Report Date: @String.Format("{0:dd/MM/yyyy}", ExpenseReport.CreateDate)</th>
                     <th>Consultant: @ExpenseReport.CreatedBy.Fullname</th>
