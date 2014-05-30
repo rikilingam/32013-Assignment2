@@ -47,13 +47,13 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
 
             if (itemid == null)
             {
-                expenseForm.ExpenseReports = reportService.GetReportsBySupervisor("ApprovedBySupervisor");
+                expenseForm.ExpenseReports = reportService.GetReportsByAccounts("ApprovedBySupervisor");
                 return View(expenseForm);
             }
             else
             {
                 reportService.ProcessReport(itemid, act);
-                expenseForm.ExpenseReports = reportService.GetReportsBySupervisor("ApprovedBySupervisor");
+                expenseForm.ExpenseReports = reportService.GetReportsByAccounts("ApprovedBySupervisor");
                 return View(expenseForm);
             }
         }
@@ -69,7 +69,7 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
         public ActionResult ViewReports(string status)
         {
             ExpenseFormViewModel expenseForm = new ExpenseFormViewModel();
-            expenseForm.ExpenseReports = reportService.GetReportsBySupervisor(status);
+            expenseForm.ExpenseReports = reportService.GetReportsByAccounts(status);
             return View(expenseForm);
         }
 
