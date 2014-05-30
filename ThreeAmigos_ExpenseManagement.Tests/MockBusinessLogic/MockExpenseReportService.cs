@@ -21,7 +21,7 @@ namespace ThreeAmigos_ExpenseManagement.Tests.MockBusinessLogic
         {
            
         }
-        public List<ExpenseReport> GetReportsBySupervisor(string status, int month)
+        public List<ExpenseReport> GetReportsBySupervisor(string status)
         {
             return null;
         }
