@@ -51,6 +51,13 @@ namespace ThreeAmigos_ExpenseManagement.BusinessLogic
             get { return budgetAmount; }
         }
 
+
+        public decimal? CompanyMonthlyBudget
+        {
+            get { return companyMonthlyBudget; }
+        }
+         
+
         public decimal? CompanyBudgetRemain(int month, int year)
         {
             totalExpenseProcessedCompany = budgetTrackerDAL.TotalExpenseProcessByCompany(month, year);
