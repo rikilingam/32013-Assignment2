@@ -23,15 +23,12 @@
     {
         if (spent <= budgetAvailable)
             return true;
-        else if (confirm("Approving this expense will cross the budget. Do you want to approve ?"))
+        else if (confirm("Approving this expense will exceed the company monthly budget. Do you want to approve ?"))
             return true;
         else
             return false;
     }
 </script>
-
-    
-    //decimal remain = Model.remainBudgetCompany;
     
     <div class="panel panel-primary">
 
@@ -49,8 +46,8 @@
                     <th>Supervisor: @ExpenseReport.ApprovedBy.Fullname</th>
                     <th>Department: @ExpenseReport.Department.DepartmentName</th>
                     @*<th>Status: @ExpenseReport.Status</th>*@
-                    <th>Tempo Dept Remaining Budget: @Model.BudgetTracker.CompanyBudgetRemain(month, year) </th>
-                    <th></th>
+                    <th>Company Remainingt: @Model.BudgetTracker.CompanyBudgetRemain(month, year) </th>
+                    <th>DEPARTMENT Remaining: @Model.BudgetTracker.GetDepartmentBudgetRemain(month, year, @ExpenseReport.Department)</th>
                     <th></th>
                 </tr>
                 <tr>
@@ -61,7 +58,6 @@
                     <th>Receipt File</th>
                     <th>Amount (AUD)</th>
                     <th></th>
-                
                 </tr>
 
                 @foreach (var ExpenseItem in ExpenseReport.ExpenseItems)
@@ -83,7 +79,7 @@
                             totalAmount = totalAmount + ExpenseItem.AudAmount;
                 }
                 
-                <tr  @HighlightOverBudget(totalAmount, @Model.BudgetTracker.RemainingAmount)> @* class="success">*@
+                <tr @HighlightOverBudget(totalAmount, @Model.BudgetTracker.GetDepartmentBudgetRemain(month, year, @ExpenseReport.Department))>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -95,35 +91,20 @@
                             "Accounts",
                             new { itemid = ExpenseReport.ExpenseId, act = "Approve" },
                             new {@class = "btn btn-success", onclick = "return ConfirmApprove(" + totalAmount +"," + companyBudgetRemain +")" }
-                            )
-                        &nbsp; 
-                        @*
-                        @Html.ActionLink(
-                                linkText: "Approve", 
-                                actionName: "ApproveExpense", 
-                                controllerName: "Supervisor", 
-                                routeValues: new { itemid = ExpenseReport.ExpenseId, act = "Approve" },
-                                htmlAttributes:new { @class = "btn btn-success" , onclick="return CheckDeptBudgetExceeded(Model.BudgetTracker.IsBudgetExceeded(totalAmount))"})
-                        &nbsp; 
-                        @Html.ActionLink(
-                            linkText: "Approve",
-                            actionName: "ProcessExpenses",
-                            controllerName: "Accounts",
-                            routeValues: new { itemid = ExpenseReport.ExpenseId, act = "Approve" },
-                            htmlAttributes: new { @class = "btn btn-success" }
-                            )
-                        *@
+                        )
+                        &nbsp;
                         @Html.ActionLink(
                             linkText: "Reject",
                             actionName: "ProcessExpenses",
                             controllerName: "Accounts",
                             routeValues: new { itemid = ExpenseReport.ExpenseId, act = "Reject" },
                             htmlAttributes: new { @class = "btn btn-success" }
-                            )
-                        &nbsp;
-                        <b>Expense Total:</b></td>
-                        <td><b>@String.Format("{0:C}", totalAmount)</b></td>
-                        <td></td>
+                        )                        
+                        <b>Total:</b></td>
+                    <td><b>@String.Format("{0:C}", totalAmount)</b></td>
+                    <td>
+
+                    </td>
                   </tr>
 
                   <tr>
