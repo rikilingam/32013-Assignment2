@@ -46,14 +46,16 @@ namespace ThreeAmigos_ExpenseManagement.DataAccess
             }
         }
 
-        public List<ExpenseReport> GetReportsBySupervisor(string status, int month)
+        public List<ExpenseReport> GetReportsBySupervisor(string status)
         {
+            int month = DateTime.Now.Month;
+            int year = DateTime.Now.Year;
             IEmployeeService employeeService = new EmployeeService();
             Employee employee = employeeService.GetEmployee((int)Membership.GetUser().ProviderUserKey);
             using (EMEntitiesContext ctx = new EMEntitiesContext())
             {
                 var result = (from i in ctx.ExpenseReports.Include("CreatedBy").Include("ExpenseItems").Include("Department")
-                              where i.Department.DepartmentId == employee.Department.DepartmentId && i.CreateDate.Value.Month == month && i.Status == status
+                              where i.Department.DepartmentId == employee.Department.DepartmentId && i.CreateDate.Value.Month == month &&i.CreateDate.Value.Year==year && i.Status == status
                               select i);
 
                 return (List<ExpenseReport>)result.ToList();
