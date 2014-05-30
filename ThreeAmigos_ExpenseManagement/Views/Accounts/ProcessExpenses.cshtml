@@ -1,4 +1,4 @@
-﻿@model ThreeAmigos_ExpenseManagement.ViewModels.ExpenseFormViewModel
+﻿@model ThreeAmigos_ExpenseManagement.ViewModels.ProcessExpensesViewModel
 @{
     ViewBag.Title = "Expense Management System | Process Expense";
     Layout = "~/Views/Shared/_EM_LayoutPage.cshtml";    
@@ -8,6 +8,10 @@
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
+
+    int month = DateTime.Now.Month;
+    int year = DateTime.Now.Year;    
+    decimal? companyBudgetRemain = Model.BudgetTracker.CompanyBudgetRemain(month,year);
 
 @helper HighlightOverBudget(decimal? spent, decimal? remainingAmount)
 {
@@ -27,7 +31,7 @@
 </script>
 
     
-    decimal remain = Model.remainBudgetCompany;
+    //decimal remain = Model.remainBudgetCompany;
     
     <div class="panel panel-primary">
 
@@ -45,7 +49,7 @@
                     <th>Supervisor: @ExpenseReport.ApprovedBy.Fullname</th>
                     <th>Department: @ExpenseReport.Department.DepartmentName</th>
                     @*<th>Status: @ExpenseReport.Status</th>*@
-                    <th>Tempo Dept Remaining Budget: @ExpenseReport.Department.budget.totalAmountRemaining </th>
+                    <th>Tempo Dept Remaining Budget: @Model.BudgetTracker.CompanyBudgetRemain(month, year) </th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -79,7 +83,7 @@
                             totalAmount = totalAmount + ExpenseItem.AudAmount;
                 }
                 
-                <tr  @HighlightOverBudget(totalAmount, @ExpenseReport.Department.budget.totalAmountRemaining)> @* class="success">*@
+                <tr  @HighlightOverBudget(totalAmount, @Model.BudgetTracker.RemainingAmount)> @* class="success">*@
                     <td></td>
                     <td></td>
                     <td></td>
@@ -100,7 +104,7 @@
                             "ProcessExpenses",
                             "Accounts",
                             new { itemid = ExpenseReport.ExpenseId, act = "Approve" },
-                            new { onclick = "return ConfirmApprove(" + totalAmount +"," + @ExpenseReport.Department.budget.totalAmountRemaining +")" }
+                            new { onclick = "return ConfirmApprove(" + totalAmount +"," + companyBudgetRemain +")" }
                             )
 
                         &nbsp; 
