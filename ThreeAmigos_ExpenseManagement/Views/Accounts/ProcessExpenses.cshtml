@@ -89,24 +89,21 @@
                     <td></td>
                     <td></td>
                     <td>
-                        @*
-                        @Html.ActionLink(
-                            linkText: "Process Expenses", 
-                            actionName: "ProcessExpenses", 
-                            controllerName: "Accounts",
-                            routeValues: new {itemid = ExpenseReport.ExpenseId,
-                                                onclick = " return ConfirmApprove()" },
-                            htmlAttributes: new { @class = "btn btn-success" })
-                        *@
-
                         @Html.ActionLink(
                             "Approve",
                             "ProcessExpenses",
                             "Accounts",
                             new { itemid = ExpenseReport.ExpenseId, act = "Approve" },
-                            new { onclick = "return ConfirmApprove(" + totalAmount +"," + companyBudgetRemain +")" }
+                            new {@class = "btn btn-success", onclick = "return ConfirmApprove(" + totalAmount +"," + companyBudgetRemain +")" }
                             )
-
+                        &nbsp; 
+                        @*
+                        @Html.ActionLink(
+                                linkText: "Approve", 
+                                actionName: "ApproveExpense", 
+                                controllerName: "Supervisor", 
+                                routeValues: new { itemid = ExpenseReport.ExpenseId, act = "Approve" },
+                                htmlAttributes:new { @class = "btn btn-success" , onclick="return CheckDeptBudgetExceeded(Model.BudgetTracker.IsBudgetExceeded(totalAmount))"})
                         &nbsp; 
                         @Html.ActionLink(
                             linkText: "Approve",
@@ -115,7 +112,7 @@
                             routeValues: new { itemid = ExpenseReport.ExpenseId, act = "Approve" },
                             htmlAttributes: new { @class = "btn btn-success" }
                             )
-                        &nbsp;
+                        *@
                         @Html.ActionLink(
                             linkText: "Reject",
                             actionName: "ProcessExpenses",
