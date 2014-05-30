@@ -10,9 +10,11 @@
     @Html.ValidationSummary(true)
 
     int month = DateTime.Now.Month;
-    int year = DateTime.Now.Year;    
-    decimal? companyBudgetRemain = Model.BudgetTracker.CompanyBudgetRemain(month,year);
-
+    int year = DateTime.Now.Year;
+    decimal? companyBudgetRemain = Model.BudgetTracker.CompanyBudgetRemain(month, year);
+    decimal? companyMonthlyBudget = Model.BudgetTracker.CompanyMonthlyBudget;
+    decimal? usedAmount = companyMonthlyBudget - companyBudgetRemain;
+    
 @helper HighlightOverBudget(decimal? spent, decimal? remainingAmount)
 {
     <text>style="background-color:@(spent > remainingAmount ? "yellow" : "none")"</text>
@@ -32,6 +34,16 @@
     
     <div class="panel panel-primary">
 
+    @if (companyBudgetRemain >= 0)
+    {
+       <text>   <b>@String.Format("{0:C}", usedAmount)</b> has been approved from the company monthly budget of <b>@String.Format("{0:C}", companyMonthlyBudget)</b>. </text> <br />
+       <text>   You currently have <b>@String.Format("{0:C}", companyBudgetRemain)</b> left for approval.</text>
+    }
+    else
+    {
+       <text>   <b>@String.Format("{0:C}", usedAmount)</b> has been approved from the company monthly budget of <b>@String.Format("{0:C}", companyMonthlyBudget)</b>. </text> <br />
+       <text>   You have approved over the budget by <b>@String.Format("{0:C}", usedAmount - companyMonthlyBudget)</b></text>
+    }                                                                                                                                       
         <div class="panel-heading">
             <h3 class="panel-title">View Reports</h3>
         </div>
@@ -45,10 +57,8 @@
                     <th>Consultant: @ExpenseReport.CreatedBy.Fullname</th>
                     <th>Supervisor: @ExpenseReport.ApprovedBy.Fullname</th>
                     <th>Department: @ExpenseReport.Department.DepartmentName</th>
-                    @*<th>Status: @ExpenseReport.Status</th>*@
-                    <th>Company Remainingt: @Model.BudgetTracker.CompanyBudgetRemain(month, year) </th>
-                    <th>DEPARTMENT Remaining: @Model.BudgetTracker.GetDepartmentBudgetRemain(month, year, @ExpenseReport.Department)</th>
-                    <th></th>
+                    <th>Status: @ExpenseReport.Status</th>
+                    <th>Department budget remain: @String.Format("{0:C}", @Model.BudgetTracker.GetDepartmentBudgetRemain(month, year, @ExpenseReport.Department))</th>
                 </tr>
                 <tr>
                     <th></th>
@@ -57,7 +67,6 @@
                     <th>Description</th>
                     <th>Receipt File</th>
                     <th>Amount (AUD)</th>
-                    <th></th>
                 </tr>
 
                 @foreach (var ExpenseItem in ExpenseReport.ExpenseItems)
@@ -74,7 +83,6 @@
                             }
                          </td>     
                         <td>@String.Format("{0:C}", @ExpenseItem.AudAmount) </td>
-                        <td></td>
                     </tr> 
                             totalAmount = totalAmount + ExpenseItem.AudAmount;
                 }
@@ -90,7 +98,7 @@
                             "ProcessExpenses",
                             "Accounts",
                             new { itemid = ExpenseReport.ExpenseId, act = "Approve" },
-                            new {@class = "btn btn-success", onclick = "return ConfirmApprove(" + totalAmount +"," + companyBudgetRemain +")" }
+                            new { @class = "btn btn-success", onclick = "return ConfirmApprove(" + totalAmount + "," + companyBudgetRemain + ")" }
                         )
                         &nbsp;
                         @Html.ActionLink(
@@ -102,13 +110,9 @@
                         )                        
                         <b>Total:</b></td>
                     <td><b>@String.Format("{0:C}", totalAmount)</b></td>
-                    <td>
-
-                    </td>
                   </tr>
 
                   <tr>
-                    <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
