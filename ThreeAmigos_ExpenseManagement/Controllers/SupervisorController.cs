@@ -18,8 +18,7 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
         private IBudgetTracker deptBudget;
         private IExpenseReportService reportService;
         private IEmployeeService employeeService;
-        private Employee employee; 
-      
+        private Employee employee;      
 
         public SupervisorController()
         {
@@ -37,34 +36,24 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
         public ActionResult ApproveExpenses()
         {
             ApproveExpensesViewModel expenses = new ApproveExpensesViewModel();
-            expenses.ExpenseReports = reportService.GetReportsBySupervisor(ReportStatus.Submitted.ToString());
             expenses.BudgetTracker = deptBudget;
+            expenses.ExpenseReports = reportService.GetReportsBySupervisor(ReportStatus.Submitted.ToString());
             return View(expenses);
         }
 
         public ActionResult ApproveExpense(int? itemid, string act)
         {
-            decimal? reportTotal = 0;
             ApproveExpensesViewModel expenses = new ApproveExpensesViewModel();
             if (act == "Approve")
             {
                 expenses.BudgetTracker = deptBudget;
-                reportTotal = deptBudget.CheckReportTotal(itemid);
-
-                if (expenses.BudgetTracker.IsBudgetExceeded(reportTotal))
-                { 
-                    return View("ApproveExpenses", expenses); 
-                }
-                else
-                
-                {
-                    reportService.ActionOnReport(itemid, act);
-                    expenses.ExpenseReports = reportService.GetReportsBySupervisor(ReportStatus.Submitted.ToString());
-                    return View("ApproveExpenses", expenses);
-                }
+                reportService.ActionOnReport(itemid, act);
+                expenses.ExpenseReports = reportService.GetReportsBySupervisor(ReportStatus.Submitted.ToString());
+                return View("ApproveExpenses", expenses);
             }
             else
             {
+                expenses.BudgetTracker = deptBudget;
                 reportService.ActionOnReport(itemid, act);
                 expenses.ExpenseReports = reportService.GetReportsBySupervisor(ReportStatus.Submitted.ToString());
                 return View("ApproveExpenses", expenses);
