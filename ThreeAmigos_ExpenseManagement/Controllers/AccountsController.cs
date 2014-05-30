@@ -68,9 +68,9 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
         [HttpPost]
         public ActionResult ViewReports(string status)
         {
-            ExpenseFormViewModel expenseForm = new ExpenseFormViewModel();
-            expenseForm.ExpenseReports = reportService.GetReportsByAccounts(status);
-            return View(expenseForm);
+            List<ExpenseReport> expReports = new List<ExpenseReport>();
+            expReports = reportService.GetReportsByAccounts(status);
+            return View(expReports);
         }
 
 
