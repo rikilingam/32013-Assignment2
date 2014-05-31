@@ -47,13 +47,13 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
 
             if (itemid == null)
             {
-                expenseForm.ExpenseReports = reportService.GetReportsByAccounts("ApprovedBySupervisor");
+                expenseForm.ExpenseReports = reportService.GetReportsByAccounts(ReportStatus.ApprovedBySupervisor.ToString());   // "ApprovedBySupervisor");
                 return View(expenseForm);
             }
             else
             {
                 reportService.ProcessReport(itemid, act);
-                expenseForm.ExpenseReports = reportService.GetReportsByAccounts("ApprovedBySupervisor");
+                expenseForm.ExpenseReports = reportService.GetReportsByAccounts(ReportStatus.ApprovedBySupervisor.ToString()); // "ApprovedBySupervisor");
                 return View(expenseForm);
             }
         }
