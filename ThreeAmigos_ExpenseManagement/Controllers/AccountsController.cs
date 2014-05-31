@@ -76,10 +76,9 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
 
         public ActionResult CheckExpenseApproved()
         {
-            Budget budget = new Budget();
-            budget.companyAmountSpent = bud.CompanyBudgetRemain(month, year);
-            budget.companyAmountRemaining = bud.RemainingAmount - bud.CompanyBudgetRemain(month, year);
-            return View(budget);
+            List<AmountProcessedSupervisor> report = new List<AmountProcessedSupervisor>();
+            report = reportService.GetAmountSupervisor();
+            return View(report);
         }
 
     }
