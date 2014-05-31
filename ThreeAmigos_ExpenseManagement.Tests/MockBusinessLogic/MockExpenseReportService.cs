@@ -64,6 +64,12 @@ namespace ThreeAmigos_ExpenseManagement.Tests.MockBusinessLogic
             return null;
         }
 
+        public List<ExpenseReport> GetReportsByAccounts(string status)
+        {
+            return null;
+        }
+
+
         public void ProcessReport(int? itemid, string action)
         { }
     }

@@ -55,24 +55,27 @@ namespace ThreeAmigos_ExpenseManagement.Tests.Controllers
 
         [TestMethod]
         public void CreateExpense_CheckInitialExpenseReportIsLoaded_IsEqual()
-        {
+        {           
+
             ConsultantController controller = new ConsultantController(employeeService, reportService, 1);
+            
+            MockHttpContext.SetFakeAuthenticatedControllerContext(controller);
+
             ViewResult result = controller.CreateExpense() as ViewResult;
 
-            //Employee employee = employeeService.GetEmployee(1);
-            //ExpenseFormViewModel expenseForm = new ExpenseFormViewModel();
-            //ExpenseReport expenseReport = new ExpenseReport();
+            Employee employee = employeeService.GetEmployee(1);
+            ExpenseFormViewModel expenseForm = new ExpenseFormViewModel();
+            ExpenseReport expenseReport = new ExpenseReport();
 
-            //expenseReport.CreateDate = DateTime.Now;
-            //expenseReport.CreatedBy = employee;
-            //expenseReport.Department = employee.Department;
+            expenseReport.CreateDate = DateTime.Now;
+            expenseReport.CreatedBy = employee;
+            expenseReport.Department = employee.Department;
 
-            //expenseForm.ExpenseReport = expenseReport;
-            //result.Model = ExpenseFormViewModel;
+            expenseForm.ExpenseReport = expenseReport;            
 
-            //ExpenseFormViewModel model = (ExpenseFormViewModel)result.ViewData.Model;
-
-            //Assert.AreEqual(model.CreateDate,DateTime.Now,"Expense report create is not equal");
+            ExpenseFormViewModel model = (ExpenseFormViewModel)result.ViewData.Model;
+                        
+            Assert.AreEqual(expenseReport, expenseForm.ExpenseReport, "Expense report is not equal");
         }
 
         [TestMethod]
