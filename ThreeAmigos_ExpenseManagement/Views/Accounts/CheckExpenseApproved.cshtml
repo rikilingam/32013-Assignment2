@@ -1,4 +1,5 @@
-﻿@model ThreeAmigos_ExpenseManagement.ViewModels.BudgetViewModel
+﻿@model List<ThreeAmigos_ExpenseManagement.Models.AmountProcessedSupervisor>
+
 @{
     ViewBag.Title = "Expense Management System | Check Expense Approved";
     Layout = "~/Views/Shared/_EM_LayoutPage.cshtml";
@@ -9,17 +10,45 @@
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <h3 class="panel-title">Check Balances</h3>
-        </div>
-        <div class="panel-body">
-            <div class="container-fluid">
-                <div class="row">
-                    <p>Total money spent so far is : AU$ @Html.Encode(Model.companyAmountSpent)</p>
-                    <p>Total money remaining is    : AU$ @Html.Encode(Model.companyAmountRemaining)</p>
-                </div>
+<div class="panel panel-primary">
+    
+    <div class="panel-heading">
+        <h3 class="panel-title">View Reports</h3>
+    </div>
+
+    <div class="panel-body">
+        <div class="container-fluid">
+
+            <div class="row" id="divDisplayExpenseReports" runat="server">
+                
+                @if (Model == null)
+                {
+                    <b>No reports</b>
+                }
+                else
+                {
+                    foreach (var supervisor in Model)
+                    {
+                        <table class="table">
+                            <tr class="info">
+                                <th><b>Supervisor name: </b> @supervisor.Fullname </th>
+                                <th><b>Total expense: </b> @String.Format("{0:C}", @supervisor.amountApproved)</th>
+                                <th></th>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                    </table>
+                    }
+                }
             </div>
         </div>
-    </div>   
+    </div>
+</div>
 }
+
+
+
+

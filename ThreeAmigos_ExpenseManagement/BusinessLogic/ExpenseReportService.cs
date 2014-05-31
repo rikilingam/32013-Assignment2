@@ -40,6 +40,11 @@ namespace ThreeAmigos_ExpenseManagement.BusinessLogic
             return reportDAL.GetReportsByAccounts(status);
         }
 
+        public List<AmountProcessedSupervisor> GetAmountSupervisor()
+        {
+            return reportDAL.GetAmountSupervisor();
+        }
+
         public void ActionOnReport(int? itemid,string action)
         {
             reportDAL.ActionOnReport(itemid,action);

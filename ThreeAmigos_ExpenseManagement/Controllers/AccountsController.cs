@@ -47,13 +47,13 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
 
             if (itemid == null)
             {
-                expenseForm.ExpenseReports = reportService.GetReportsByAccounts("ApprovedBySupervisor");
+                expenseForm.ExpenseReports = reportService.GetReportsByAccounts(ReportStatus.ApprovedBySupervisor.ToString());   // "ApprovedBySupervisor");
                 return View(expenseForm);
             }
             else
             {
                 reportService.ProcessReport(itemid, act);
-                expenseForm.ExpenseReports = reportService.GetReportsByAccounts("ApprovedBySupervisor");
+                expenseForm.ExpenseReports = reportService.GetReportsByAccounts(ReportStatus.ApprovedBySupervisor.ToString()); // "ApprovedBySupervisor");
                 return View(expenseForm);
             }
         }
@@ -76,10 +76,9 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
 
         public ActionResult CheckExpenseApproved()
         {
-            Budget budget = new Budget();
-            budget.companyAmountSpent = bud.CompanyBudgetRemain(month, year);
-            budget.companyAmountRemaining = bud.RemainingAmount - bud.CompanyBudgetRemain(month, year);
-            return View(budget);
+            List<AmountProcessedSupervisor> report = new List<AmountProcessedSupervisor>();
+            report = reportService.GetAmountSupervisor();
+            return View(report);
         }
 
     }

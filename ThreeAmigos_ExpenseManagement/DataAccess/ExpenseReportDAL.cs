@@ -66,17 +66,64 @@ namespace ThreeAmigos_ExpenseManagement.DataAccess
         {
             int month = DateTime.Now.Month;
             int year = DateTime.Now.Year;
-            IEmployeeService employeeService = new EmployeeService();
-            Employee employee = employeeService.GetEmployee((int)Membership.GetUser().ProviderUserKey);
+
             using (EMEntitiesContext ctx = new EMEntitiesContext())
             {
-                var result = (from i in ctx.ExpenseReports.Include("CreatedBy").Include("ExpenseItems").Include("Department").Include("ApprovedBy")
-                              where i.CreateDate.Value.Month == month && i.CreateDate.Value.Year == year && i.Status == status
-                              select i);
+                var result = (from report in ctx.ExpenseReports.Include("CreatedBy").Include("ExpenseItems").Include("Department").Include("ApprovedBy")
+                              where report.CreateDate.Value.Month == month && report.CreateDate.Value.Year == year && report.Status == status
+                              select report);
 
                 return (List<ExpenseReport>)result.ToList();
             }
         }
+
+
+        public List<AmountProcessedSupervisor> GetAmountSupervisor()
+        {
+            int month = DateTime.Now.Month;
+            int year = DateTime.Now.Year;
+
+            using (EMEntitiesContext ctx = new EMEntitiesContext())
+            {
+                var totalExpenseInOneReport = from expense in ctx.ExpenseItems
+                                              group expense by expense.ExpenseId into exp
+                                              select new
+                                              {
+                                                  expID = exp.Key,
+                                                  totalAmount = exp.Sum(expense => expense.AudAmount)
+                                              };
+
+                var reportsApprovedInCurrentMonth = from report in ctx.ExpenseReports
+                                                    join ex in totalExpenseInOneReport
+                                                    on report.ExpenseId equals ex.expID
+                                                    where report.CreateDate.Value.Month == month && report.CreateDate.Value.Year == year && report.Status == "ApprovedByAccounts"
+                                                    select new
+                                                    {
+                                                        supervisorID = report.ApprovedById,
+                                                        total = ex.totalAmount
+                                                    };
+
+                var totalExpenseApprovedBySupervisor = from report in reportsApprovedInCurrentMonth
+                                                       group report by report.supervisorID into rep
+                                                       select new
+                                                       {
+                                                           supervisorID = rep.Key,
+                                                           total = rep.Sum(report => report.total)
+                                                       };
+
+                var result = from emp in ctx.Employees
+                                  join spent in totalExpenseApprovedBySupervisor
+                                  on emp.UserId equals spent.supervisorID
+                                  select new AmountProcessedSupervisor
+                                  {
+                                      Fullname = emp.Firstname + " " + emp.Surname,
+                                      amountApproved = spent.total
+                                  };
+                
+                return (List<AmountProcessedSupervisor>)result.ToList();
+            }
+        }
+
 
         public void ActionOnReport(int? itemid, string action)
         {
@@ -110,6 +157,7 @@ namespace ThreeAmigos_ExpenseManagement.DataAccess
         {
             IEmployeeService employeeService = new EmployeeService();
             Employee employee = employeeService.GetEmployee((int)Membership.GetUser().ProviderUserKey);
+
             using (EMEntitiesContext ctx = new EMEntitiesContext())
             {
 
