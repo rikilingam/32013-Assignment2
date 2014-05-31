@@ -9,11 +9,14 @@
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
+    
+    decimal? totalExpenseApproved = 0;
+    decimal? companyMonthlyBudget = Model.FirstOrDefault().companyMonthlyBudget;
 
 <div class="panel panel-primary">
     
     <div class="panel-heading">
-        <h3 class="panel-title">View Reports</h3>
+        <h3 class="panel-title">Check Balance and Expense Approved by Supervisors</h3>
     </div>
 
     <div class="panel-body">
@@ -31,17 +34,38 @@
                     {
                         <table class="table">
                             <tr class="info">
-                                <th><b>Supervisor name: </b> @supervisor.Fullname </th>
-                                <th><b>Total expense: </b> @String.Format("{0:C}", @supervisor.amountApproved)</th>
+                                <th></th>
+                                <th><b>Supervisor name: </b>@supervisor.Fullname </th> 
+                                <th></th>
+                                <th></th>                                                                
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <th><b>Amount approved: </b>@String.Format("{0:C}", @supervisor.amountApproved)</th>
+                                <th></th>
                                 <th></th>
                             </tr>
                             <tr>
                                 <th></th>
                                 <th></th>
                                 <th></th>
+                                <th></th>
                             </tr>
-                    </table>
+                        </table>
+                    
+                        totalExpenseApproved = totalExpenseApproved + @supervisor.amountApproved;
                     }
+                    
+                    if (companyMonthlyBudget >= totalExpenseApproved)
+                    {
+                        <text>   <b>@String.Format("{0:C}", totalExpenseApproved)</b> has been approved from the company monthly budget of <b>@String.Format("{0:C}", companyMonthlyBudget)</b>. </text> <br />
+                        <text>   You currently have <b>@String.Format("{0:C}", companyMonthlyBudget - totalExpenseApproved)</b> left for approval.</text>
+                    }
+                    else
+                    {
+                        <text>   <b>@String.Format("{0:C}", totalExpenseApproved)</b> has been approved from the company monthly budget of <b>@String.Format("{0:C}", companyMonthlyBudget)</b>. </text> <br />
+                        <text>   Accounts have approved over the budget by <b>@String.Format("{0:C}", totalExpenseApproved - companyMonthlyBudget)</b></text>
+                    } 
                 }
             </div>
         </div>
