@@ -9,6 +9,8 @@
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
+    
+    decimal? totalExpenseApproved = 0;
 
 <div class="panel panel-primary">
     
@@ -27,21 +29,33 @@
                 }
                 else
                 {
+
                     foreach (var supervisor in Model)
                     {
                         <table class="table">
                             <tr class="info">
-                                <th><b>Supervisor name: </b> @supervisor.Fullname </th>
-                                <th><b>Total expense: </b> @String.Format("{0:C}", @supervisor.amountApproved)</th>
+                                <th></th>
+                                <th><b>Supervisor name: </b>@supervisor.Fullname </th> 
+                                <th></th>
+                                <th></th>                                                                
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <th><b>Amount approved: </b>@String.Format("{0:C}", @supervisor.amountApproved)</th>
+                                <th></th>
                                 <th></th>
                             </tr>
                             <tr>
                                 <th></th>
                                 <th></th>
                                 <th></th>
+                                <th></th>
                             </tr>
-                    </table>
+                        </table>
+                    
+                        totalExpenseApproved = totalExpenseApproved + @supervisor.amountApproved;
                     }
+                    <text>    <b>@String.Format("{0:C}", totalExpenseApproved)</b> has been approved by accounts.</text>
                 }
             </div>
         </div>
