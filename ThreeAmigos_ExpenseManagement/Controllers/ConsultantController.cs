@@ -30,11 +30,11 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
             employee = employeeService.GetEmployee((int)Membership.GetUser().ProviderUserKey);
         }
 
-        public ConsultantController(IEmployeeService empService, IExpenseReportService rptService, int userId)
+        public ConsultantController(IEmployeeService empService, IExpenseReportService rptService, Employee employee)
         {
             employeeService = empService;
             reportService = rptService;
-            employee = empService.GetEmployee(userId);
+            this.employee = employee;
         }
 
         //
@@ -61,7 +61,7 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
 
             expenseForm.ExpenseReport = expenseReport;
             TempData["msg"] = "There are currently no expense items";
-            return View(expenseForm);
+            return View("CreateExpense",expenseForm);
 
         }
 

@@ -12,10 +12,10 @@ namespace ThreeAmigos_ExpenseManagement.Tests.MockBusinessLogic
 {
     public static class MockHttpContext
     {
-        public static void SetFakeAuthenticatedControllerContext(this Controller controller)
+        public static void SetFakeHttpContext(this Controller controller)
         {
 
-            var httpContext = FakeAuthenticatedHttpContext();
+            var httpContext = FakeHttpContext();
             ControllerContext context =
             new ControllerContext(
             new RequestContext(httpContext,
@@ -25,7 +25,7 @@ namespace ThreeAmigos_ExpenseManagement.Tests.MockBusinessLogic
         }
 
 
-        private static HttpContextBase FakeAuthenticatedHttpContext()
+        private static HttpContextBase FakeHttpContext()
         {
             var context = new Mock<HttpContextBase>();
             var request = new Mock<HttpRequestBase>();

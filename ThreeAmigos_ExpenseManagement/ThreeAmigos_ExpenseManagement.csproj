@@ -199,6 +199,7 @@
     <Compile Include="Controllers\ConsultantController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="BusinessLogic\EmployeeService.cs" />
+    <Compile Include="DataAccess\AmountProcessedSupervisor.cs" />
     <Compile Include="DataAccess\BudgetTrackerDAL.cs" />
     <Compile Include="DataAccess\EmployeeDAL.cs" />
     <Compile Include="DataAccess\ExpenseReportDAL.cs" />
