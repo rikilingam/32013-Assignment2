@@ -66,6 +66,7 @@ namespace ThreeAmigos_ExpenseManagement.DataAccess
         {
             int month = DateTime.Now.Month;
             int year = DateTime.Now.Year;
+
             using (EMEntitiesContext ctx = new EMEntitiesContext())
             {
                 var result = (from report in ctx.ExpenseReports.Include("CreatedBy").Include("ExpenseItems").Include("Department").Include("ApprovedBy")
@@ -81,45 +82,45 @@ namespace ThreeAmigos_ExpenseManagement.DataAccess
         {
             int month = DateTime.Now.Month;
             int year = DateTime.Now.Year;
-            IEmployeeService employeeService = new EmployeeService();
-            Employee employee = employeeService.GetEmployee((int)Membership.GetUser().ProviderUserKey);
+
             using (EMEntitiesContext ctx = new EMEntitiesContext())
             {
-                var totalExp = from expense in ctx.ExpenseItems
-                               group expense by expense.ExpenseId into exp
-                               select new
-                               {
-                                   expID = exp.Key,
-                                   totalAmount = exp.Sum(expense => expense.AudAmount)
-                               };
+                var totalExpenseInOneReport = from expense in ctx.ExpenseItems
+                                              group expense by expense.ExpenseId into exp
+                                              select new
+                                              {
+                                                  expID = exp.Key,
+                                                  totalAmount = exp.Sum(expense => expense.AudAmount)
+                                              };
 
-                var totalReport = from report in ctx.ExpenseReports
-                                  join ex in totalExp
-                                  on report.ExpenseId equals ex.expID
-                                  where report.CreateDate.Value.Month == month && report.CreateDate.Value.Year == year && report.Status == "ApprovedByAccounts"
-                                  select new
+                var reportsApprovedInCurrentMonth = from report in ctx.ExpenseReports
+                                                    join ex in totalExpenseInOneReport
+                                                    on report.ExpenseId equals ex.expID
+                                                    where report.CreateDate.Value.Month == month && report.CreateDate.Value.Year == year && report.Status == "ApprovedByAccounts"
+                                                    select new
+                                                    {
+                                                        supervisorID = report.ApprovedById,
+                                                        total = ex.totalAmount
+                                                    };
+
+                var totalExpenseApprovedBySupervisor = from report in reportsApprovedInCurrentMonth
+                                                       group report by report.supervisorID into rep
+                                                       select new
+                                                       {
+                                                           supervisorID = rep.Key,
+                                                           total = rep.Sum(report => report.total)
+                                                       };
+
+                var result = from emp in ctx.Employees
+                                  join spent in totalExpenseApprovedBySupervisor
+                                  on emp.UserId equals spent.supervisorID
+                                  select new AmountProcessedSupervisor
                                   {
-                                      supervisorID = report.ApprovedById,
-                                      total = ex.totalAmount
+                                      Fullname = emp.Firstname + " " + emp.Surname,
+                                      amountApproved = spent.total
                                   };
-
-                var endSecond = from report in totalReport
-                                group report by report.supervisorID into repo
-                                select new
-                                {
-                                    superID = repo.Key,
-                                    total = repo.Sum(report => report.total)
-                                };
-
-                var endReport = from emp in ctx.Employees
-                                join spent in endSecond
-                                on emp.UserId equals spent.superID
-                                select new AmountProcessedSupervisor
-                                {
-                                    Fullname = emp.Firstname + " " + emp.Surname,
-                                    amountApproved = spent.total
-                                };
-                return endReport.ToList();
+                
+                return (List<AmountProcessedSupervisor>)result.ToList();
             }
         }
 
@@ -156,6 +157,7 @@ namespace ThreeAmigos_ExpenseManagement.DataAccess
         {
             IEmployeeService employeeService = new EmployeeService();
             Employee employee = employeeService.GetEmployee((int)Membership.GetUser().ProviderUserKey);
+
             using (EMEntitiesContext ctx = new EMEntitiesContext())
             {
 
