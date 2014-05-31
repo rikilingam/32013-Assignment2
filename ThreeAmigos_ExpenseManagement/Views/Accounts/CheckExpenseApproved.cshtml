@@ -12,7 +12,6 @@
     
     decimal? totalExpenseApproved = 0;
     decimal? companyMonthlyBudget = Model.FirstOrDefault().companyMonthlyBudget;
-    decimal? amountRemain = 0;
 
 <div class="panel panel-primary">
     
@@ -31,7 +30,6 @@
                 }
                 else
                 {
-
                     foreach (var supervisor in Model)
                     {
                         <table class="table">
@@ -57,12 +55,11 @@
                     
                         totalExpenseApproved = totalExpenseApproved + @supervisor.amountApproved;
                     }
-                    amountRemain = companyMonthlyBudget - totalExpenseApproved;
                     
-                    if (amountRemain >= 0)
+                    if (companyMonthlyBudget >= totalExpenseApproved)
                     {
                         <text>   <b>@String.Format("{0:C}", totalExpenseApproved)</b> has been approved from the company monthly budget of <b>@String.Format("{0:C}", companyMonthlyBudget)</b>. </text> <br />
-                        <text>   You currently have <b>@String.Format("{0:C}", amountRemain)</b> left for approval.</text>
+                        <text>   You currently have <b>@String.Format("{0:C}", companyMonthlyBudget - totalExpenseApproved)</b> left for approval.</text>
                     }
                     else
                     {
