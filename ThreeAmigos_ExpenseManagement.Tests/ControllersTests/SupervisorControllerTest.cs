@@ -83,7 +83,7 @@ namespace ThreeAmigos_ExpenseManagement.Tests.Controllers
         }
 
         [TestMethod]
-        public void HttpPost_ViewReports_ViewData()
+        public void HttpPost_ViewReports_ViewData_IsListOfExpenseReports()
         {
 
             SupervisorController controller = new SupervisorController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetTracker);
@@ -92,6 +92,55 @@ namespace ThreeAmigos_ExpenseManagement.Tests.Controllers
             var result = controller.ViewReports(ReportStatus.Submitted.ToString()) as ViewResult;
 
             Assert.IsInstanceOfType(result.ViewData.Model, typeof(List<ExpenseReport>));
+        }
+
+
+        [TestMethod]
+        public void HttpPost_ViewReports_CheckDepartmentIdOfReportAndEmployee_AreEqual()
+        {
+            Employee mockEmployee = mockEmployeeService.GetEmployee(1);
+            SupervisorController controller = new SupervisorController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetTracker);
+            MockHttpContext.SetFakeHttpContext(controller);
+
+            var result = controller.ViewReports(ReportStatus.Submitted.ToString()) as ViewResult;
+            var ExpenseReports = (List<ExpenseReport>)result.Model;
+            foreach (var report in ExpenseReports)
+            {
+                Assert.AreEqual(mockEmployee.Department.DepartmentId, report.ExpenseToDept);
+            }
+         }
+
+        [TestMethod]
+        public void HttpPost_ViewReports_CheckStatusOfReportAndStatusPassed_AreEqual()
+        {
+            Employee mockEmployee = mockEmployeeService.GetEmployee(1);
+            SupervisorController controller = new SupervisorController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetTracker);
+            MockHttpContext.SetFakeHttpContext(controller);
+
+            var result = controller.ViewReports(ReportStatus.Submitted.ToString()) as ViewResult;
+            var ExpenseReports = (List<ExpenseReport>)result.Model;
+            foreach (var report in ExpenseReports)
+            {
+                Assert.AreEqual(ReportStatus.Submitted.ToString(), report.Status);
+            }
+        }
+
+        [TestMethod]
+        public void ViewReports_ReportsAreDisplayedForCurrentMonthOfCurrentYear_IsTrue()
+        {
+            Employee mockEmployee = mockEmployeeService.GetEmployee(1);
+            int month = DateTime.Now.Month;
+            int year = DateTime.Now.Year;
+
+            SupervisorController controller = new SupervisorController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetTracker);
+            MockHttpContext.SetFakeHttpContext(controller);
+            var result = controller.ViewReports(ReportStatus.Submitted.ToString()) as ViewResult;
+            var ExpenseReports = (List<ExpenseReport>)result.Model;
+            foreach (var report in ExpenseReports)
+            {
+                Assert.IsTrue(month == report.CreateDate.Value.Month);
+                Assert.IsTrue(year == report.CreateDate.Value.Year);
+            }
         }
     }
 }
