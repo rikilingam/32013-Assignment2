@@ -200,7 +200,6 @@
     <Compile Include="Controllers\ConsultantController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="BusinessLogic\EmployeeService.cs" />
-    <Compile Include="DataAccess\AmountProcessedSupervisor.cs" />
     <Compile Include="DataAccess\BudgetTrackerDAL.cs" />
     <Compile Include="DataAccess\EmployeeDAL.cs" />
     <Compile Include="DataAccess\ExpenseReportDAL.cs" />
@@ -209,6 +208,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AmountProcessedSupervisor.cs" />
     <Compile Include="Models\Budget.cs" />
     <Compile Include="Models\EmployeePartial.cs" />
     <Compile Include="Models\ExpenseItemPartial.cs" />
