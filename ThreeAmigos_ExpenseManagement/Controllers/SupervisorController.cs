@@ -29,6 +29,14 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
             deptBudget.SetBudgetSpent(DateTime.Now.Month, DateTime.Now.Year);   
         }
 
+         public SupervisorController(IEmployeeService empService, IExpenseReportService rptService, Employee employee,IBudgetTracker budget)
+        {
+            employeeService = empService;
+            reportService = rptService;
+            this.employee = employee;
+            deptBudget = budget;  
+         }
+
         public ActionResult Index()
         {
             return View();
