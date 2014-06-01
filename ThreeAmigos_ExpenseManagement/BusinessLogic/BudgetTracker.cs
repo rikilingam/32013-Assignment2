@@ -93,7 +93,8 @@ namespace ThreeAmigos_ExpenseManagement.BusinessLogic
         {
             decimal? totalExpenseProcessedDepartment = 0;
             budgetAmount = department.MonthlyBudget;
-            totalExpenseProcessedDepartment = budgetTrackerDAL.TotalExpenseProcessByDepartment(month, year, department);
+           // totalExpenseProcessedDepartment = budgetTrackerDAL.TotalExpenseProcessByDepartment(month, year, department);
+            totalExpenseAmount = budgetTrackerDAL.TotalExpenseAmountByDept(department.DepartmentId);
             return (budgetAmount - totalExpenseProcessedDepartment);
         }
         
