@@ -190,6 +190,7 @@
     <Compile Include="BusinessLogic\CurrencyService.cs" />
     <Compile Include="BusinessLogic\ExpenseReportService.cs" />
     <Compile Include="BusinessLogic\IBudgetTracker.cs" />
+    <Compile Include="BusinessLogic\IConfigurationManger.cs" />
     <Compile Include="BusinessLogic\IEmployeeService.cs" />
     <Compile Include="BusinessLogic\IExpenseReportService.cs" />
     <Compile Include="BusinessLogic\MaximumDateAttribute.cs" />
@@ -244,6 +245,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ApproveExpensesViewModel.cs" />
     <Compile Include="ViewModels\ExpenseFormViewModel.cs" />
+    <Compile Include="ViewModels\ProcessExpensesViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-datetimepicker.css" />
