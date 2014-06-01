@@ -62,7 +62,7 @@ namespace ThreeAmigos_ExpenseManagement.DataAccess
 
                 var reports = from expenseReports in ctx.ExpenseReports 
                               where expenseReports.ApprovedDate.Value.Month == month && expenseReports.ApprovedDate.Value.Year == year
-                                    && expenseReports.ApprovedById != null &&( expenseReports.Status == "ApprovedBySupervisor" || expenseReports.Status == "ApprovedByAccounts") && department.DepartmentId == expenseReports.Department.DepartmentId
+                                    && expenseReports.ApprovedById != null && expenseReports.Status=="ApprovedByAccounts"
                               select expenseReports;
 
                 foreach (var expenseItems in reports)
