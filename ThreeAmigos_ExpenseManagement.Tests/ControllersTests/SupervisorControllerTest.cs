@@ -16,7 +16,10 @@ namespace ThreeAmigos_ExpenseManagement.Tests.Controllers
         IExpenseReportService mockReportService = new MockExpenseReportService();
         IEmployeeService mockEmployeeService = new MockEmployeeService();
         Employee mockEmployee;
-        IBudgetTracker mockBudgetTracker = new MockBudgetTracker();
+        static Department dept = new Department { DepartmentId = 1,DepartmentName="State Services",MonthlyBudget=10000 };
+
+
+        IBudgetService mockBudgetService = new MockBudgetService(dept);
      
        [TestInitialize]
        public void InitializeMockEmployee()
@@ -35,7 +38,7 @@ namespace ThreeAmigos_ExpenseManagement.Tests.Controllers
         [TestMethod]
         public void ViewReports_Returns_ActionResult()
         {
-            SupervisorController controller=new SupervisorController(mockEmployeeService,mockReportService,mockEmployee,mockBudgetTracker);
+            SupervisorController controller=new SupervisorController(mockEmployeeService,mockReportService,mockEmployee,mockBudgetService);
             MockHttpContext.SetFakeHttpContext(controller);
 
             var result=controller.ViewReports();
@@ -49,7 +52,7 @@ namespace ThreeAmigos_ExpenseManagement.Tests.Controllers
         public void ViewReports_Returns_View_ViewReports()
         {
             const string expectedViewName = "ViewReports";
-            SupervisorController controller = new SupervisorController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetTracker);
+            SupervisorController controller = new SupervisorController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetService);
             MockHttpContext.SetFakeHttpContext(controller);
           
             var result = controller.ViewReports() as ViewResult;
@@ -60,7 +63,7 @@ namespace ThreeAmigos_ExpenseManagement.Tests.Controllers
         [TestMethod]
         public void HttpPost_ViewReports_Returns_ActionResult()
         {
-            SupervisorController controller = new SupervisorController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetTracker);
+            SupervisorController controller = new SupervisorController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetService);
             MockHttpContext.SetFakeHttpContext(controller);
 
             var result = controller.ViewReports(ReportStatus.Submitted.ToString());
@@ -74,7 +77,7 @@ namespace ThreeAmigos_ExpenseManagement.Tests.Controllers
         public void HttpPost_ViewReports_Returns_View_ViewReports()
         {
             const string expectedViewName = "ViewReports";
-            SupervisorController controller = new SupervisorController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetTracker);
+            SupervisorController controller = new SupervisorController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetService);
             MockHttpContext.SetFakeHttpContext(controller);
 
             var result = controller.ViewReports(ReportStatus.Submitted.ToString()) as ViewResult;
@@ -86,7 +89,7 @@ namespace ThreeAmigos_ExpenseManagement.Tests.Controllers
         public void HttpPost_ViewReports_ViewData_IsListOfExpenseReports()
         {
 
-            SupervisorController controller = new SupervisorController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetTracker);
+            SupervisorController controller = new SupervisorController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetService);
             MockHttpContext.SetFakeHttpContext(controller);
 
             var result = controller.ViewReports(ReportStatus.Submitted.ToString()) as ViewResult;
@@ -94,12 +97,11 @@ namespace ThreeAmigos_ExpenseManagement.Tests.Controllers
             Assert.IsInstanceOfType(result.ViewData.Model, typeof(List<ExpenseReport>));
         }
 
-
         [TestMethod]
         public void HttpPost_ViewReports_CheckDepartmentIdOfReportAndEmployee_AreEqual()
         {
             Employee mockEmployee = mockEmployeeService.GetEmployee(1);
-            SupervisorController controller = new SupervisorController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetTracker);
+            SupervisorController controller = new SupervisorController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetService);
             MockHttpContext.SetFakeHttpContext(controller);
 
             var result = controller.ViewReports(ReportStatus.Submitted.ToString()) as ViewResult;
@@ -114,7 +116,7 @@ namespace ThreeAmigos_ExpenseManagement.Tests.Controllers
         public void HttpPost_ViewReports_CheckStatusOfReportAndStatusPassed_AreEqual()
         {
             Employee mockEmployee = mockEmployeeService.GetEmployee(1);
-            SupervisorController controller = new SupervisorController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetTracker);
+            SupervisorController controller = new SupervisorController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetService);
             MockHttpContext.SetFakeHttpContext(controller);
 
             var result = controller.ViewReports(ReportStatus.Submitted.ToString()) as ViewResult;
@@ -132,7 +134,7 @@ namespace ThreeAmigos_ExpenseManagement.Tests.Controllers
             int month = DateTime.Now.Month;
             int year = DateTime.Now.Year;
 
-            SupervisorController controller = new SupervisorController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetTracker);
+            SupervisorController controller = new SupervisorController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetService);
             MockHttpContext.SetFakeHttpContext(controller);
             var result = controller.ViewReports(ReportStatus.Submitted.ToString()) as ViewResult;
             var ExpenseReports = (List<ExpenseReport>)result.Model;
@@ -142,5 +144,123 @@ namespace ThreeAmigos_ExpenseManagement.Tests.Controllers
                 Assert.IsTrue(year == report.CreateDate.Value.Year);
             }
         }
+
+
+        [TestMethod]
+        public void CheckBalance_Returns_View_CheckBalance()
+        {
+            const string expectedViewName = "CheckBalance";
+            SupervisorController controller = new SupervisorController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetService);
+            MockHttpContext.SetFakeHttpContext(controller);
+
+            var result = controller.CheckBalance() as ViewResult;
+
+            Assert.AreEqual(expectedViewName, result.ViewName, "View names do not match, expected view name is{0}", expectedViewName);
+        }
+
+        [TestMethod]
+        public void CheckBalance_ViewData_IsBudget()
+        {
+            SupervisorController controller = new SupervisorController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetService);
+            MockHttpContext.SetFakeHttpContext(controller);
+            var result = controller.CheckBalance() as ViewResult;
+            Assert.IsInstanceOfType(result.ViewData.Model, typeof(Budget));
+        }
+
+        [TestMethod]
+        public void CheckBalance_CorrectMoneyRemaining_IsReturned()
+        {
+            SupervisorController controller = new SupervisorController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetService);
+            MockHttpContext.SetFakeHttpContext(controller);
+            var result = controller.CheckBalance() as ViewResult;
+            var budget = (Budget)result.Model;
+
+            decimal? MoneyRemaining = 5500;
+
+            Assert.AreEqual(MoneyRemaining, budget.RemainingBudget);
+        }
+
+        [TestMethod]
+        public void CheckBalance_CorrectAmountSpent_IsReturned()
+        {
+            SupervisorController controller = new SupervisorController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetService);
+            MockHttpContext.SetFakeHttpContext(controller);
+            var result = controller.CheckBalance() as ViewResult;
+            var budget = (Budget)result.Model;
+
+            decimal? AmountSpent = 4500;
+
+            Assert.AreEqual(AmountSpent, budget.Spent);
+        }
+
+                [TestMethod]
+        public void ApproveExpenses_Returns_ActionResult()
+        {
+            SupervisorController controller = new SupervisorController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetService);
+            MockHttpContext.SetFakeHttpContext(controller);
+
+            var result = controller.ApproveExpenses();
+
+            Assert.IsInstanceOfType(result, typeof(ActionResult), "Result is not of ActionResult type");
+        
+        }
+
+        [TestMethod]
+        public void ApproveExpenses_Returns_View_ApproveExpenses()
+        {
+            const string expectedViewName ="ApproveExpenses";
+            SupervisorController controller = new SupervisorController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetService);
+            MockHttpContext.SetFakeHttpContext(controller);
+
+            var result = controller.ApproveExpenses() as ViewResult;
+
+            Assert.AreEqual(expectedViewName, result.ViewName, "View names do not match, expected view name is{0}", expectedViewName);
+        }
+
+        [TestMethod]
+        public void ApproveExpenses_ViewData_IsApproveExpensesViewModel()
+        {
+            SupervisorController controller = new SupervisorController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetService);
+            MockHttpContext.SetFakeHttpContext(controller);
+            var result = controller.ApproveExpenses() as ViewResult;
+            Assert.IsInstanceOfType(result.ViewData.Model, typeof(ApproveExpensesViewModel));
+        }
+
+
+
+        [TestMethod]
+        public void ApproveExpense_Returns_ActionResult()
+        {
+            SupervisorController controller = new SupervisorController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetService);
+            MockHttpContext.SetFakeHttpContext(controller);
+
+            var result = controller.ApproveExpense(1,"Approve");
+
+            Assert.IsInstanceOfType(result, typeof(ActionResult), "Result is not of ActionResult type");
+
+        }
+
+        [TestMethod]
+        public void ApproveExpense_Returns_View_ApproveExpenses()
+        {
+            const string expectedViewName = "ApproveExpenses";
+            SupervisorController controller = new SupervisorController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetService);
+            MockHttpContext.SetFakeHttpContext(controller);
+
+            var result = controller.ApproveExpense(1, "Approve") as ViewResult;
+
+            Assert.AreEqual(expectedViewName, result.ViewName, "View names do not match, expected view name is{0}", expectedViewName);
+        }
+
+        [TestMethod]
+        public void ApproveExpense_ViewData_IsApproveExpensesViewModel()
+        {
+            SupervisorController controller = new SupervisorController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetService);
+            MockHttpContext.SetFakeHttpContext(controller);
+            var result = controller.ApproveExpense(1, "Approve") as ViewResult;
+            Assert.IsInstanceOfType(result.ViewData.Model, typeof(ApproveExpensesViewModel));
+        }
+
+        
     }
 }
