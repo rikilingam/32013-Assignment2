@@ -72,5 +72,10 @@ namespace ThreeAmigos_ExpenseManagement.Tests.MockBusinessLogic
 
         public void ProcessReport(int? itemid, string action)
         { }
+
+        public List<AmountProcessedSupervisor> GetAmountSupervisor()
+        {
+            return null;
+        }
     }
 }
