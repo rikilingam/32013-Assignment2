@@ -47,7 +47,7 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
             ApproveExpensesViewModel expenses = new ApproveExpensesViewModel();
             expenses.BudgetTracker = deptBudget;
             expenses.ExpenseReports = reportService.GetReportsBySupervisor(ReportStatus.Submitted.ToString());
-            return View(expenses);
+            return View("ApproveExpenses",expenses);
         }
 
         public ActionResult ApproveExpense(int? itemid, string act)
@@ -73,7 +73,7 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
 
         public ActionResult ViewReports()
         {
-            return View();
+            return View("ViewReports");
         }
 
         [HttpPost]
@@ -81,7 +81,7 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
         {
             List<ExpenseReport> expReports = new List<ExpenseReport>();
             expReports = reportService.GetReportsBySupervisor(status);
-            return View(expReports);
+            return View("ViewReports",expReports);
         }
 
         public ActionResult CheckBalance()
@@ -89,7 +89,7 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
             //Budget budget = new Budget();
             //budget.totalAmountRemaining = deptBudget.RemainingAmount;
             //budget.totalAmountSpent = deptBudget.TotalExpenseAmount;
-            return View(deptBudget.Budget);
+            return View("CheckBalance",deptBudget.Budget);
         }
     }
 
