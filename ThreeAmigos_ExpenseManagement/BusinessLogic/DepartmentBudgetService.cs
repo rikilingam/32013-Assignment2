@@ -23,13 +23,15 @@ namespace ThreeAmigos_ExpenseManagement.BusinessLogic
 
         public decimal RemainingAmount(int month, int year)
         {
-            Budget.Spent = budgetTrackerDAL.TotalExpenseProcessByDepartment(month, year, department);
+          //  Budget.Spent = budgetTrackerDAL.TotalExpenseProcessByDepartment(month, year, department);
+            Budget.Spent = budgetTrackerDAL.TotalExpenseAmountByDept(department.DepartmentId);
             return Budget.RemainingBudget??0;
         }
 
         public void SetBudgetSpent(int month, int year)
         {
-            Budget.Spent = budgetTrackerDAL.TotalExpenseProcessByDepartment(month, year, department);
+            Budget.Spent = budgetTrackerDAL.TotalExpenseAmountByDept(department.DepartmentId);
+         //   Budget.Spent = budgetTrackerDAL.TotalExpenseProcessByDepartment(month, year, department);
         }
 
         public bool IsBudgetExceeded(decimal? amount)
@@ -51,7 +53,8 @@ namespace ThreeAmigos_ExpenseManagement.BusinessLogic
             //decimal? totalExpenseProcessedDepartment = 0;
             //budgetAmount = department.MonthlyBudget;
             //totalExpenseProcessedDepartment = budgetTrackerDAL.TotalExpenseProcessByDepartment(month, year, department);
-            deptBudget.Spent = budgetTrackerDAL.TotalExpenseProcessByDepartment(month, year, department);
+           // deptBudget.Spent = budgetTrackerDAL.TotalExpenseProcessByDepartment(month, year, department);
+            deptBudget.Spent = budgetTrackerDAL.TotalExpenseAmountByDept(department.DepartmentId);
             return (deptBudget.RemainingBudget);
         }
     }
