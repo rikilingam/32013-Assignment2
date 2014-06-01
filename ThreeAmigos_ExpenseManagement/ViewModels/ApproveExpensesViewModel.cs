@@ -10,7 +10,7 @@ namespace ThreeAmigos_ExpenseManagement.ViewModels
     public class ApproveExpensesViewModel
     {
         public List<ExpenseReport> ExpenseReports { get; set; }
-        public IBudgetTracker BudgetTracker { get; set; }
+        public IBudgetService BudgetTracker { get; set; }
 
         public ApproveExpensesViewModel()
         {

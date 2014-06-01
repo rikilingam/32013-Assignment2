@@ -190,7 +190,7 @@
     <Compile Include="BusinessLogic\CurrencyService.cs" />
     <Compile Include="BusinessLogic\DepartmentBudgetService.cs" />
     <Compile Include="BusinessLogic\ExpenseReportService.cs" />
-    <Compile Include="BusinessLogic\IBudgetTracker.cs" />
+    <Compile Include="BusinessLogic\IBudgetService.cs" />
     <Compile Include="BusinessLogic\IEmployeeService.cs" />
     <Compile Include="BusinessLogic\IExpenseReportService.cs" />
     <Compile Include="BusinessLogic\MaximumDateAttribute.cs" />

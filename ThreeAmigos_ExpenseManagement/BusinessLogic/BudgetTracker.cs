@@ -8,7 +8,7 @@ using ThreeAmigos_ExpenseManagement.Models;
 
 namespace ThreeAmigos_ExpenseManagement.BusinessLogic
 {
-    public class BudgetTracker : IBudgetTracker
+    public class BudgetTracker : IBudgetService
     {
         public Budget Budget { get; set; }
         //IConfigurationDAL config;

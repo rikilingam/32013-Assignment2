@@ -97,17 +97,17 @@
                     <td>
                         @Html.ActionLink(
                             "Approve",
-                            "ProcessExpenses",
+                            "ProcessExpenseItem",
                             "Accounts",
-                            new { itemid = ExpenseReport.ExpenseId, act = "Approve" },
+                            new { expenseId = ExpenseReport.ExpenseId, action = "Approve" },
                             new { @class = "btn btn-success", onclick = "return ConfirmApprove(" + totalAmount + "," + companyBudgetRemain + ")" }
                         )
                         &nbsp;
                         @Html.ActionLink(
                             linkText: "Reject",
-                            actionName: "ProcessExpenses",
+                            actionName: "ProcessExpenseItem",
                             controllerName: "Accounts",
-                            routeValues: new { itemid = ExpenseReport.ExpenseId, act = "Reject" },
+                            routeValues: new { expenseId = ExpenseReport.ExpenseId, action = "Reject" },
                             htmlAttributes: new { @class = "btn btn-success" }
                         )                        
                         <b>Total:</b></td>

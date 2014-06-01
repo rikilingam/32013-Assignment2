@@ -14,7 +14,7 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
 {
     public class SupervisorController : Controller
     {
-        private IBudgetTracker deptBudget;        
+        private IBudgetService deptBudget;        
         private IExpenseReportService reportService;
         private IEmployeeService employeeService;
         private Employee employee;      
@@ -29,7 +29,7 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
             deptBudget.SetBudgetSpent(DateTime.Now.Month, DateTime.Now.Year);   
         }
 
-         public SupervisorController(IEmployeeService empService, IExpenseReportService rptService, Employee employee,IBudgetTracker budget)
+         public SupervisorController(IEmployeeService empService, IExpenseReportService rptService, Employee employee,IBudgetService budget)
         {
             employeeService = empService;
             reportService = rptService;

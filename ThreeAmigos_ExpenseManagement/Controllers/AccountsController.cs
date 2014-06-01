@@ -20,11 +20,11 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
         IExpenseReportService reportService = new ExpenseReportService();
         private IEmployeeService employeeService;
         private Employee employee;
-        IBudgetTracker budgetTracker;
+        IBudgetService budgetTracker;
         IConfigurationDAL config;
-        int month = DateTime.Now.Month;
-        int year = DateTime.Now.Year;
 
+        readonly DateTime TODAY = DateTime.Now;
+        
         public AccountsController()
         {
             reportService = new ExpenseReportService();
@@ -45,25 +45,42 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
         }
         
 
-        public ActionResult ProcessExpenses(int? itemid, string act)
+        public ActionResult ProcessExpenses()
         {
             ProcessExpensesViewModel expenseForm = new ProcessExpensesViewModel();
 
-            if (itemid == null)
-            {
+            //if (itemid == null)
+            //{
                 expenseForm.ExpenseReports = reportService.GetReportsByAccounts(ReportStatus.ApprovedBySupervisor.ToString());   // "ApprovedBySupervisor");
                 expenseForm.BudgetTracker = budgetTracker;
-                expenseForm.BudgetTracker.SetBudgetSpent(month,year);
+                expenseForm.BudgetTracker.SetBudgetSpent(TODAY.Month, TODAY.Year);
                 return View(expenseForm);
-            }
-            else
-            {
-                reportService.ProcessReport(itemid, act);
-                expenseForm.ExpenseReports = reportService.GetReportsByAccounts(ReportStatus.ApprovedBySupervisor.ToString()); // "ApprovedBySupervisor");
-                expenseForm.BudgetTracker = budgetTracker;
-                expenseForm.BudgetTracker.SetBudgetSpent(month, year);
-                return View(expenseForm);
-            }
+            //}
+            //else
+            //{
+            //    reportService.ProcessReport(itemid, act);
+            //    expenseForm.ExpenseReports = reportService.GetReportsByAccounts(ReportStatus.ApprovedBySupervisor.ToString()); // "ApprovedBySupervisor");
+            //    expenseForm.BudgetTracker = budgetTracker;
+            //    expenseForm.BudgetTracker.SetBudgetSpent(TODAY.Month, TODAY.Year);
+            //    return View(expenseForm);
+            //}
+        }
+
+        public ActionResult ProcessExpenseItem(int expenseId, string action)
+        {
+            reportService.ProcessReport(expenseId, action);
+                       
+
+            return RedirectToAction("ProcessExpenses");
+
+            //ProcessExpensesViewModel expenseForm = new ProcessExpensesViewModel();                        
+            
+            //expenseForm.ExpenseReports = reportService.GetReportsByAccounts(ReportStatus.ApprovedBySupervisor.ToString()); // "ApprovedBySupervisor");
+            //expenseForm.BudgetTracker = budgetTracker;
+            //expenseForm.BudgetTracker.SetBudgetSpent(TODAY.Month, TODAY.Year);
+
+            //return View(expenseForm);
+
         }
 
 

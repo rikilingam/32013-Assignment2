@@ -7,7 +7,7 @@ using ThreeAmigos_ExpenseManagement.Models;
 
 namespace ThreeAmigos_ExpenseManagement.BusinessLogic
 {
-    public class DepartmentBudgetService : IBudgetTracker
+    public class DepartmentBudgetService : IBudgetService
     {
         Department department;        
         BudgetTrackerDAL budgetTrackerDAL;

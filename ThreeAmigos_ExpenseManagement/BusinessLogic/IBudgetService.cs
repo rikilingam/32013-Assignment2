@@ -6,7 +6,7 @@ using ThreeAmigos_ExpenseManagement.Models;
 
 namespace ThreeAmigos_ExpenseManagement.BusinessLogic
 {
-    public interface IBudgetTracker
+    public interface IBudgetService
     {
         Budget Budget { get; set; }
         void SetBudgetSpent(int month, int year);
