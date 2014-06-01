@@ -28,6 +28,14 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
             deptBudget = new BudgetTracker(employee.Department);
         }
 
+         public SupervisorController(IEmployeeService empService, IExpenseReportService rptService, Employee employee,IBudgetTracker budget)
+        {
+            employeeService = empService;
+            reportService = rptService;
+            this.employee = employee;
+            deptBudget = budget;  
+         }
+
         public ActionResult Index()
         {
             return View();
