@@ -8,11 +8,18 @@ namespace ThreeAmigos_ExpenseManagement.DataAccess
 {
     public class FileUploader
     {
-        string destinationPath;
+        IConfigurationDAL config;        
+        readonly string ReceiptKeyName = "ReceiptItemFilePath"; // Key name in web.config for the receipt upload location
 
         public FileUploader()
         {
-            destinationPath = ConfigurationManager.AppSettings["ReceiptItemFilePath"];
+            config = new ConfigurationDAL();
+            
+        }
+
+        public FileUploader(IConfigurationDAL config)
+        {
+            this.config = config;
         }
 
         //Upload file to file path defined in web.config
@@ -26,12 +33,12 @@ namespace ThreeAmigos_ExpenseManagement.DataAccess
                 {
                     newFileName = GenerateNewFileName() + ".pdf";
 
-                    fileUpload.SaveAs(System.Web.HttpContext.Current.Server.MapPath(destinationPath) + newFileName);
+                    fileUpload.SaveAs(System.Web.HttpContext.Current.Server.MapPath(config.GetAppSetting(ReceiptKeyName) as string) + newFileName);
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception("There was a problem uploading file " + fileUpload.FileName + ": " + ex.Message);
+                throw new Exception("There was a problem uploading the file " + fileUpload.FileName + ": " + ex.Message);
             }
 
             return newFileName;

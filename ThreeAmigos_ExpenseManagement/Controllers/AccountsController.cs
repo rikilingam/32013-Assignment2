@@ -16,6 +16,26 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
 {
     public class AccountsController : Controller
     {
+
+        IExpenseReportService reportService = new ExpenseReportService();
+        private IEmployeeService employeeService;
+        private Employee employee;
+        IBudgetTracker budgetTracker;
+        IConfigurationDAL config;
+        int month = DateTime.Now.Month;
+        int year = DateTime.Now.Year;
+
+        public AccountsController()
+        {
+            reportService = new ExpenseReportService();
+            employeeService = new EmployeeService();
+            //budgetTracker = new BudgetTracker();
+            config = new ConfigurationDAL();            
+            budgetTracker = new CompanyBudgetService(decimal.Parse((string)config.GetAppSetting("CompanyMonthlyBudget")));
+            employee = employeeService.GetEmployee((int)Membership.GetUser().ProviderUserKey);
+        }
+
+
         //
         // GET: /Accounts/
 
@@ -23,23 +43,7 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
         {
             return View();
         }
-
-        IExpenseReportService reportService = new ExpenseReportService();
-        private IEmployeeService employeeService;
-        private Employee employee;
-        BudgetTracker bud;
-        int month = DateTime.Now.Month;
-        int year = DateTime.Now.Year;
-
-
-        public AccountsController()
-        {
-            reportService = new ExpenseReportService();
-            employeeService = new EmployeeService();
-            bud = new BudgetTracker();
-            employee = employeeService.GetEmployee((int)Membership.GetUser().ProviderUserKey);
-        }
-
+        
 
         public ActionResult ProcessExpenses(int? itemid, string act)
         {
@@ -48,12 +52,16 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
             if (itemid == null)
             {
                 expenseForm.ExpenseReports = reportService.GetReportsByAccounts(ReportStatus.ApprovedBySupervisor.ToString());   // "ApprovedBySupervisor");
+                expenseForm.BudgetTracker = budgetTracker;
+                expenseForm.BudgetTracker.SetBudgetSpent(month,year);
                 return View(expenseForm);
             }
             else
             {
                 reportService.ProcessReport(itemid, act);
                 expenseForm.ExpenseReports = reportService.GetReportsByAccounts(ReportStatus.ApprovedBySupervisor.ToString()); // "ApprovedBySupervisor");
+                expenseForm.BudgetTracker = budgetTracker;
+                expenseForm.BudgetTracker.SetBudgetSpent(month, year);
                 return View(expenseForm);
             }
         }

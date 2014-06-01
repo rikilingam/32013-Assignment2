@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using ThreeAmigos_ExpenseManagement.DataAccess;
@@ -9,6 +10,9 @@ namespace ThreeAmigos_ExpenseManagement.BusinessLogic
 {
     public class BudgetTracker : IBudgetTracker
     {
+        public Budget Budget { get; set; }
+        //IConfigurationDAL config;
+
         private decimal? budgetAmount;
         private decimal? totalExpenseAmount;
         private decimal? totalExpenseProcessedCompany;
@@ -21,15 +25,34 @@ namespace ThreeAmigos_ExpenseManagement.BusinessLogic
             budgetAmount = 0;
             totalExpenseAmount = 0;
             totalExpenseProcessedCompany = 0;
-            companyMonthlyBudget = CurrencyService.GetCompanyMonthlyBudget(); 
+            companyMonthlyBudget = GetCompanyMonthlyBudget(); 
         }
 
         public BudgetTracker(Department department)
         {
             budgetTrackerDAL = new BudgetTrackerDAL();
             budgetAmount = department.MonthlyBudget;
-            companyMonthlyBudget = CurrencyService.GetCompanyMonthlyBudget(); 
+            //companyMonthlyBudget = GetCompanyMonthlyBudget(); 
             totalExpenseAmount = budgetTrackerDAL.TotalExpenseAmountByDept(department.DepartmentId);
+        }
+
+        public BudgetTracker(Budget budget)
+        {
+            Budget = budget;            
+        }
+
+        private decimal GetCompanyMonthlyBudget()
+        {
+            decimal budget = 0;
+
+            if (decimal.TryParse(ConfigurationManager.AppSettings["CompanyMonthlyBudget"], out budget) && budget > 0)
+            {
+                return budget;
+            }
+            else
+            {
+                return 0;
+            }
         }
 
         public decimal? TotalExpenseAmount
@@ -65,6 +88,7 @@ namespace ThreeAmigos_ExpenseManagement.BusinessLogic
         }
 
 
+
         public decimal? GetDepartmentBudgetRemain(int month, int year, Department department)
         {
             decimal? totalExpenseProcessedDepartment = 0;
@@ -86,13 +110,13 @@ namespace ThreeAmigos_ExpenseManagement.BusinessLogic
             }
         }
 
-        public decimal? RemainingAmount
-        {
-            get
-            {
-                return budgetAmount - totalExpenseAmount;
-            }
-        }
+        //public decimal? RemainingAmount
+        //{
+        //    get
+        //    {
+        //        return budgetAmount - totalExpenseAmount;
+        //    }
+        //}
 
         public bool IsBudgetExceeded(decimal? amount)
         {
@@ -106,9 +130,23 @@ namespace ThreeAmigos_ExpenseManagement.BusinessLogic
             }
         }
 
-        public decimal? CheckReportTotal(int? expenseId)
+        //public decimal? CheckReportTotal(int? expenseId)
+        //{
+        //    return budgetTrackerDAL.CheckReportTotal(expenseId);
+        //}
+
+
+        //dummy methods
+        public decimal RemainingAmount(int month, int year)
         {
-            return budgetTrackerDAL.CheckReportTotal(expenseId);
+            totalExpenseProcessedCompany = budgetTrackerDAL.TotalExpenseProcessByCompany(month, year);
+            return (companyMonthlyBudget - totalExpenseProcessedCompany) ?? 0;
+        }
+
+
+        public void SetBudgetSpent(int month, int year)
+        {
+            //Budget.Spent = budgetTrackerDAL.TotalExpenseProcessByDepartment(month, year);
         }
     }
 }

@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using ThreeAmigos_ExpenseManagement.BusinessLogic;
+using ThreeAmigos_ExpenseManagement.DataAccess;
 using ThreeAmigos_ExpenseManagement.Models;
 
-namespace ThreeAmigos_ExpenseManagement.DataAccess
+namespace ThreeAmigos_ExpenseManagement.BusinessLogic
 {
     public class EmployeeService : IEmployeeService
     {

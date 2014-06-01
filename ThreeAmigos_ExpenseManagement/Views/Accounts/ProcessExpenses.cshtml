@@ -11,8 +11,10 @@
 
     int month = DateTime.Now.Month;
     int year = DateTime.Now.Year;
-    decimal? companyBudgetRemain = Model.BudgetTracker.CompanyBudgetRemain(month, year);
-    decimal? companyMonthlyBudget = Model.BudgetTracker.CompanyMonthlyBudget;
+    //decimal? companyBudgetRemain = Model.BudgetTracker.(month, year);
+    decimal? companyBudgetRemain = Model.BudgetTracker.Budget.RemainingBudget;
+    //decimal? companyMonthlyBudget = Model.BudgetTracker.CompanyMonthlyBudget;
+    decimal? companyMonthlyBudget = Model.BudgetTracker.Budget.BudgetAmount;
     decimal? usedAmount = companyMonthlyBudget - companyBudgetRemain;
     
 @helper HighlightOverBudget(decimal? spent, decimal? remainingAmount)

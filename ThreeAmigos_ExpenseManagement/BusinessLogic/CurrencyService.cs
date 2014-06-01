@@ -3,18 +3,35 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Web;
+using ThreeAmigos_ExpenseManagement.DataAccess;
 using ThreeAmigos_ExpenseManagement.Models;
 
 namespace ThreeAmigos_ExpenseManagement.BusinessLogic
 {
-    public static class CurrencyService
+    public class CurrencyService
     {
+        IConfigurationDAL config;
 
-        private static decimal GetRate(string currency)
+        public CurrencyService()
+        {
+            config = new ConfigurationDAL();
+        }
+
+        public CurrencyService(IConfigurationDAL config)
+        {
+            this.config = config;
+        }
+
+        /// <summary>
+        /// Get the currency rate from the web.config for a given currency
+        /// </summary>
+        /// <param name="currency">The currency short code</param>
+        /// <returns>returns the rate</returns>
+        private decimal GetRate(string currency)
         {
             decimal rate = 0;
-
-            if (decimal.TryParse(ConfigurationManager.AppSettings[currency], out rate) && rate > 0)
+                        
+            if (decimal.TryParse(config.GetAppSetting(currency) as string, out rate) && rate > 0)
             {
                 return rate;
             }
@@ -24,8 +41,14 @@ namespace ThreeAmigos_ExpenseManagement.BusinessLogic
             }
         }
 
-        public static decimal? CalcAud(decimal? amount, string currency)
-        {                       
+        /// <summary>
+        /// Calculate AUD value of a given amount in non-AUD currency
+        /// </summary>
+        /// <param name="amount">Original amount</param>
+        /// <param name="currency">The currency code</param>
+        /// <returns>AUD value</returns>
+        public decimal? CalcAud(decimal? amount, string currency)
+        {
             decimal? audAmount = 0;
 
             if (currency == "AUD" && amount > 0)
@@ -38,20 +61,6 @@ namespace ThreeAmigos_ExpenseManagement.BusinessLogic
             }
 
             return audAmount;
-        }
-
-        public static decimal GetCompanyMonthlyBudget()
-        {
-            decimal budget = 0;
-
-            if (decimal.TryParse(ConfigurationManager.AppSettings["CompanyMonthlyBudget"], out budget) && budget > 0)
-            {
-                return budget;
-            }
-            else
-            {
-                return 0;
-            }
         }
     }
 }

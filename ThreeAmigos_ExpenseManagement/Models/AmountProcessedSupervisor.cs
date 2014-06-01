@@ -10,6 +10,13 @@ namespace ThreeAmigos_ExpenseManagement.Models
     {
         public string Fullname { get; set; }
         public decimal? amountApproved { get; set; }
-        public decimal? companyMonthlyBudget = CurrencyService.GetCompanyMonthlyBudget();
+        public decimal? companyMonthlyBudget { get; set; }
+
+        public AmountProcessedSupervisor()
+        {
+            
+        }
+        
+        // = CurrencyService.GetCompanyMonthlyBudget();
     }
 }

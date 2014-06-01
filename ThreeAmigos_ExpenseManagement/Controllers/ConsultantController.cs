@@ -21,12 +21,16 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
     {
         private IExpenseReportService reportService;
         private IEmployeeService employeeService;
+        private CurrencyService currencyService = new CurrencyService();
+        private FileUploader fileUploader = new FileUploader();
         private Employee employee;
 
         public ConsultantController()
         {
             reportService = new ExpenseReportService();
             employeeService = new EmployeeService();
+            currencyService = new CurrencyService();
+            fileUploader = new FileUploader();
             employee = employeeService.GetEmployee((int)Membership.GetUser().ProviderUserKey);
         }
 
@@ -61,7 +65,7 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
 
             expenseForm.ExpenseReport = expenseReport;
             TempData["msg"] = "There are currently no expense items";
-            return View("CreateExpense",expenseForm);
+            return View("CreateExpense", expenseForm);
 
         }
 
@@ -76,9 +80,8 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
             if (ModelState.IsValid)
             {
                 ExpenseReport expenseReport = new ExpenseReport();
-                FileUploader fileUploader = new FileUploader();
-
-                expenseForm.ExpenseItem.AudAmount = CurrencyService.CalcAud(expenseForm.ExpenseItem.Amount, expenseForm.ExpenseItem.Currency);
+                
+                expenseForm.ExpenseItem.AudAmount = currencyService.CalcAud(expenseForm.ExpenseItem.Amount, expenseForm.ExpenseItem.Currency);
 
                 expenseForm.ExpenseItem.ReceiptFileName = fileUploader.Upload(expenseForm.ReceiptFile);
 
@@ -92,7 +95,7 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
                 else
                 {
                     expenseReport.ExpenseItems.Add(expenseForm.ExpenseItem);
-                    Session["_expenseReport"] = expenseReport;                    
+                    Session["_expenseReport"] = expenseReport;
                 }
 
                 expenseForm.ExpenseReport = expenseReport;
@@ -124,7 +127,7 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
             {
                 return RedirectToAction("CreateExpense");
             }
-            
+
         }
 
 

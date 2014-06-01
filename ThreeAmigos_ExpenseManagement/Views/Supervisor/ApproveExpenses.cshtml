@@ -8,14 +8,14 @@
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
-    decimal? remain = Model.BudgetTracker.RemainingAmount;
+    decimal? remain = Model.BudgetTracker.Budget.RemainingBudget;
    <div>  </div>
     <div class="panel panel-primary">
         
         <div class="panel-heading">
             <h3 class="panel-title">Expenses awaiting approval</h3>
         </div>
-        You currently have $<b> @Model.BudgetTracker.RemainingAmount</b> from your departments monthly budget of $<b>@Model.BudgetTracker.BudgetAmount</b>
+        You currently have $<b> @Model.BudgetTracker.Budget.RemainingBudget</b> from your departments monthly budget of $<b>@Model.BudgetTracker.Budget.BudgetAmount</b>
             
         <table class="table">
           <tr><td></td></tr> 
