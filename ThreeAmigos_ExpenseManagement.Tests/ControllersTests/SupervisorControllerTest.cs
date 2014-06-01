@@ -168,32 +168,6 @@ namespace ThreeAmigos_ExpenseManagement.Tests.Controllers
         }
 
         [TestMethod]
-        public void CheckBalance_CorrectMoneyRemaining_IsReturned()
-        {
-            SupervisorController controller = new SupervisorController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetService);
-            MockHttpContext.SetFakeHttpContext(controller);
-            var result = controller.CheckBalance() as ViewResult;
-            var budget = (Budget)result.Model;
-
-            decimal? MoneyRemaining = 5500;
-
-            Assert.AreEqual(MoneyRemaining, budget.RemainingBudget);
-        }
-
-        [TestMethod]
-        public void CheckBalance_CorrectAmountSpent_IsReturned()
-        {
-            SupervisorController controller = new SupervisorController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetService);
-            MockHttpContext.SetFakeHttpContext(controller);
-            var result = controller.CheckBalance() as ViewResult;
-            var budget = (Budget)result.Model;
-
-            decimal? AmountSpent = 4500;
-
-            Assert.AreEqual(AmountSpent, budget.Spent);
-        }
-
-                [TestMethod]
         public void ApproveExpenses_Returns_ActionResult()
         {
             SupervisorController controller = new SupervisorController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetService);
