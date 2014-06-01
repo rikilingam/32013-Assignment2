@@ -27,34 +27,34 @@ namespace ThreeAmigos_ExpenseManagement.Tests.MockBusinessLogic
         public List<ExpenseReport> GetReportsBySupervisor(string status)
         {
         //    return reportDAL.GetReportsBySupervisor(status);
-            //List<ExpenseReport> expReport = new List<ExpenseReport>();
-            //expReport.Add(new ExpenseReport
-            // {
-            //     ExpenseId = 1,
-            //     CreateDate = Convert.ToDateTime("29-May-14 10:23:30 PM"),
-            //     CreatedById = 1,
-            //     Status = ReportStatus.Submitted.ToString(),
-            //     ExpenseToDept = 1
-            // });
-            //expReport.Add(new ExpenseReport
-            //{
-            //    ExpenseId = 2,
-            //    CreateDate = Convert.ToDateTime("29-May-14 10:23:30 PM"),
-            //    CreatedById = 1,
-            //    Status = ReportStatus.Submitted.ToString(),
-            //    ExpenseToDept = 1
-            //});
-            //expReport.Add(new ExpenseReport
-            //{
-            //    ExpenseId = 3,
-            //    CreateDate = Convert.ToDateTime("29-May-14 10:23:30 PM"),
-            //    CreatedById = 2,
-            //    Status = ReportStatus.Submitted.ToString(),
-            //    ExpenseToDept = 1
-            //});
+            List<ExpenseReport> expReport = new List<ExpenseReport>();
+            expReport.Add(new ExpenseReport
+             {
+                 ExpenseId = 1,
+                 CreateDate = Convert.ToDateTime("29-Jun-14 10:23:30 PM"),
+                 CreatedById = 1,
+                 Status = ReportStatus.Submitted.ToString(),
+                 ExpenseToDept = 1
+             });
+            expReport.Add(new ExpenseReport
+            {
+                ExpenseId = 2,
+                CreateDate = Convert.ToDateTime("29-Jun-14 10:23:30 PM"),
+                CreatedById = 1,
+                Status = ReportStatus.Submitted.ToString(),
+                ExpenseToDept = 1
+            });
+            expReport.Add(new ExpenseReport
+            {
+                ExpenseId = 3,
+                CreateDate = Convert.ToDateTime("29-Jun-14 10:23:30 PM"),
+                CreatedById = 2,
+                Status = ReportStatus.Submitted.ToString(),
+                ExpenseToDept = 1
+            });
 
-            //return expReport;
-            return null;
+            return expReport;
+           // return null;
 
               
                
