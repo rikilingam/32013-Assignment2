@@ -43,6 +43,7 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
             return View();
         }
 
+        
         public ActionResult ApproveExpenses()
         {
             ApproveExpensesViewModel expenses = new ApproveExpensesViewModel();
@@ -51,6 +52,9 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
             return View("ApproveExpenses",expenses);
         }
 
+        /// <summary>
+        ///  Approves or rejects the report on the basis of action selected
+        /// </summary>
         public ActionResult ApproveExpense(int? expenseId, string status)
         {
             ApproveExpensesViewModel expenses = new ApproveExpensesViewModel();
@@ -67,6 +71,12 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
             return View("ViewReports");
         }
 
+
+        /// <summary>
+        /// Filters the list of expense reports by status
+        /// </summary>
+        /// <param name="status"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult ViewReports(string status)
         {
@@ -75,6 +85,10 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
             return View("ViewReports",expReports);
         }
 
+
+        /// <summary>
+        ///  Checks the balance left of from the monthly budget
+        /// </summary>
         public ActionResult CheckBalance()
         {
             return View("CheckBalance",deptBudget.Budget);
