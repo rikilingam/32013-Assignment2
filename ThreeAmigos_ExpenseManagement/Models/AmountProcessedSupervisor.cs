@@ -14,9 +14,7 @@ namespace ThreeAmigos_ExpenseManagement.Models
 
         public AmountProcessedSupervisor()
         {
-            
+            companyMonthlyBudget = CompanyBudgetService.GetCompanyMonthlyBudget();  // John June 3
         }
-        
-        // = CurrencyService.GetCompanyMonthlyBudget();
     }
 }
