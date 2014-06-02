@@ -71,7 +71,7 @@
                       {
                           @Html.ActionLink(linkText: "Approve", actionName: "ApproveExpense", controllerName: "Supervisor", routeValues: new { expenseId = ExpenseReport.ExpenseId, status = "ApprovedBySupervisor"},htmlAttributes:new { @class = "btn btn-success"})
                       }
-                      @Html.ActionLink(linkText: "Reject", actionName: "ApproveExpense", controllerName: "Supervisor", routeValues: new { expenseId = ExpenseReport.ExpenseId, status = "RejectBySupervisor" }, htmlAttributes: new { @class = "btn btn-success" })
+                      @Html.ActionLink(linkText: "Reject", actionName: "ApproveExpense", controllerName: "Supervisor", routeValues: new { expenseId = ExpenseReport.ExpenseId, status = "RejectedBySupervisor" }, htmlAttributes: new { @class = "btn btn-success" })
                     </td>
                 </tr> 
                 <tr><td></td></tr>                
