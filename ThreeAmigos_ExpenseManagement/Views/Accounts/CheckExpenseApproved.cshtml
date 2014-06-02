@@ -11,7 +11,16 @@
     @Html.ValidationSummary(true)
     
     decimal? totalExpenseApproved = 0;
-    decimal? companyMonthlyBudget = Model.FirstOrDefault().companyMonthlyBudget;
+    decimal? companyMonthlyBudget = 0;
+    
+    if (Model.Count != 0)
+    {
+        companyMonthlyBudget = Model.FirstOrDefault().companyMonthlyBudget;
+    }
+    else
+    {
+        companyMonthlyBudget = 30000;
+    }
 
 <div class="panel panel-primary">
     
