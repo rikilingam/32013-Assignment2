@@ -45,9 +45,9 @@ namespace ThreeAmigos_ExpenseManagement.BusinessLogic
             return reportDAL.GetAmountSupervisor();
         }
 
-        public void ActionOnReport(int? itemid, string action)
+        public void ActionOnReport(int? expenseId,Employee employee,ReportStatus status)
         {
-            reportDAL.ActionOnReport(itemid, action);
+            reportDAL.ActionOnReport(expenseId, employee, status);
         }
 
         public void ProcessReport(int? expenseId, Employee employee, ReportStatus status)

@@ -24,13 +24,14 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
         IConfigurationDAL config;
 
         readonly DateTime TODAY = DateTime.Now;
+        readonly string COMPANY_BUDGET_KEY = "CompanyMonthlyBudget";
         
         public AccountsController()
         {
             reportService = new ExpenseReportService();
             employeeService = new EmployeeService();
             config = new ConfigurationDAL();            
-            budgetTracker = new CompanyBudgetService(decimal.Parse((string)config.GetAppSetting("CompanyMonthlyBudget")));
+            budgetTracker = new CompanyBudgetService(decimal.Parse((string)config.GetAppSetting(COMPANY_BUDGET_KEY)));
             employee = employeeService.GetEmployee((int)Membership.GetUser().ProviderUserKey);
         }
 

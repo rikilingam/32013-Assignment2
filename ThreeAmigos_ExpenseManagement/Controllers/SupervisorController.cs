@@ -17,16 +17,17 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
         private IBudgetService deptBudget;        
         private IExpenseReportService reportService;
         private IEmployeeService employeeService;
-        private Employee employee;      
+        private Employee employee;
+
+        readonly DateTime TODAY = DateTime.Now;
 
         public SupervisorController()
         {
             reportService = new ExpenseReportService();
             employeeService = new EmployeeService();
             employee = employeeService.GetEmployee((int)Membership.GetUser().ProviderUserKey);
-            //deptBudget = new BudgetTracker(employee.Department);
             deptBudget = new DepartmentBudgetService(employee.Department);
-            deptBudget.SetBudgetSpent(DateTime.Now.Month, DateTime.Now.Year);   
+            deptBudget.SetBudgetSpent(TODAY.Month, TODAY.Year);
         }
 
          public SupervisorController(IEmployeeService empService, IExpenseReportService rptService, Employee employee,IBudgetService budget)
@@ -50,25 +51,15 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
             return View("ApproveExpenses",expenses);
         }
 
-        public ActionResult ApproveExpense(int? itemid, string act)
+        public ActionResult ApproveExpense(int? expenseId, string status)
         {
             ApproveExpensesViewModel expenses = new ApproveExpensesViewModel();
-            if (act == "Approve")
-            {                
-                reportService.ActionOnReport(itemid, act);
+             
+                reportService.ActionOnReport(expenseId, employee,(ReportStatus)Enum.Parse(typeof(ReportStatus),status));
                 expenses.ExpenseReports = reportService.GetReportsBySupervisor(ReportStatus.Submitted.ToString());
-                deptBudget.SetBudgetSpent(DateTime.Now.Month, DateTime.Now.Year);
-                expenses.BudgetTracker = deptBudget;                                
-                return View("ApproveExpenses", expenses);
-            }
-            else
-            {
-                reportService.ActionOnReport(itemid, act);
-                expenses.ExpenseReports = reportService.GetReportsBySupervisor(ReportStatus.Submitted.ToString());
-                deptBudget.SetBudgetSpent(DateTime.Now.Month, DateTime.Now.Year);
-                expenses.BudgetTracker = deptBudget;                  
-                return View("ApproveExpenses", expenses);
-            }
+                deptBudget.SetBudgetSpent(TODAY.Month, TODAY.Year);
+                expenses.BudgetTracker = deptBudget;
+                return RedirectToAction("ApproveExpenses");
         }
 
         public ActionResult ViewReports()
@@ -86,9 +77,6 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
 
         public ActionResult CheckBalance()
         {
-            //Budget budget = new Budget();
-            //budget.totalAmountRemaining = deptBudget.RemainingAmount;
-            //budget.totalAmountSpent = deptBudget.TotalExpenseAmount;
             return View("CheckBalance",deptBudget.Budget);
         }
     }
