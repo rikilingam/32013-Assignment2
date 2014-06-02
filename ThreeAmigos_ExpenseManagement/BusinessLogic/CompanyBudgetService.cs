@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Configuration;
 using ThreeAmigos_ExpenseManagement.DataAccess;
 using ThreeAmigos_ExpenseManagement.Models;
 
@@ -24,6 +25,23 @@ namespace ThreeAmigos_ExpenseManagement.BusinessLogic
         //    Budget.Spent = budgetTrackerDAL.TotalExpenseProcessByCompany(month, year);
         //    return Budget.RemainingBudget??0;
         //}
+
+
+        public static decimal GetCompanyMonthlyBudget()
+        {
+            decimal budget = 0;
+
+            if (decimal.TryParse(ConfigurationManager.AppSettings["CompanyMonthlyBudget"], out budget) && budget > 0)
+            {
+                return budget;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+
 
         public void SetBudgetSpent(int month, int year)
         {
