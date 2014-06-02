@@ -193,7 +193,6 @@
     <Compile Include="BusinessLogic\IBudgetService.cs" />
     <Compile Include="BusinessLogic\IEmployeeService.cs" />
     <Compile Include="BusinessLogic\IExpenseReportService.cs" />
-    <Compile Include="BusinessLogic\MaximumDateAttribute.cs" />
     <Compile Include="BusinessLogic\CompanyBudgetService.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\SupervisorController.cs" />

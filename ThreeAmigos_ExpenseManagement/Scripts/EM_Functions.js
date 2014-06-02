@@ -3,6 +3,7 @@ $(document).ready(function () {
     var toEndDate = new Date();
     var dp = $('#expenseDate');
     dp.datetimepicker({
+        maxDate: new Date(),
         pickTime: false,
         autoclose: true,
     });

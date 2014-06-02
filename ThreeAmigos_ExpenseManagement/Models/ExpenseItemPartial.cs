@@ -17,7 +17,6 @@ namespace ThreeAmigos_ExpenseManagement.Models
         [Required]
         [Display(Name = "Expense Date")]        
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
-        [MaximumDate]
         public Nullable<System.DateTime> ExpenseDate { get; set; }
 
         [Required]
