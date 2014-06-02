@@ -19,7 +19,7 @@ namespace ThreeAmigos_ExpenseManagement.Tests.MockBusinessLogic
         {
             return null;
         }
-        public void ActionOnReport(int? itemid, string action)
+        public void ActionOnReport(int? expenseId, Employee employee, ReportStatus status)
         {
            
         }
@@ -54,9 +54,7 @@ namespace ThreeAmigos_ExpenseManagement.Tests.MockBusinessLogic
             });
 
             return expReport;
-           // return null;
-
-              
+           // return null;              
                
         }
         public List<ExpenseReport> GetReportsByConsultant(string status, Employee consultant)
@@ -70,7 +68,7 @@ namespace ThreeAmigos_ExpenseManagement.Tests.MockBusinessLogic
         }
 
 
-        public void ProcessReport(int? itemid, string action)
+        public void ProcessReport(int? expenseId, Employee employee, ReportStatus status)
         { }
 
         public List<AmountProcessedSupervisor> GetAmountSupervisor()

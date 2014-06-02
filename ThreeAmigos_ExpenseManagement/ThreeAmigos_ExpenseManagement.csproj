@@ -186,7 +186,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="BusinessLogic\BudgetTracker.cs" />
     <Compile Include="BusinessLogic\CurrencyService.cs" />
     <Compile Include="BusinessLogic\DepartmentBudgetService.cs" />
     <Compile Include="BusinessLogic\ExpenseReportService.cs" />
@@ -200,11 +199,12 @@
     <Compile Include="Controllers\ConsultantController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="BusinessLogic\EmployeeService.cs" />
-    <Compile Include="DataAccess\BudgetTrackerDAL.cs" />
+    <Compile Include="DataAccess\BudgetDAL.cs" />
     <Compile Include="DataAccess\ConfigurationDAL.cs" />
     <Compile Include="DataAccess\EmployeeDAL.cs" />
     <Compile Include="DataAccess\ExpenseReportDAL.cs" />
     <Compile Include="DataAccess\FileUploader.cs" />
+    <Compile Include="DataAccess\IBudgetDAL.cs" />
     <Compile Include="DataAccess\IConfigurationDAL.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">

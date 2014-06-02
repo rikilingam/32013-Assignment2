@@ -6,7 +6,7 @@ using ThreeAmigos_ExpenseManagement.Models;
 
 namespace ThreeAmigos_ExpenseManagement.DataAccess
 {
-    public class BudgetTrackerDAL
+    public class BudgetDAL:IBudgetDAL
     {
         public decimal? TotalExpenseAmountByDept(int? departmentID)
         {

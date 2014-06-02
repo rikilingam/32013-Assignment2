@@ -10,7 +10,7 @@ namespace ThreeAmigos_ExpenseManagement.BusinessLogic
     public class DepartmentBudgetService : IBudgetService
     {
         Department department;        
-        BudgetTrackerDAL budgetTrackerDAL;
+        IBudgetDAL budgetTrackerDAL;
 
         public Budget Budget { get; set; }
 
@@ -18,14 +18,21 @@ namespace ThreeAmigos_ExpenseManagement.BusinessLogic
         {
             this.department = department;
             Budget = new Budget(department.MonthlyBudget);
-            budgetTrackerDAL = new BudgetTrackerDAL();
+            budgetTrackerDAL = new BudgetDAL();
+        }
+
+        public DepartmentBudgetService(Department department, IBudgetDAL budgetDal)
+        {
+            this.department = department;
+            Budget = new Budget(department.MonthlyBudget);
+            budgetTrackerDAL = budgetDal;
         }
 
         public decimal RemainingAmount(int month, int year)
         {
-          //  Budget.Spent = budgetTrackerDAL.TotalExpenseProcessByDepartment(month, year, department);
+            //  Budget.Spent = budgetTrackerDAL.TotalExpenseProcessByDepartment(month, year, department);
             Budget.Spent = budgetTrackerDAL.TotalExpenseAmountByDept(department.DepartmentId);
-            return Budget.RemainingBudget??0;
+            return Budget.RemainingBudget ?? 0;
         }
 
         public void SetBudgetSpent(int month, int year)

@@ -10,10 +10,6 @@ namespace ThreeAmigos_ExpenseManagement.Models
         protected decimal? budgetAmount;
         public decimal? Spent { get; set; }
 
-        //public decimal? totalAmountSpent { get; set; }
-        //public decimal? totalAmountRemaining { get; set; }
-        //public decimal? companyAmountSpent { get; set; }
-        //public decimal? companyAmountRemaining { get; set; }
         public Budget()
         {
             budgetAmount = 0;
@@ -24,7 +20,11 @@ namespace ThreeAmigos_ExpenseManagement.Models
         {
             this.budgetAmount = budgetAmount;
         }
-
+        
+        /// <summary>
+        /// The available budget amount for a month
+        /// </summary>
+        /// <param name="budgetAmount">budget value</param>
         public decimal? BudgetAmount
         {
             get
@@ -33,6 +33,9 @@ namespace ThreeAmigos_ExpenseManagement.Models
             }
         }
 
+        /// <summary>
+        /// Returns remaining remaining amount
+        /// </summary>
         public decimal? RemainingBudget
         {
             get
