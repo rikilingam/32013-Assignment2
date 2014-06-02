@@ -198,43 +198,6 @@ namespace ThreeAmigos_ExpenseManagement.Tests.Controllers
             MockHttpContext.SetFakeHttpContext(controller);
             var result = controller.ApproveExpenses() as ViewResult;
             Assert.IsInstanceOfType(result.ViewData.Model, typeof(ApproveExpensesViewModel));
-        }
-
-
-
-        [TestMethod]
-        public void ApproveExpense_Returns_ActionResult()
-        {
-            SupervisorController controller = new SupervisorController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetService);
-            MockHttpContext.SetFakeHttpContext(controller);
-
-            var result = controller.ApproveExpense(1,"Approve");
-
-            Assert.IsInstanceOfType(result, typeof(ActionResult), "Result is not of ActionResult type");
-
-        }
-
-        [TestMethod]
-        public void ApproveExpense_Returns_View_ApproveExpenses()
-        {
-            const string expectedViewName = "ApproveExpenses";
-            SupervisorController controller = new SupervisorController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetService);
-            MockHttpContext.SetFakeHttpContext(controller);
-
-            var result = controller.ApproveExpense(1, "Approve") as ViewResult;
-
-            Assert.AreEqual(expectedViewName, result.ViewName, "View names do not match, expected view name is{0}", expectedViewName);
-        }
-
-        [TestMethod]
-        public void ApproveExpense_ViewData_IsApproveExpensesViewModel()
-        {
-            SupervisorController controller = new SupervisorController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetService);
-            MockHttpContext.SetFakeHttpContext(controller);
-            var result = controller.ApproveExpense(1, "Approve") as ViewResult;
-            Assert.IsInstanceOfType(result.ViewData.Model, typeof(ApproveExpensesViewModel));
-        }
-
-        
+        }      
     }
 }
