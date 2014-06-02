@@ -48,22 +48,12 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
         public ActionResult ProcessExpenses()
         {
             ProcessExpensesViewModel expenseForm = new ProcessExpensesViewModel();
+            
+            expenseForm.ExpenseReports = reportService.GetReportsByAccounts(ReportStatus.ApprovedBySupervisor.ToString());
+            expenseForm.BudgetTracker = budgetTracker;
+            expenseForm.BudgetTracker.SetBudgetSpent(TODAY.Month, TODAY.Year);
+            return View(expenseForm);
 
-            //if (itemid == null)
-            //{
-                expenseForm.ExpenseReports = reportService.GetReportsByAccounts(ReportStatus.ApprovedBySupervisor.ToString());   // "ApprovedBySupervisor");
-                expenseForm.BudgetTracker = budgetTracker;
-                expenseForm.BudgetTracker.SetBudgetSpent(TODAY.Month, TODAY.Year);
-                return View(expenseForm);
-            //}
-            //else
-            //{
-            //    reportService.ProcessReport(itemid, act);
-            //    expenseForm.ExpenseReports = reportService.GetReportsByAccounts(ReportStatus.ApprovedBySupervisor.ToString()); // "ApprovedBySupervisor");
-            //    expenseForm.BudgetTracker = budgetTracker;
-            //    expenseForm.BudgetTracker.SetBudgetSpent(TODAY.Month, TODAY.Year);
-            //    return View(expenseForm);
-            //}
         }
 
         public ActionResult ProcessExpenseItem(int expenseId, string action)
