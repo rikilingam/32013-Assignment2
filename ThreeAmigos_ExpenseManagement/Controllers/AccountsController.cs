@@ -29,7 +29,6 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
         {
             reportService = new ExpenseReportService();
             employeeService = new EmployeeService();
-            //budgetTracker = new BudgetTracker();
             config = new ConfigurationDAL();            
             budgetTracker = new CompanyBudgetService(decimal.Parse((string)config.GetAppSetting("CompanyMonthlyBudget")));
             employee = employeeService.GetEmployee((int)Membership.GetUser().ProviderUserKey);
@@ -56,20 +55,11 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
 
         }
 
-        public ActionResult ProcessExpenseItem(int expenseId, string action)
+        public ActionResult ProcessExpenseItem(int expenseId, string status)
         {
-            reportService.ProcessReport(expenseId, action);
-                       
+            reportService.ProcessReport(expenseId, employee, (ReportStatus)Enum.Parse(typeof(ReportStatus), status));
 
             return RedirectToAction("ProcessExpenses");
-
-            //ProcessExpensesViewModel expenseForm = new ProcessExpensesViewModel();                        
-            
-            //expenseForm.ExpenseReports = reportService.GetReportsByAccounts(ReportStatus.ApprovedBySupervisor.ToString()); // "ApprovedBySupervisor");
-            //expenseForm.BudgetTracker = budgetTracker;
-            //expenseForm.BudgetTracker.SetBudgetSpent(TODAY.Month, TODAY.Year);
-
-            //return View(expenseForm);
 
         }
 

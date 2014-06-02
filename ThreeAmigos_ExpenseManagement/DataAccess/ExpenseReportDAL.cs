@@ -55,7 +55,7 @@ namespace ThreeAmigos_ExpenseManagement.DataAccess
             using (EMEntitiesContext ctx = new EMEntitiesContext())
             {
                 var result = (from i in ctx.ExpenseReports.Include("CreatedBy").Include("ExpenseItems").Include("Department")
-                              where i.Department.DepartmentId == employee.Department.DepartmentId && i.CreateDate.Value.Month == month &&i.CreateDate.Value.Year==year && i.Status == status
+                              where i.Department.DepartmentId == employee.Department.DepartmentId && i.CreateDate.Value.Month == month && i.CreateDate.Value.Year == year && i.Status == status
                               select i);
 
                 return (List<ExpenseReport>)result.ToList();
@@ -112,14 +112,14 @@ namespace ThreeAmigos_ExpenseManagement.DataAccess
                                                        };
 
                 var result = from emp in ctx.Employees
-                                  join spent in totalExpenseApprovedBySupervisor
-                                  on emp.UserId equals spent.supervisorID
-                                  select new AmountProcessedSupervisor
-                                  {
-                                      Fullname = emp.Firstname + " " + emp.Surname,
-                                      amountApproved = spent.total
-                                  };
-                
+                             join spent in totalExpenseApprovedBySupervisor
+                             on emp.UserId equals spent.supervisorID
+                             select new AmountProcessedSupervisor
+                             {
+                                 Fullname = emp.Firstname + " " + emp.Surname,
+                                 amountApproved = spent.total
+                             };
+
                 return (List<AmountProcessedSupervisor>)result.ToList();
             }
         }
@@ -153,34 +153,36 @@ namespace ThreeAmigos_ExpenseManagement.DataAccess
             }
         }
 
-        public void ProcessReport(int? itemid, string action)
+        //public void ProcessReport(int? itemid, string action)
+        public void ProcessReport(int? expenseId, Employee employee, ReportStatus status)
         {
-            IEmployeeService employeeService = new EmployeeService();
-            Employee employee = employeeService.GetEmployee((int)Membership.GetUser().ProviderUserKey);
+            //IEmployeeService employeeService = new EmployeeService();
+            //Employee employee = employeeService.GetEmployee((int)Membership.GetUser().ProviderUserKey);
 
             using (EMEntitiesContext ctx = new EMEntitiesContext())
             {
 
                 var report = (from ExpReport in ctx.ExpenseReports
-                              where ExpReport.ExpenseId == itemid
+                              where ExpReport.ExpenseId == expenseId
                               select ExpReport).FirstOrDefault();
 
-                if (action == "Approve")
-                {
-                    report.ProcessedDate = DateTime.Now;
-                    report.Status = "ApprovedByAccounts";
-                    report.ProcessedById = employee.UserId;
-                    ctx.SaveChanges();
-                }
-                else
-                {
-                    report.ProcessedDate = DateTime.Now;
-                    report.Status = "RejectedByAccounts";
-                    report.ProcessedById = employee.UserId;
-                    ctx.SaveChanges();
-                }
+                //if (action == "Approve")
+                //{
+                report.ProcessedDate = DateTime.Now;
+                //report.Status = "ApprovedByAccounts";
+                report.Status = status.ToString();
+                report.ProcessedById = employee.UserId;
+                ctx.SaveChanges();
+                //}
+                //else
+                //{
+                //    report.ProcessedDate = DateTime.Now;
+                //    report.Status = "RejectedByAccounts";
+                //    report.ProcessedById = employee.UserId;
+                //    ctx.SaveChanges();
+                //}
             }
         }
 
     }
-} 
+}

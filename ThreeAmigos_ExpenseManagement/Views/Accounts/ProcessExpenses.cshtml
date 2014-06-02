@@ -99,7 +99,7 @@
                             "Approve",
                             "ProcessExpenseItem",
                             "Accounts",
-                            new { expenseId = ExpenseReport.ExpenseId, action = "Approve" },
+                            new { expenseId = ExpenseReport.ExpenseId, status = "ApprovedByAccounts" },
                             new { @class = "btn btn-success", onclick = "return ConfirmApprove(" + totalAmount + "," + companyBudgetRemain + ")" }
                         )
                         &nbsp;
@@ -107,7 +107,7 @@
                             linkText: "Reject",
                             actionName: "ProcessExpenseItem",
                             controllerName: "Accounts",
-                            routeValues: new { expenseId = ExpenseReport.ExpenseId, action = "Reject" },
+                            routeValues: new { expenseId = ExpenseReport.ExpenseId, status = "RejectedByAccounts" },
                             htmlAttributes: new { @class = "btn btn-success" }
                         )                        
                         <b>Total:</b></td>

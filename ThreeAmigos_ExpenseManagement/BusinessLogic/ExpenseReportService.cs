@@ -21,7 +21,7 @@ namespace ThreeAmigos_ExpenseManagement.BusinessLogic
         {
 
             return reportDAL.GetExpenseReportByConsultant(status, consultant);
-        
+
         }
 
         public void CreateExpenseReport(ExpenseReport report)
@@ -45,14 +45,14 @@ namespace ThreeAmigos_ExpenseManagement.BusinessLogic
             return reportDAL.GetAmountSupervisor();
         }
 
-        public void ActionOnReport(int? itemid,string action)
+        public void ActionOnReport(int? itemid, string action)
         {
-            reportDAL.ActionOnReport(itemid,action);
+            reportDAL.ActionOnReport(itemid, action);
         }
 
-        public void ProcessReport(int? itemid, string action)
+        public void ProcessReport(int? expenseId, Employee employee, ReportStatus status)
         {
-            reportDAL.ProcessReport(itemid, action);
+            reportDAL.ProcessReport(expenseId, employee, status);
         }
     }
 }
