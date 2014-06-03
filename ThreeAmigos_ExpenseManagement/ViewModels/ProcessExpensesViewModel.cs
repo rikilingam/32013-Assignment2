@@ -11,11 +11,5 @@ namespace ThreeAmigos_ExpenseManagement.ViewModels
     {
         public List<ExpenseReport> ExpenseReports { get; set; }
         public IBudgetService BudgetTracker { get; set; }
-
-        //public ProcessExpensesViewModel()
-        //{
-        //    ExpenseReports = new List<ExpenseReport>();
-        //    BudgetTracker = new BudgetTracker();
-        //}
     }
 }
