@@ -119,6 +119,7 @@
     <Compile Include="BusinessLogicTests\CurrencyServiceTests.cs" />
     <Compile Include="BusinessLogicTests\DepartmentBudgetServiceTests.cs" />
     <Compile Include="BusinessLogicTests\EmployeeServiceTests.cs" />
+    <Compile Include="BusinessLogicTests\CompanyBudgetServiceTests.cs" />
     <Compile Include="ControllersTests\AccountsControllerTest.cs" />
     <Compile Include="ControllersTests\ConsultantControllerTest.cs" />
     <Compile Include="ControllersTests\SupervisorControllerTest.cs" />
