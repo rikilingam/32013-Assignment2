@@ -8,7 +8,8 @@ using ThreeAmigos_ExpenseManagement.Tests.MockBusinessLogic;
 using ThreeAmigos_ExpenseManagement.Models;
 using ThreeAmigos_ExpenseManagement.ViewModels;
 
-namespace ThreeAmigos_ExpenseManagement.Tests.ControllersTests
+//namespace ThreeAmigos_ExpenseManagement.Tests.ControllersTests
+namespace ThreeAmigos_ExpenseManagement.Tests.Controllers
 {
     [TestClass]
     public class AccountsControllerTest
@@ -35,7 +36,7 @@ namespace ThreeAmigos_ExpenseManagement.Tests.ControllersTests
 
         }
 
-        [TestMethod]
+        [TestMethod]  //OK
         public void Accounts_ViewReports_Returns_ActionResult()
         {
             AccountsController controller = new AccountsController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetService);
@@ -60,7 +61,7 @@ namespace ThreeAmigos_ExpenseManagement.Tests.ControllersTests
             Assert.AreEqual(expectedViewName, result.ViewName, "View names do not match, expected view name is{0}", expectedViewName);
         }
 
-        [TestMethod]
+        [TestMethod] //OK
         public void Accounts_HttpPost_ViewReports_Returns_ActionResult()
         {
             AccountsController controller = new AccountsController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetService);
@@ -73,7 +74,7 @@ namespace ThreeAmigos_ExpenseManagement.Tests.ControllersTests
 
         }
 
-        [TestMethod]
+        [TestMethod]  //OK
         public void Accounts_HttpPost_ViewReports_Returns_View_ViewReports()
         {
             const string expectedViewName = "ViewReports";
@@ -155,19 +156,19 @@ namespace ThreeAmigos_ExpenseManagement.Tests.ControllersTests
 
             var result = controller.CheckExpenseApproved() as ViewResult;
 
-            Assert.AreEqual(expectedViewName, result.ViewName, "View names do not match, expected view name is{0}", expectedViewName);
+            Assert.AreEqual(expectedViewName, result.ViewName, "View names do not match, expected view name is {0}", expectedViewName);
         }
 
         [TestMethod]
-        public void Accounts_CheckBalance_ViewData_IsBudget()
+        public void Accounts_CheckExpenseApproved_ViewData_AmountProcessedSupervisor()
         {
             AccountsController controller = new AccountsController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetService);
             MockHttpContext.SetFakeHttpContext(controller);
             var result = controller.CheckExpenseApproved() as ViewResult;
-            Assert.IsInstanceOfType(result.ViewData.Model, typeof(Budget));
+            Assert.IsInstanceOfType(result.ViewData.Model, typeof(AmountProcessedSupervisor));
         }
 
-        [TestMethod]
+        [TestMethod]  //OK
         public void Accounts_ApproveExpenses_Returns_ActionResult()
         {
             AccountsController controller = new AccountsController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetService);
@@ -179,7 +180,7 @@ namespace ThreeAmigos_ExpenseManagement.Tests.ControllersTests
 
         }
 
-        [TestMethod]
+        [TestMethod]  //OK
         public void Accounts_ApproveExpenses_Returns_View_ApproveExpenses()
         {
             const string expectedViewName = "ProcessExpenses";
