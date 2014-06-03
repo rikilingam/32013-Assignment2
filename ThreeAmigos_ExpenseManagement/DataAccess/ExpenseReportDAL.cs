@@ -54,7 +54,7 @@ namespace ThreeAmigos_ExpenseManagement.DataAccess
             Employee employee = employeeService.GetEmployee((int)Membership.GetUser().ProviderUserKey);
             using (EMEntitiesContext ctx = new EMEntitiesContext())
             {
-                var result = (from i in ctx.ExpenseReports.Include("CreatedBy").Include("ExpenseItems").Include("Department")
+                var result = (from i in ctx.ExpenseReports.Include("CreatedBy").Include("ExpenseItems").Include("Department").Include("ApprovedBy")
                               where i.Department.DepartmentId == employee.Department.DepartmentId && i.CreateDate.Value.Month == month && i.CreateDate.Value.Year == year && i.Status == status
                               select i);
 
