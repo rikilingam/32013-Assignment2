@@ -11,7 +11,7 @@ using ThreeAmigos_ExpenseManagement.ViewModels;
 namespace ThreeAmigos_ExpenseManagement.Tests.ControllersTests
 {
     [TestClass]
-    class AccountsControllerTest
+    public class AccountsControllerTest
     {
         IExpenseReportService mockReportService = new MockExpenseReportService();
         IEmployeeService mockEmployeeService = new MockEmployeeService();
@@ -36,7 +36,7 @@ namespace ThreeAmigos_ExpenseManagement.Tests.ControllersTests
         }
 
         [TestMethod]
-        public void ViewReports_Returns_ActionResult()
+        public void Accounts_ViewReports_Returns_ActionResult()
         {
             AccountsController controller = new AccountsController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetService);
             MockHttpContext.SetFakeHttpContext(controller);
@@ -49,7 +49,7 @@ namespace ThreeAmigos_ExpenseManagement.Tests.ControllersTests
         }
 
         [TestMethod]
-        public void ViewReports_Returns_View_ViewReports()
+        public void Accounts_ViewReports_Returns_View_ViewReports()
         {
             const string expectedViewName = "ViewReports";
             AccountsController controller = new AccountsController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetService);
@@ -61,7 +61,7 @@ namespace ThreeAmigos_ExpenseManagement.Tests.ControllersTests
         }
 
         [TestMethod]
-        public void HttpPost_ViewReports_Returns_ActionResult()
+        public void Accounts_HttpPost_ViewReports_Returns_ActionResult()
         {
             AccountsController controller = new AccountsController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetService);
             MockHttpContext.SetFakeHttpContext(controller);
@@ -74,7 +74,7 @@ namespace ThreeAmigos_ExpenseManagement.Tests.ControllersTests
         }
 
         [TestMethod]
-        public void HttpPost_ViewReports_Returns_View_ViewReports()
+        public void Accounts_HttpPost_ViewReports_Returns_View_ViewReports()
         {
             const string expectedViewName = "ViewReports";
             AccountsController controller = new AccountsController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetService);
@@ -86,7 +86,7 @@ namespace ThreeAmigos_ExpenseManagement.Tests.ControllersTests
         }
 
         [TestMethod]
-        public void HttpPost_ViewReports_ViewData_IsListOfExpenseReports()
+        public void Accounts_HttpPost_ViewReports_ViewData_IsListOfExpenseReports()
         {
 
             AccountsController controller = new AccountsController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetService);
@@ -98,7 +98,7 @@ namespace ThreeAmigos_ExpenseManagement.Tests.ControllersTests
         }
 
         [TestMethod]
-        public void HttpPost_ViewReports_CheckDepartmentIdOfReportAndEmployee_AreEqual()
+        public void Accounts_HttpPost_ViewReports_CheckDepartmentIdOfReportAndEmployee_AreEqual()
         {
             Employee mockEmployee = mockEmployeeService.GetEmployee(1);
             AccountsController controller = new AccountsController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetService);
@@ -113,7 +113,7 @@ namespace ThreeAmigos_ExpenseManagement.Tests.ControllersTests
         }
 
         [TestMethod]
-        public void HttpPost_ViewReports_CheckStatusOfReportAndStatusPassed_AreEqual()
+        public void Accounts_HttpPost_ViewReports_CheckStatusOfReportAndStatusPassed_AreEqual()
         {
             Employee mockEmployee = mockEmployeeService.GetEmployee(1);
             AccountsController controller = new AccountsController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetService);
@@ -128,7 +128,7 @@ namespace ThreeAmigos_ExpenseManagement.Tests.ControllersTests
         }
 
         [TestMethod]
-        public void ViewReports_ReportsAreDisplayedForCurrentMonthOfCurrentYear_IsTrue()
+        public void Accounts_ViewReports_ReportsAreDisplayedForCurrentMonthOfCurrentYear_IsTrue()
         {
             Employee mockEmployee = mockEmployeeService.GetEmployee(1);
             int month = DateTime.Now.Month;
@@ -147,7 +147,7 @@ namespace ThreeAmigos_ExpenseManagement.Tests.ControllersTests
 
 
         [TestMethod]
-        public void CheckBalance_Returns_View_CheckBalance()
+        public void Accounts_CheckBalance_Returns_View_CheckBalance()
         {
             const string expectedViewName = "CheckExpenseApproved";
             AccountsController controller = new AccountsController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetService);
@@ -159,7 +159,7 @@ namespace ThreeAmigos_ExpenseManagement.Tests.ControllersTests
         }
 
         [TestMethod]
-        public void CheckBalance_ViewData_IsBudget()
+        public void Accounts_CheckBalance_ViewData_IsBudget()
         {
             AccountsController controller = new AccountsController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetService);
             MockHttpContext.SetFakeHttpContext(controller);
@@ -168,7 +168,7 @@ namespace ThreeAmigos_ExpenseManagement.Tests.ControllersTests
         }
 
         [TestMethod]
-        public void ApproveExpenses_Returns_ActionResult()
+        public void Accounts_ApproveExpenses_Returns_ActionResult()
         {
             AccountsController controller = new AccountsController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetService);
             MockHttpContext.SetFakeHttpContext(controller);
@@ -180,7 +180,7 @@ namespace ThreeAmigos_ExpenseManagement.Tests.ControllersTests
         }
 
         [TestMethod]
-        public void ApproveExpenses_Returns_View_ApproveExpenses()
+        public void Accounts_ApproveExpenses_Returns_View_ApproveExpenses()
         {
             const string expectedViewName = "ProcessExpenses";
             AccountsController controller = new AccountsController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetService);
@@ -192,7 +192,7 @@ namespace ThreeAmigos_ExpenseManagement.Tests.ControllersTests
         }
 
         [TestMethod]
-        public void ApproveExpenses_ViewData_IsApproveExpensesViewModel()
+        public void Accounts_ApproveExpenses_ViewData_IsApproveExpensesViewModel()
         {
             AccountsController controller = new AccountsController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetService);
             MockHttpContext.SetFakeHttpContext(controller);
