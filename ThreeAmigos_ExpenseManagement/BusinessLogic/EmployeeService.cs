@@ -10,6 +10,18 @@ namespace ThreeAmigos_ExpenseManagement.BusinessLogic
 {
     public class EmployeeService : IEmployeeService
     {
+        IEmployeeDAL employeeDAL;
+
+        public EmployeeService()
+        {
+            employeeDAL = new EmployeeDAL();
+        }
+
+        public EmployeeService(IEmployeeDAL employeeDAL)
+        {
+            this.employeeDAL = employeeDAL;
+        }
+
         /// <summary>
         /// Gets an employee and associate department object from the Data Access layer
         /// </summary>
@@ -17,8 +29,6 @@ namespace ThreeAmigos_ExpenseManagement.BusinessLogic
         /// <returns>An employee object</returns>
         public Employee GetEmployee(int userId)
         {
-            EmployeeDAL employeeDAL = new EmployeeDAL();
-
             return employeeDAL.GetEmployee(userId);
         }
     }

@@ -118,11 +118,13 @@
   <ItemGroup>
     <Compile Include="BusinessLogicTests\CurrencyServiceTests.cs" />
     <Compile Include="BusinessLogicTests\DepartmentBudgetServiceTests.cs" />
+    <Compile Include="BusinessLogicTests\EmployeeServiceTests.cs" />
     <Compile Include="ControllersTests\ConsultantControllerTest.cs" />
     <Compile Include="ControllersTests\SupervisorControllerTest.cs" />
     <Compile Include="Mocks\MockBudgetDAL.cs" />
     <Compile Include="Mocks\MockBudgetService.cs" />
     <Compile Include="Mocks\MockConfigurationDAL.cs" />
+    <Compile Include="Mocks\MockEmployeeDAL.cs" />
     <Compile Include="Mocks\MockHttpContext.cs" />
     <Compile Include="Mocks\MockEmployeeService.cs" />
     <Compile Include="Mocks\MockExpenseReportService.cs" />

@@ -6,7 +6,7 @@ using ThreeAmigos_ExpenseManagement.Models;
 
 namespace ThreeAmigos_ExpenseManagement.DataAccess
 {
-    public class EmployeeDAL
+    public class EmployeeDAL : IEmployeeDAL
     {
         public Employee GetEmployee(int userId)
         {

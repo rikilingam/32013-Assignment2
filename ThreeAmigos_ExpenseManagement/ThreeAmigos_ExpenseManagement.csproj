@@ -206,6 +206,7 @@
     <Compile Include="DataAccess\FileUploader.cs" />
     <Compile Include="DataAccess\IBudgetDAL.cs" />
     <Compile Include="DataAccess\IConfigurationDAL.cs" />
+    <Compile Include="DataAccess\IEmployeeDAL.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
