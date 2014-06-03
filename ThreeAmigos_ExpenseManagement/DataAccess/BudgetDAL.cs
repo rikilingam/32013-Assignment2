@@ -10,12 +10,14 @@ namespace ThreeAmigos_ExpenseManagement.DataAccess
     {
         public decimal? TotalExpenseAmountByDept(int? departmentID)
         {
+            int month=DateTime.Now.Month;
+            int year=DateTime.Now.Year;
             using (EMEntitiesContext ctx = new EMEntitiesContext())
             {
                 decimal? total = 0;
 
                 var reports= from expenseReports in ctx.ExpenseReports
-                            where expenseReports.Department.DepartmentId==departmentID && (expenseReports.Status=="ApprovedBySupervisor"||expenseReports.Status=="ApprovedByAccounts")
+                            where expenseReports.ApprovedDate.Value.Month==month && expenseReports.ApprovedDate.Value.Year==year && expenseReports.Department.DepartmentId==departmentID && (expenseReports.Status=="ApprovedBySupervisor"||expenseReports.Status=="ApprovedByAccounts")
                             select expenseReports;
 
                 foreach(var expenseItems in reports)
