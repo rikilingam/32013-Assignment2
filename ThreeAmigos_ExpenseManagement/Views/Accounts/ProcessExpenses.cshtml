@@ -60,7 +60,7 @@
                     <th>Supervisor: @ExpenseReport.ApprovedBy.Fullname</th>
                     <th>Department: @ExpenseReport.Department.DepartmentName</th>
                     <th>Status: @ExpenseReport.Status</th>
-                    <th>Department budget remain: @String.Format("{0:C}", @Model.BudgetTracker.GetDepartmentBudgetRemain(month, year, @ExpenseReport.Department))</th>
+                    <th>Department budget: @String.Format("{0:C}", @Model.BudgetTracker.GetDepartmentBudgetRemain(month, year, @ExpenseReport.Department))</th>
                 </tr>
                 <tr>
                     <th></th>
@@ -94,6 +94,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
+                    <td><b>Expense Total: @String.Format("{0:C}", totalAmount)</b></td>
                     <td>
                         @Html.ActionLink(
                             "Approve",
@@ -109,9 +110,7 @@
                             controllerName: "Accounts",
                             routeValues: new { expenseId = ExpenseReport.ExpenseId, status = "RejectedByAccounts" },
                             htmlAttributes: new { @class = "btn btn-success" }
-                        )                        
-                        <b>Total:</b></td>
-                    <td><b>@String.Format("{0:C}", totalAmount)</b></td>
+                        )</td>
                   </tr>
 
                   <tr>
