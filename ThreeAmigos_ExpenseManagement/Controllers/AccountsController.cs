@@ -63,7 +63,7 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
             expenseForm.ExpenseReports = reportService.GetReportsByAccounts(ReportStatus.ApprovedBySupervisor.ToString());
             expenseForm.BudgetTracker = budgetTracker;
             expenseForm.BudgetTracker.SetBudgetSpent(TODAY.Month, TODAY.Year);
-            return View(expenseForm);
+            return View("ProcessExpenses", expenseForm);
 
         }
 
