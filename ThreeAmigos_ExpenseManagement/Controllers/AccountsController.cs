@@ -112,7 +112,7 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
         {
             List<AmountProcessedSupervisor> report = new List<AmountProcessedSupervisor>();
             report = reportService.GetAmountSupervisor();
-            return View(report);
+            return View("CheckExpenseApproved", report);
         }
 
     }
