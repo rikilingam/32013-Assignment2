@@ -14,6 +14,8 @@ using ThreeAmigos_ExpenseManagement.ViewModels;
 
 namespace ThreeAmigos_ExpenseManagement.Controllers
 {
+    [Authorize(Roles = "Accounts")]
+    [InitializeSimpleMembership]
     public class AccountsController : Controller
     {
 

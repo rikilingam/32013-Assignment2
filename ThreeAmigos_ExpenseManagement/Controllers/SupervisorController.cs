@@ -12,6 +12,8 @@ using ThreeAmigos_ExpenseManagement.ViewModels;
 
 namespace ThreeAmigos_ExpenseManagement.Controllers
 {
+    [Authorize(Roles = "Supervisor")]
+    [InitializeSimpleMembership]
     public class SupervisorController : Controller
     {
         private IBudgetService deptBudget;        
