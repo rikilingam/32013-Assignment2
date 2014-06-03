@@ -75,10 +75,11 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
             ProcessExpensesViewModel expenses = new ProcessExpensesViewModel();
 
             reportService.ProcessReport(expenseId, employee, (ReportStatus)Enum.Parse(typeof(ReportStatus), status));
-            expenses.ExpenseReports = reportService.GetReportsBySupervisor(ReportStatus.ApprovedBySupervisor.ToString());
-            budgetTracker.SetBudgetSpent(DateTime.Now.Month, DateTime.Now.Year);
-            expenses.BudgetTracker = budgetTracker;
-            return View("ProcessExpenses", expenses);
+            //expenses.ExpenseReports = reportService.GetReportsBySupervisor(ReportStatus.ApprovedBySupervisor.ToString());
+            //budgetTracker.SetBudgetSpent(DateTime.Now.Month, DateTime.Now.Year);
+            //expenses.BudgetTracker = budgetTracker;
+            return RedirectToAction("ProcessExpenses");
+            //return View("ProcessExpenses", expenses);
         }
 
 
