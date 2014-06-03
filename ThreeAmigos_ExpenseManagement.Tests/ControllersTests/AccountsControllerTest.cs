@@ -49,14 +49,14 @@ namespace ThreeAmigos_ExpenseManagement.Tests.Controllers
 
         }
 
-        [TestMethod]
+        [TestMethod] //OK
         public void Accounts_ViewReports_Returns_View_ViewReports()
         {
             const string expectedViewName = "ViewReports";
             AccountsController controller = new AccountsController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetService);
             MockHttpContext.SetFakeHttpContext(controller);
 
-            var result = controller.ViewReports() as ViewResult;
+            var result = controller.ViewReports(ReportStatus.ApprovedByAccounts.ToString()) as ViewResult;
 
             Assert.AreEqual(expectedViewName, result.ViewName, "View names do not match, expected view name is{0}", expectedViewName);
         }
@@ -120,11 +120,11 @@ namespace ThreeAmigos_ExpenseManagement.Tests.Controllers
             AccountsController controller = new AccountsController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetService);
             MockHttpContext.SetFakeHttpContext(controller);
 
-            var result = controller.ViewReports(ReportStatus.ApprovedBySupervisor.ToString()) as ViewResult;
+            var result = controller.ViewReports(ReportStatus.ApprovedByAccounts.ToString()) as ViewResult;
             var ExpenseReports = (List<ExpenseReport>)result.Model;
             foreach (var report in ExpenseReports)
             {
-                Assert.AreEqual(ReportStatus.ApprovedBySupervisor.ToString(), report.Status);
+                Assert.AreEqual(ReportStatus.ApprovedByAccounts.ToString(), report.Status);
             }
         }
 
@@ -198,7 +198,7 @@ namespace ThreeAmigos_ExpenseManagement.Tests.Controllers
             AccountsController controller = new AccountsController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetService);
             MockHttpContext.SetFakeHttpContext(controller);
             var result = controller.ProcessExpenses() as ViewResult;
-            Assert.IsInstanceOfType(result.ViewData.Model, typeof(ApproveExpensesViewModel));
+            Assert.IsInstanceOfType(result.ViewData.Model, typeof(List<ApproveExpensesViewModel>));
         }      
 
     }
