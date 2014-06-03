@@ -20,13 +20,7 @@ namespace ThreeAmigos_ExpenseManagement.BusinessLogic
             Budget = new Budget(budgetAmount);
         }
 
-        //public decimal RemainingAmount(int month, int year)
-        //{
-        //    Budget.Spent = budgetTrackerDAL.TotalExpenseProcessByCompany(month, year);
-        //    return Budget.RemainingBudget??0;
-        //}
-
-
+      
         public static decimal GetCompanyMonthlyBudget()
         {
             decimal budget = 0;
@@ -42,7 +36,6 @@ namespace ThreeAmigos_ExpenseManagement.BusinessLogic
         }
 
 
-
         public void SetBudgetSpent(int month, int year)
         {
             Budget.Spent = budgetTrackerDAL.TotalExpenseProcessByCompany(month, year);
@@ -51,10 +44,6 @@ namespace ThreeAmigos_ExpenseManagement.BusinessLogic
         public decimal? GetDepartmentBudgetRemain(int month, int year, Department department)
         {
             Budget deptBudget = new Budget(department.MonthlyBudget);
-
-            //decimal? totalExpenseProcessedDepartment = 0;
-            //budgetAmount = department.MonthlyBudget;
-            //totalExpenseProcessedDepartment = budgetTrackerDAL.TotalExpenseProcessByDepartment(month, year, department);
             deptBudget.Spent = budgetTrackerDAL.GetDepartmentMonthlySpendCommitted(month, year, department);
             return (deptBudget.RemainingBudget);
         }
