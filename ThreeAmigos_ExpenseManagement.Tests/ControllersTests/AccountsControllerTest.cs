@@ -120,11 +120,11 @@ namespace ThreeAmigos_ExpenseManagement.Tests.Controllers
             AccountsController controller = new AccountsController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetService);
             MockHttpContext.SetFakeHttpContext(controller);
 
-            var result = controller.ViewReports(ReportStatus.ApprovedByAccounts.ToString()) as ViewResult;
+            var result = controller.ViewReports(ReportStatus.ApprovedBySupervisor.ToString()) as ViewResult;
             var ExpenseReports = (List<ExpenseReport>)result.Model;
             foreach (var report in ExpenseReports)
             {
-                Assert.AreEqual(ReportStatus.ApprovedByAccounts.ToString(), report.Status);
+                Assert.AreEqual(ReportStatus.ApprovedBySupervisor.ToString(), report.Status);
             }
         }
 
@@ -141,8 +141,8 @@ namespace ThreeAmigos_ExpenseManagement.Tests.Controllers
             var ExpenseReports = (List<ExpenseReport>)result.Model;
             foreach (var report in ExpenseReports)
             {
-                Assert.IsTrue(month == report.CreateDate.Value.Month);
-                Assert.IsTrue(year == report.CreateDate.Value.Year);
+                Assert.IsTrue(month == report.ApprovedDate.Value.Month);
+                Assert.IsTrue(year == report.ApprovedDate.Value.Year);
             }
         }
 
@@ -192,13 +192,13 @@ namespace ThreeAmigos_ExpenseManagement.Tests.Controllers
             Assert.AreEqual(expectedViewName, result.ViewName, "View names do not match, expected view name is{0}", expectedViewName);
         }
 
-        [TestMethod]
-        public void Accounts_ApproveExpenses_ViewData_IsApproveExpensesViewModel()
+        [TestMethod]  //OK
+        public void Accounts_ProcessExpenses_ViewData_IsProcessExpensesViewModel()
         {
             AccountsController controller = new AccountsController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetService);
             MockHttpContext.SetFakeHttpContext(controller);
             var result = controller.ProcessExpenses() as ViewResult;
-            Assert.IsInstanceOfType(result.ViewData.Model, typeof(List<ApproveExpensesViewModel>));
+            Assert.IsInstanceOfType(result.ViewData.Model, typeof(ProcessExpensesViewModel));
         }      
 
     }
