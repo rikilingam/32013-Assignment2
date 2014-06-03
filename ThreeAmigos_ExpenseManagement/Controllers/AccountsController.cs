@@ -36,6 +36,15 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
         }
 
 
+        public AccountsController(IEmployeeService empService, IExpenseReportService rptService, Employee employee,IBudgetService budget)
+        {
+            employeeService = empService;
+            reportService = rptService;
+            this.employee = employee;
+            budgetTracker = budget;  
+         }
+
+
         //
         // GET: /Accounts/
 
