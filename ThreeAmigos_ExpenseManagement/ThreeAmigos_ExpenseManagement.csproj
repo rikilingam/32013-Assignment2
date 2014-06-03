@@ -252,6 +252,10 @@
     <Compile Include="ViewModels\ProcessExpensesViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\aspnet-ThreeAmigos_ExpenseManagement-20140509162433.mdf" />
+    <Content Include="App_Data\aspnet-ThreeAmigos_ExpenseManagement-20140509162433_log.ldf">
+      <DependentUpon>aspnet-ThreeAmigos_ExpenseManagement-20140509162433.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap-datetimepicker.css" />
     <Content Include="Content\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -702,7 +706,6 @@
     <Content Include="Views\Shared\Error.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Receipts\" />
   </ItemGroup>
   <ItemGroup>
