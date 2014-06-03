@@ -85,7 +85,7 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
 
         public ActionResult ViewReports()
         {
-            return View();
+            return View("ViewReports");
         }
 
 
