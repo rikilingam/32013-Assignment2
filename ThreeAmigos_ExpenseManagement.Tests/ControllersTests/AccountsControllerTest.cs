@@ -70,8 +70,6 @@ namespace ThreeAmigos_ExpenseManagement.Tests.Controllers
             var result = controller.ViewReports(ReportStatus.ApprovedBySupervisor.ToString());
 
             Assert.IsInstanceOfType(result, typeof(ActionResult), "Result is not of ActionResult type");
-
-
         }
 
         [TestMethod]  //OK
@@ -128,26 +126,7 @@ namespace ThreeAmigos_ExpenseManagement.Tests.Controllers
             }
         }
 
-        [TestMethod]
-        public void Accounts_ViewReports_ReportsAreDisplayedForCurrentMonthOfCurrentYear_IsTrue()
-        {
-            Employee mockEmployee = mockEmployeeService.GetEmployee(1);
-            int month = DateTime.Now.Month;
-            int year = DateTime.Now.Year;
-
-            AccountsController controller = new AccountsController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetService);
-            MockHttpContext.SetFakeHttpContext(controller);
-            var result = controller.ViewReports(ReportStatus.ApprovedBySupervisor.ToString()) as ViewResult;
-            var ExpenseReports = (List<ExpenseReport>)result.Model;
-            foreach (var report in ExpenseReports)
-            {
-                Assert.IsTrue(month == report.ApprovedDate.Value.Month);
-                Assert.IsTrue(year == report.ApprovedDate.Value.Year);
-            }
-        }
-
-
-        [TestMethod]
+        [TestMethod]  //OK
         public void Accounts_CheckBalance_Returns_View_CheckBalance()
         {
             const string expectedViewName = "CheckExpenseApproved";
@@ -160,12 +139,23 @@ namespace ThreeAmigos_ExpenseManagement.Tests.Controllers
         }
 
         [TestMethod]
-        public void Accounts_CheckExpenseApproved_ViewData_AmountProcessedSupervisor()
+        public void Accounts_CheckExpenseApproved_ViewData_IsListOfAmountProcessedSupervisor()
         {
             AccountsController controller = new AccountsController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetService);
             MockHttpContext.SetFakeHttpContext(controller);
             var result = controller.CheckExpenseApproved() as ViewResult;
-            Assert.IsInstanceOfType(result.ViewData.Model, typeof(AmountProcessedSupervisor));
+            Assert.IsInstanceOfType(result.ViewData.Model, typeof(List<AmountProcessedSupervisor>));
+
+
+            //AccountsController controller = new AccountsController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetService);
+            //MockHttpContext.SetFakeHttpContext(controller);
+
+            //var result = controller.ViewReports(ReportStatus.ApprovedBySupervisor.ToString()) as ViewResult;
+
+            //Assert.IsInstanceOfType(result.ViewData.Model, typeof(List<ExpenseReport>));
+
+
+
         }
 
         [TestMethod]  //OK
