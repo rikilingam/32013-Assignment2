@@ -100,7 +100,7 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
         {
             List<ExpenseReport> expReports = new List<ExpenseReport>();
             expReports = reportService.GetReportsByAccounts(status);
-            return View(expReports);
+            return View("ViewReports", expReports);
         }
 
 
@@ -112,7 +112,7 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
         {
             List<AmountProcessedSupervisor> report = new List<AmountProcessedSupervisor>();
             report = reportService.GetAmountSupervisor();
-            return View(report);
+            return View("CheckExpenseApproved", report);
         }
 
     }
