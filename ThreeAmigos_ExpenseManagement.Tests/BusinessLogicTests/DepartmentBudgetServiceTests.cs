@@ -42,5 +42,31 @@ namespace ThreeAmigos_ExpenseManagement.Tests.BusinessLogicTests
             Assert.AreEqual(expectedAmount, deptBudgetService.Budget.Spent, "Expected amount does not equal the amount spent");
         }
 
+        [TestMethod]
+        public void GetDepartmentBudgetRemaining_AreEqual()
+        {
+            decimal expectedAmount = 100;
+            decimal? result = deptBudgetService.GetDepartmentBudgetRemain(06, 2014, department);
+            Assert.AreEqual(expectedAmount, result, "Expected amount does not equal the amount spent");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(FormatException))]
+        public void GetDepartmentBudgetRemaining_AreEqual_ThrowFormatException()
+        {
+            decimal expectedAmount = 100;
+            var month = "January";
+            decimal? result = deptBudgetService.GetDepartmentBudgetRemain(Int32.Parse(month), 2014, department);
+            Assert.AreEqual(expectedAmount, result, "Expected amount does not equal the amount spent");
+        }
+
+        [TestMethod]
+        public void DepartmentBudget_IsBudgetExceeded_False()
+        {
+            bool result = deptBudgetService.IsBudgetExceeded(1000);
+
+            Assert.IsFalse(result, "The budget is exceeed when the amount is greater than budget amount");
+        }
+
     }
 }
