@@ -33,23 +33,9 @@ namespace ThreeAmigos_ExpenseManagement.Tests.Controllers
 
         }
 
-        //[TestMethod]
-        //public void Index()
-        //{
-        //    // Arrange
-        //    HomeController controller = new HomeController();
-
-        //    // Act
-        //    ViewResult result = controller.Index() as ViewResult;
-
-        //    // Assert
-        //    Assert.AreEqual("Modify this template to jump-start your ASP.NET MVC application.", result.ViewBag.Message);
-        //}
-
-
         //Check the default constructor loads with correct employee
         [TestMethod]
-        public void CreateExpense_CheckEmployeeIsLoadedWithDepartment()
+        public void Consultant_CreateExpense_CheckEmployeeIsLoadedWithDepartment()
         {
             //Arrange
             Employee mockEmployee = mockEmployeeService.GetEmployee(1); //get the employee from the mock employee service                       
@@ -63,7 +49,7 @@ namespace ThreeAmigos_ExpenseManagement.Tests.Controllers
 
         //Test the CreateExpense action is a type of ActionResult
         [TestMethod]
-        public void CreateExpense_Returns_ActionResult()
+        public void Consultant_CreateExpense_Returns_ActionResult()
         {
             //Arrange            
             ConsultantController controller = new ConsultantController(mockEmployeeService, mockReportService, mockEmployee);
@@ -77,7 +63,7 @@ namespace ThreeAmigos_ExpenseManagement.Tests.Controllers
 
         // Check that the correct view is returned
         [TestMethod]
-        public void CreateExpense_Returns_View_CreateExpense()
+        public void Consultant_CreateExpense_Returns_View_CreateExpense()
         {
             //Arrange
             const string expectedViewName = "CreateExpense";
@@ -95,7 +81,7 @@ namespace ThreeAmigos_ExpenseManagement.Tests.Controllers
 
         //Test that the initial ExpenseReport is intialized correctly
         [TestMethod]
-        public void CreateExpense_CheckInitialExpenseReportIsInitialized()
+        public void Consultant_CreateExpense_CheckInitialExpenseReportIsInitialized()
         {           
             //Arrange
             ConsultantController controller = new ConsultantController(mockEmployeeService, mockReportService, mockEmployee);            
@@ -114,7 +100,7 @@ namespace ThreeAmigos_ExpenseManagement.Tests.Controllers
 
         //Test the data being sent to the view
         [TestMethod]
-        public void CreateExpense_ViewData_ExpenseFormViewModal()
+        public void Consultant_CreateExpense_ViewData_ExpenseFormViewModal()
         {
             //Arrange
             ConsultantController controller = new ConsultantController(mockEmployeeService, mockReportService, mockEmployee);
@@ -141,7 +127,7 @@ namespace ThreeAmigos_ExpenseManagement.Tests.Controllers
 
         //Test the HttpPost CreateExpense action is a type of ActionResult
         [TestMethod]
-        public void HttpPost_CreateExpense_Returns_ActionResult()
+        public void Consultant_HttpPost_CreateExpense_Returns_ActionResult()
         {
             //Arrange            
             ExpenseFormViewModel expenseForm = new ExpenseFormViewModel();
@@ -162,7 +148,7 @@ namespace ThreeAmigos_ExpenseManagement.Tests.Controllers
 
         // Check that the correct view is returned
         [TestMethod]
-        public void HttpPost_CreateExpense_Returns_View_CreateExpense()
+        public void Consultant_HttpPost_CreateExpense_Returns_View_CreateExpense()
         {
             //Arrange
             const string expectedViewName = "CreateExpense";
@@ -185,7 +171,7 @@ namespace ThreeAmigos_ExpenseManagement.Tests.Controllers
 
         //Check that the expense item sent to the view is the same as the intial item that was intialized
         [TestMethod]
-        public void HttpPost_CreateExpense_AddExpenseItem()
+        public void Consultant_HttpPost_CreateExpense_AddExpenseItem()
         {
             //Arrange
             ExpenseFormViewModel expenseForm = new ExpenseFormViewModel();
@@ -210,6 +196,56 @@ namespace ThreeAmigos_ExpenseManagement.Tests.Controllers
             //Assert
             Assert.AreEqual(model.ExpenseItem, expenseForm.ExpenseItem, "Expense items in view are not equal to expense item in the response");
             Assert.IsNotNull((ExpenseFormViewModel)result.ViewData.Model, "The resulting view modal is null");
+        }
+
+        [TestMethod]
+        public void Consultant_ViewReports_Returns_ActionResult()
+        {
+            ConsultantController controller = new ConsultantController(mockEmployeeService, mockReportService, mockEmployee);
+            MockHttpContext.SetFakeHttpContext(controller);
+
+            var result = controller.ViewMyExpenses();
+
+            Assert.IsInstanceOfType(result, typeof(ActionResult), "Result is not of ActionResult type");
+
+
+        }
+
+        [TestMethod]
+        public void Consultant_ViewReports_Returns_View_ViewReports()
+        {
+            const string expectedViewName = "";
+            ConsultantController controller = new ConsultantController(mockEmployeeService, mockReportService, mockEmployee);
+            MockHttpContext.SetFakeHttpContext(controller);
+
+            var result = controller.ViewMyExpenses() as ViewResult;
+
+            Assert.AreEqual(expectedViewName, result.ViewName, "View names do not match, expected view name is{0}", expectedViewName);
+        }
+
+        [TestMethod]
+        public void Consultant_HttpPost_ViewReports_Returns_ActionResult()
+        {
+            ConsultantController controller = new ConsultantController(mockEmployeeService, mockReportService, mockEmployee);
+            MockHttpContext.SetFakeHttpContext(controller);
+
+            var result = controller.ViewMyExpenses(ReportStatus.Submitted.ToString());
+
+            Assert.IsInstanceOfType(result, typeof(ActionResult), "Result is not of ActionResult type");
+
+
+        }
+
+        [TestMethod]
+        public void Consultant_HttpPost_ViewReports_Returns_View_ViewReports()
+        {
+            const string expectedViewName = "";
+            ConsultantController controller = new ConsultantController(mockEmployeeService, mockReportService, mockEmployee);
+            MockHttpContext.SetFakeHttpContext(controller);
+
+            var result = controller.ViewMyExpenses(ReportStatus.Submitted.ToString()) as ViewResult;
+
+            Assert.AreEqual(expectedViewName, result.ViewName, "View names do not match, expected view name is{0}", expectedViewName);
         }
     }
 }
