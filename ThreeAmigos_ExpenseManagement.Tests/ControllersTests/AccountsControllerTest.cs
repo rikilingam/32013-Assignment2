@@ -8,7 +8,6 @@ using ThreeAmigos_ExpenseManagement.Tests.MockBusinessLogic;
 using ThreeAmigos_ExpenseManagement.Models;
 using ThreeAmigos_ExpenseManagement.ViewModels;
 
-//namespace ThreeAmigos_ExpenseManagement.Tests.ControllersTests
 namespace ThreeAmigos_ExpenseManagement.Tests.Controllers
 {
     [TestClass]
@@ -139,22 +138,12 @@ namespace ThreeAmigos_ExpenseManagement.Tests.Controllers
         }
 
         [TestMethod]
-        public void Accounts_CheckExpenseApproved_ViewData_IsListOfAmountProcessedSupervisor()
+        public void Accounts_CheckExpenseApproved_ViewData_IsListOf_AmountProcessedSupervisor()
         {
             AccountsController controller = new AccountsController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetService);
             MockHttpContext.SetFakeHttpContext(controller);
             var result = controller.CheckExpenseApproved() as ViewResult;
             Assert.IsInstanceOfType(result.ViewData.Model, typeof(List<AmountProcessedSupervisor>));
-
-
-            //AccountsController controller = new AccountsController(mockEmployeeService, mockReportService, mockEmployee, mockBudgetService);
-            //MockHttpContext.SetFakeHttpContext(controller);
-
-            //var result = controller.ViewReports(ReportStatus.ApprovedBySupervisor.ToString()) as ViewResult;
-
-            //Assert.IsInstanceOfType(result.ViewData.Model, typeof(List<ExpenseReport>));
-
-
 
         }
 
