@@ -65,6 +65,9 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
 
         }
 
+        /// <summary>
+        ///  Processes the report on the basis of action selected
+        /// </summary>
         public ActionResult ProcessExpenseItem(int expenseId, string status)
         {
             ProcessExpensesViewModel expenses = new ProcessExpensesViewModel();
@@ -74,11 +77,6 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
             budgetTracker.SetBudgetSpent(DateTime.Now.Month, DateTime.Now.Year);
             expenses.BudgetTracker = budgetTracker;
             return View("ProcessExpenses", expenses);
-            
-            //reportService.ProcessReport(expenseId, employee, (ReportStatus)Enum.Parse(typeof(ReportStatus), status));
-
-            //return RedirectToAction("ProcessExpenses");
-
         }
 
 
@@ -88,6 +86,12 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
         }
 
 
+
+        /// <summary>
+        /// Filters the list of expense reports by status
+        /// </summary>
+        /// <param name="status"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult ViewReports(string status)
         {
@@ -97,7 +101,11 @@ namespace ThreeAmigos_ExpenseManagement.Controllers
         }
 
 
-        public ActionResult CheckExpenseApproved()
+
+        /// <summary>
+        /// Checks the amount approved by each supervisor
+        /// </summary>
+       public ActionResult CheckExpenseApproved()
         {
             List<AmountProcessedSupervisor> report = new List<AmountProcessedSupervisor>();
             report = reportService.GetAmountSupervisor();
