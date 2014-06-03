@@ -194,6 +194,7 @@
     <Compile Include="BusinessLogic\IExpenseReportService.cs" />
     <Compile Include="BusinessLogic\CompanyBudgetService.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\SupervisorController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ConsultantController.cs" />
@@ -677,7 +678,6 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index_org.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
@@ -699,6 +699,7 @@
     <Content Include="Views\Supervisor\Index.cshtml" />
     <Content Include="Views\Supervisor\ViewReports.cshtml" />
     <Content Include="Views\Supervisor\CheckBalance.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
