@@ -10,13 +10,19 @@ namespace ThreeAmigos_ExpenseManagement.BusinessLogic
 {
     public class CompanyBudgetService : IBudgetService
     {
-        BudgetDAL budgetTrackerDAL;
+        IBudgetDAL budgetTrackerDAL;
 
         public Budget Budget { get; set; }
         
         public CompanyBudgetService(decimal budgetAmount)
         {
             budgetTrackerDAL = new BudgetDAL();
+            Budget = new Budget(budgetAmount);
+        }
+
+        public CompanyBudgetService(decimal budgetAmount, IBudgetDAL budgetDAL)
+        {
+            budgetTrackerDAL = budgetDAL;
             Budget = new Budget(budgetAmount);
         }
 
